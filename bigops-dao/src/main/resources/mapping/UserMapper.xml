@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywb.bigops.dao.mapper.UserMapper">
+    <!-- 默认返回对象映射 -->
+    <resultMap id="BaseResultMap" type="com.ywb.bigops.domain.user.UserDomain">
+        <id column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="employId" property="employId" jdbcType="INTEGER"/>
+        <result column="im1" property="im1" jdbcType="VARCHAR"/>
+        <result column="im2" property="im2" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="expires" property="expires" jdbcType="TIMESTAMP"/>
+        <result column="pwdLastSetTime" property="pwdLastSetTime" jdbcType="TIMESTAMP"/>
+        <result column="lastUpdateTime" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="lastLoginIp" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="isAdmin" property="isAdmin" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 全局列名 -->
+    <sql id="Base_Column_List">
+        uid, email, password, realname, title, tel, mobile, gender, age, employId, im1, im2, description,
+        expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status
+    </sql>
+
+    <!-- 对象查询条件拼装 -->
+    <sql id="where_Cond">
+        <where>
+            1 = 1
+            <if test="uid != null">
+                and uid = #{uid,jdbcType=INTEGER}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="realname != null">
+                and realname = #{realname,jdbcType=VARCHAR}
+            </if>
+            <if test="title != null">
+                and title = #{title,jdbcType=VARCHAR}
+            </if>
+            <if test="tel != null">
+                and tel = #{tel,jdbcType=VARCHAR}
+            </if>
+            <if test="mobile != null">
+                and mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender,jdbcType=INTEGER}
+            </if>
+            <if test="age != null">
+                and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="employId != null">
+                and employId = #{employId,jdbcType=INTEGER}
+            </if>
+            <if test="im1 != null">
+                and im1 = #{im1,jdbcType=VARCHAR}
+            </if>
+            <if test="im2 != null">
+                and im2 = #{im2,jdbcType=VARCHAR}
+            </if>
+            <if test="description != null">
+                and description = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test="expires != null">
+                and expires = #{expires,jdbcType=TIMESTAMP}
+            </if>
+            <if test="pwdLastSetTime != null">
+                and pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastUpdateTime != null">
+                and lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastLoginIp != null">
+                and lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR}
+            </if>
+            <if test="isAdmin != null">
+                and isAdmin = #{isAdmin,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+    <!-- 封装查询条件拼装 -->
+    <sql id="where_CondKey">
+        <where>
+            1 = 1
+            <choose>
+                <when test="condition != null">
+
+                    <if test="condition.uid != null">
+                        and uid = #{condition.uid,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.email != null">
+                        and email = #{condition.email,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.password != null">
+                        and password = #{condition.password,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.realname != null">
+                        and realname = #{condition.realname,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.title != null">
+                        and title = #{condition.title,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.tel != null">
+                        and tel = #{condition.tel,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.mobile != null">
+                        and mobile = #{condition.mobile,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.gender != null">
+                        and gender = #{condition.gender,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.age != null">
+                        and age = #{condition.age,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.employId != null">
+                        and employId = #{condition.employId,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.im1 != null">
+                        and im1 = #{condition.im1,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.im2 != null">
+                        and im2 = #{condition.im2,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.description != null">
+                        and description = #{condition.description,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.expires != null">
+                        and expires = #{condition.expires,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="condition.pwdLastSetTime != null">
+                        and pwdLastSetTime = #{condition.pwdLastSetTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="condition.lastUpdateTime != null">
+                        and lastUpdateTime = #{condition.lastUpdateTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="condition.lastLoginIp != null">
+                        and lastLoginIp = #{condition.lastLoginIp,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.isAdmin != null">
+                        and isAdmin = #{condition.isAdmin,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.status != null">
+                        and status = #{condition.status,jdbcType=INTEGER}
+                    </if>
+                </when>
+                <otherwise>
+                    <if test="uid != null">
+                        and uid = #{uid,jdbcType=INTEGER}
+                    </if>
+                    <if test="email != null">
+                        and email = #{email,jdbcType=VARCHAR}
+                    </if>
+                    <if test="password != null">
+                        and password = #{password,jdbcType=VARCHAR}
+                    </if>
+                    <if test="realname != null">
+                        and realname = #{realname,jdbcType=VARCHAR}
+                    </if>
+                    <if test="title != null">
+                        and title = #{title,jdbcType=VARCHAR}
+                    </if>
+                    <if test="tel != null">
+                        and tel = #{tel,jdbcType=VARCHAR}
+                    </if>
+                    <if test="mobile != null">
+                        and mobile = #{mobile,jdbcType=VARCHAR}
+                    </if>
+                    <if test="gender != null">
+                        and gender = #{gender,jdbcType=INTEGER}
+                    </if>
+                    <if test="age != null">
+                        and age = #{age,jdbcType=INTEGER}
+                    </if>
+                    <if test="employId != null">
+                        and employId = #{employId,jdbcType=INTEGER}
+                    </if>
+                    <if test="im1 != null">
+                        and im1 = #{im1,jdbcType=VARCHAR}
+                    </if>
+                    <if test="im2 != null">
+                        and im2 = #{im2,jdbcType=VARCHAR}
+                    </if>
+                    <if test="description != null">
+                        and description = #{description,jdbcType=VARCHAR}
+                    </if>
+                    <if test="expires != null">
+                        and expires = #{expires,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="pwdLastSetTime != null">
+                        and pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="lastUpdateTime != null">
+                        and lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="lastLoginIp != null">
+                        and lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR}
+                    </if>
+                    <if test="isAdmin != null">
+                        and isAdmin = #{isAdmin,jdbcType=INTEGER}
+                    </if>
+                    <if test="status != null">
+                        and status = #{status,jdbcType=INTEGER}
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    <!-- 对象更新拼装 -->
+    <sql id="set_User">
+        <set>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null">
+                realname = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="employId != null">
+                employId = #{employId,jdbcType=INTEGER},
+            </if>
+            <if test="im1 != null">
+                im1 = #{im1,jdbcType=VARCHAR},
+            </if>
+            <if test="im2 != null">
+                im2 = #{im2,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="expires != null">
+                expires = #{expires,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pwdLastSetTime != null">
+                pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="isAdmin != null">
+                isAdmin = #{isAdmin,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+        </set>
+    </sql>
+    <!-- 封装更新拼装 -->
+    <sql id="set_UserKey">
+        <set>
+            <if test="user != null">
+                <if test="user.email != null">
+                    email = #{user.email,jdbcType=VARCHAR},
+                </if>
+                <if test="user.password != null">
+                    password = #{user.password,jdbcType=VARCHAR},
+                </if>
+                <if test="user.realname != null">
+                    realname = #{user.realname,jdbcType=VARCHAR},
+                </if>
+                <if test="user.title != null">
+                    title = #{user.title,jdbcType=VARCHAR},
+                </if>
+                <if test="user.tel != null">
+                    tel = #{user.tel,jdbcType=VARCHAR},
+                </if>
+                <if test="user.mobile != null">
+                    mobile = #{user.mobile,jdbcType=VARCHAR},
+                </if>
+                <if test="user.gender != null">
+                    gender = #{user.gender,jdbcType=INTEGER},
+                </if>
+                <if test="user.age != null">
+                    age = #{user.age,jdbcType=INTEGER},
+                </if>
+                <if test="user.employId != null">
+                    employId = #{user.employId,jdbcType=INTEGER},
+                </if>
+                <if test="user.im1 != null">
+                    im1 = #{user.im1,jdbcType=VARCHAR},
+                </if>
+                <if test="user.im2 != null">
+                    im2 = #{user.im2,jdbcType=VARCHAR},
+                </if>
+                <if test="user.description != null">
+                    description = #{user.description,jdbcType=VARCHAR},
+                </if>
+                <if test="user.expires != null">
+                    expires = #{user.expires,jdbcType=TIMESTAMP},
+                </if>
+                <if test="user.pwdLastSetTime != null">
+                    pwdLastSetTime = #{user.pwdLastSetTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="user.lastUpdateTime != null">
+                    lastUpdateTime = #{user.lastUpdateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="user.lastLoginIp != null">
+                    lastLoginIp = #{user.lastLoginIp,jdbcType=VARCHAR},
+                </if>
+                <if test="user.isAdmin != null">
+                    isAdmin = #{user.isAdmin,jdbcType=INTEGER},
+                </if>
+                <if test="user.status != null">
+                    status = #{user.status,jdbcType=INTEGER}
+                </if>
+            </if>
+        </set>
+    </sql>
+    <!-- 对象覆盖更新拼装 -->
+    <sql id="set_UserWithForce">
+        <set>
+            email = #{email,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            realname = #{realname,jdbcType=VARCHAR},
+            title = #{title,jdbcType=VARCHAR},
+            tel = #{tel,jdbcType=VARCHAR},
+            mobile = #{mobile,jdbcType=VARCHAR},
+            gender = #{gender,jdbcType=INTEGER},
+            age = #{age,jdbcType=INTEGER},
+            employId = #{employId,jdbcType=INTEGER},
+            im1 = #{im1,jdbcType=VARCHAR},
+            im2 = #{im2,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            expires = #{expires,jdbcType=TIMESTAMP},
+            pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP},
+            lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR},
+            isAdmin = #{isAdmin,jdbcType=INTEGER},
+            status = #{status,jdbcType=INTEGER}
+        </set>
+    </sql>
+    <!-- 封装覆盖更新拼装 -->
+    <sql id="set_UserKeyWithForce">
+        <set>
+            <if test="user != null">
+                email = #{user.email,jdbcType=VARCHAR},
+                password = #{user.password,jdbcType=VARCHAR},
+                realname = #{user.realname,jdbcType=VARCHAR},
+                title = #{user.title,jdbcType=VARCHAR},
+                tel = #{user.tel,jdbcType=VARCHAR},
+                mobile = #{user.mobile,jdbcType=VARCHAR},
+                gender = #{user.gender,jdbcType=INTEGER},
+                age = #{user.age,jdbcType=INTEGER},
+                employId = #{user.employId,jdbcType=INTEGER},
+                im1 = #{user.im1,jdbcType=VARCHAR},
+                im2 = #{user.im2,jdbcType=VARCHAR},
+                description = #{user.description,jdbcType=VARCHAR},
+                expires = #{user.expires,jdbcType=TIMESTAMP},
+                pwdLastSetTime = #{user.pwdLastSetTime,jdbcType=TIMESTAMP},
+                lastUpdateTime = #{user.lastUpdateTime,jdbcType=TIMESTAMP},
+                lastLoginIp = #{user.lastLoginIp,jdbcType=VARCHAR},
+                isAdmin = #{user.isAdmin,jdbcType=INTEGER},
+                status = #{user.status,jdbcType=INTEGER}
+            </if>
+        </set>
+    </sql>
+
+    <!-- 创建用户 -->
+    <insert id="insertUser" parameterType="com.ywb.bigops.domain.user.UserDomain">
+        insert into sso_user (email, password, realname, title, tel, mobile, gender, age, employId, im1, im2,
+        description, expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status)
+        values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+        #{age,jdbcType=INTEGER}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR}, #{expires,jdbcType=TIMESTAMP}, #{pwdLastSetTime,jdbcType=TIMESTAMP},
+        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginIp,jdbcType=INTEGER},
+        #{lastLoginIp,jdbcType=INTEGER})
+    </insert>
+
+    <!-- 通过ID查询用户 -->
+    <select id="findUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sso_user
+        where uid = #{uid,jdbcType=INTEGER}
+    </select>
+    <!-- 通过分页条件查询用户列表 -->
+    <select id="findUserListByConditionWithPage" resultMap="BaseResultMap"
+            parameterType="com.ywb.bigops.domain.user.UserCondition">
+        select
+        <include refid="Base_Column_List"/>
+        from sso_user
+        <include refid="where_Cond"/>
+        <if test="sortField != null and sortDesc != null">
+            ORDER BY ${sortField} ${sortDesc}
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+    <!-- 通过条件查询用户数量 -->
+    <select id="findUserCountByCondition" resultType="java.lang.Integer"
+            parameterType="com.ywb.bigops.domain.user.UserCondition">
+        select count(*)
+        from sso_user
+        <include refid="where_Cond"/>
+    </select>
+
+    <!-- 通过ID更新用户信息 -->
+    <update id="updateUserById" parameterType="com.ywb.bigops.domain.user.UserDomain">
+        update sso_user
+        <include refid="set_User"/>
+        where uid = #{uid,jdbcType=INTEGER}
+    </update>
+    <!-- 通过ID覆盖更新用户信息 -->
+    <update id="updateUserByIdWithForce" parameterType="com.ywb.bigops.domain.user.UserDomain">
+        update sso_user
+        <include refid="set_UserWithForce"/>
+        where uid = #{uid,jdbcType=INTEGER}
+    </update>
+    <!-- 通过Ids更新用户信息 -->
+    <update id="updateUserByIds" parameterType="java.util.Map">
+        update sso_user
+        <include refid="set_UserKey"/>
+        where uid IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!-- 通过Ids更新用户信息 -->
+    <update id="updateUserByIdsWithForce" parameterType="com.ywb.bigops.domain.user.UserDomain">
+        update sso_user
+        <include refid="set_UserKeyWithForce"/>
+        where uid IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!-- 通过条件更新用户信息 -->
+    <update id="updateUserByCondition" parameterType="java.util.Map">
+        update sso_user
+        <include refid="set_UserKey"/>
+        <include refid="where_CondKey"/>
+    </update>
+    <!-- 通过条件覆盖更新用户信息 -->
+    <update id="updateUserByConditionWithForce" parameterType="java.util.Map">
+        update sso_user
+        <include refid="set_UserKeyWithForce"/>
+        <include refid="where_CondKey"/>
+    </update>
+
+    <!-- 通过ID删除用户 -->
+    <delete id="deleteUserById" parameterType="java.lang.Long">
+        delete from sso_user
+        where uid = #{uid,jdbcType=INTEGER}
+    </delete>
+    <!-- 通过Ids删除用户 -->
+    <delete id="deleteUserByIds">
+        delete from sso_user
+        where uid IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
