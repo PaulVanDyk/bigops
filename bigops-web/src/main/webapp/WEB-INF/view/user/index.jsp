@@ -17,6 +17,7 @@
 <head>
     <!-- BEGIN HEAD -->
     <%@include file="../layout/head.jsp"%>
+    <link href="<%=contextPath%>/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" type="text/css" />
     <!-- END HEAD -->
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-sidebar-fixed">
@@ -37,12 +38,42 @@
                     <!-- BEGIN THEME PANEL -->
                     <%@include file="../layout/page-theme-panel.jsp"%>
                     <!-- END THEME PANEL -->
-                    <!-- BEGIN PAGE TITLE-->
-                    <h1 class="page-title"> 运维帮科技
-                        <%--<small>loading content via ajax</small>--%>
-                        <button type="button" class="btn default">修改名字</button>
-                    </h1>
-                    <!-- END PAGE TITLE-->
+                    <!-- BEGIN PAGE BAR -->
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <span style="font-size: 24px;">运维帮科技</span>
+                            </li>
+                            <li class="mgl10">
+                                <button type="button" class="btn btn-xs blue">修改名字</button>
+                            </li>
+                            <li class="mgl10">
+                                <button type="button" class="btn btn-xs blue">新建子部门</button>
+                            </li>
+                            <li class="mgl10">
+                                <button type="button" class="btn btn-xs red">删除</button>
+                            </li>
+                            <li class="mgl10">
+                                <button type="button" class="btn btn-xs blue">新增成员</button>
+                            </li>
+                        </ul>
+                        <div class="page-toolbar">
+                            <%--<button type="button" class="btn btn-xs default">修改名字</button>--%>
+                        </div>
+                    </div>
+                    <!-- END PAGE BAR -->
+                    <div class="row" style="margin: 15px;">
+                        <div class="col-md-2 icheck-inline form-control-static">
+                            <label>
+                                <input type="checkbox" class="icheck"> 显示所有成员</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" value="">
+                        </div>
+                        <div class="col-md-5">
+                            <button type="button" class="btn blue">搜索</button>
+                        </div>
+                    </div>
                     <!-- END PAGE HEADER-->
                     <div class="page-content-body">
                         <div class="note note-info">
@@ -109,5 +140,7 @@
     <%@include file="../layout/page-quick-nav.jsp"%>
     <!-- END QUICK NAV -->
     <%@include file="../layout/foot.jsp"%>
+    <script src="<%=contextPath%>/assets/global/plugins/icheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/assets/pages/scripts/temp/user.js" type="text/javascript"></script>
 </body>
 </html>

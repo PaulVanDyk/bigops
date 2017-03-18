@@ -33,14 +33,14 @@
                 <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
                 <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
                 <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
-                <form class="sidebar-search  " action="page_general_search_3.html" method="POST">
+                <form class="sidebar-search  " action="#" method="POST">
                     <a href="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" id="txt_regex" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                                            <a href="javascript:;" class="btn submit">
+                                            <a href="javascript:;" class="btn" onclick="filterTree()">
                                                 <i class="icon-magnifier"></i>
                                             </a>
                                         </span>
@@ -49,8 +49,8 @@
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="nav-item">
-                <a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">
-                    <i class="icon-bar-chart"></i> Section 2</a>
+                <%--<a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">--%>
+                    <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
                 <div>
                     <ul id="treeDemo" class="ztree"></ul>
                 </div>
@@ -77,7 +77,7 @@
     var zNodes =[
         { id:1, pId:0, name:"父节点1 - 展开", url:"../login/login.jsp", open:true},
         { id:11, pId:1, name:"父节点11 - 折叠", click:"Layout.loadAjaxContent('/user/findUserList.do?start=1&length=10')"},
-        { id:111, pId:11, name:"叶子节点111"},
+        { id:111, pId:11, name:"叶子节点111", click:"Layout.loadAjaxContent('/user/indexAjax.do?employId=1',$(this))"},
         { id:112, pId:11, name:"叶子节点112"},
         { id:113, pId:11, name:"叶子节点113"},
         { id:114, pId:11, name:"叶子节点114"},
@@ -136,4 +136,19 @@
     $(document).ready(function(){
         $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
+
+    function filterTree() {
+        var regex = $("#txt_regex").val().trim();
+        if (!regex && regex != 0) {
+            $("#treeDemo li").show();
+        }
+        $("#treeDemo li > a").each(function () {
+            var text = $(this).attr("title");
+            if (text && text.indexOf(regex) > -1) {
+                $(this).parent().hide();
+            } else {
+                $(this).parent().show();
+            }
+        });
+    }
 </SCRIPT>

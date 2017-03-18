@@ -26,15 +26,18 @@
 <link href="<%=contextPath%>/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
 <!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="<%=contextPath%>/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="<%=contextPath%>/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
 <link href="<%=contextPath%>/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 <!-- END THEME GLOBAL STYLES -->
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="<%=contextPath%>/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-<link href="<%=contextPath%>/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/layouts/layout/css/themes/blue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-<link href="<%=contextPath%>/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->
 <!-- BEGIN USER STYLES -->
 <%--<link rel="stylesheet" href="<%=contextPath%>/assets/global/plugins/jquery-ztree/themes/zTreeStyle/zTreeStyle.css" type="text/css">--%>

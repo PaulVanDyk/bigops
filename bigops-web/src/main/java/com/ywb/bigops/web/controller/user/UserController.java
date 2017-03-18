@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +38,13 @@ public class UserController extends BaseController {
     @RequestMapping("index")
     public ModelAndView index() {
         return new ModelAndView("user/index");
+    }
+
+    @RequestMapping("indexAjax")
+    public ModelAndView indexAjax(@RequestParam String employId) {
+        ModelAndView modelAndView = new ModelAndView("user/list");
+        modelAndView.addObject("params", "{\"key\":\"employId\",\"value\":\"" + employId + "\"}");
+        return modelAndView;
     }
 
     @RequestMapping("login")
