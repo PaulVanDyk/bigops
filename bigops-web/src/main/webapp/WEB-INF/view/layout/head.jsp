@@ -32,6 +32,7 @@
 <!-- END THEME GLOBAL STYLES -->
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="<%=contextPath%>/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/layouts/layout/css/themes/blue.min.css" rel="stylesheet" type="text/css" id="style_color" />
 <link href="<%=contextPath%>/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->

@@ -35,86 +35,7 @@
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
                     <!-- BEGIN THEME PANEL -->
-                    <div class="theme-panel hidden-xs hidden-sm">
-                        <div class="toggler"> </div>
-                        <div class="toggler-close"> </div>
-                        <div class="theme-options">
-                            <div class="theme-option theme-colors clearfix">
-                                <span> THEME COLOR </span>
-                                <ul>
-                                    <li class="color-default current tooltips" data-style="default" data-container="body" data-original-title="Default"> </li>
-                                    <li class="color-darkblue tooltips" data-style="darkblue" data-container="body" data-original-title="Dark Blue"> </li>
-                                    <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="Blue"> </li>
-                                    <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="Grey"> </li>
-                                    <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="Light"> </li>
-                                    <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="Light 2"> </li>
-                                </ul>
-                            </div>
-                            <div class="theme-option">
-                                <span> Theme Style </span>
-                                <select class="layout-style-option form-control input-sm">
-                                    <option value="square" selected="selected">Square corners</option>
-                                    <option value="rounded">Rounded corners</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Layout </span>
-                                <select class="layout-option form-control input-sm">
-                                    <option value="fluid" selected="selected">Fluid</option>
-                                    <option value="boxed">Boxed</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Header </span>
-                                <select class="page-header-option form-control input-sm">
-                                    <option value="fixed" selected="selected">Fixed</option>
-                                    <option value="default">Default</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Top Menu Dropdown</span>
-                                <select class="page-header-top-dropdown-style-option form-control input-sm">
-                                    <option value="light" selected="selected">Light</option>
-                                    <option value="dark">Dark</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Sidebar Mode</span>
-                                <select class="sidebar-option form-control input-sm">
-                                    <option value="fixed">Fixed</option>
-                                    <option value="default" selected="selected">Default</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Sidebar Menu </span>
-                                <select class="sidebar-menu-option form-control input-sm">
-                                    <option value="accordion" selected="selected">Accordion</option>
-                                    <option value="hover">Hover</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Sidebar Style </span>
-                                <select class="sidebar-style-option form-control input-sm">
-                                    <option value="default" selected="selected">Default</option>
-                                    <option value="light">Light</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Sidebar Position </span>
-                                <select class="sidebar-pos-option form-control input-sm">
-                                    <option value="left" selected="selected">Left</option>
-                                    <option value="right">Right</option>
-                                </select>
-                            </div>
-                            <div class="theme-option">
-                                <span> Footer </span>
-                                <select class="page-footer-option form-control input-sm">
-                                    <option value="fixed">Fixed</option>
-                                    <option value="default" selected="selected">Default</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <%@include file="layout/page-theme-panel.jsp"%>
                     <!-- END THEME PANEL -->
                     <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">
@@ -165,7 +86,7 @@
                         <div class="note note-info">
                             <p> Page contents can be loaded via ajax. To enable ajax content loading for the sidebar menu you can follow below steps: </p>
                         </div>
-                        <div class="portlet light bordered">
+                        <div class="portlet light bordered direct">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="icon-share font-dark hide"></i>
@@ -185,11 +106,27 @@
                                 </div>
                             </div>
                             <div class="portlet-body">
+                                <a href="javascript:void(0);" onclick="$('.direct').toggleClass('direct-open');">direct</a>
                                 <p> 1. Add a DIV wrapper with <code>page-content-body</code> class under <code>page-content</code> DIV of the page content. </p>
                                 <p> 2. Apply <code>ajaxify nav-link</code> class to links of the sidebar menu and specify the content URL using <code>href="some_ajax_content.php"</code> link attribute. </p>
                                 <p> 3. Use <code>Layout.loadAjaxContent('some_url.php')</code> to load an ajax content programmatically </p>
                                 <p> 4. Use <code>Layout.addAjaxContentSuccessCallback(function(res){ // res is ajax response object })</code> to add ajax success callback function </p>
                                 <p>Use <code>Layout.addAjaxContentErrorCallback(function(res){ // res is ajax response object })</code> to add ajax error callback function</p>
+                            </div>
+                            <div class="direct-content">
+                                <div class="content-title">
+                                    <div class="actions">
+                                        <a href="javascript:;" onclick="$('.direct').toggleClass('direct-open');" class="btn btn-icon-only purple">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                    <div class="caption">
+                                        <span class="bold">Quick Info</span>
+                                    </div>
+                                </div>
+                                <div class="content-body">
+                                    <h3>This is direct-content-body</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
