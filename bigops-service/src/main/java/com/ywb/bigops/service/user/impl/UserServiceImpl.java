@@ -35,6 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDomain findUserByCondition(UserCondition condition) {
+        condition.setPageIndex(0);
+        condition.setPageSize(1);
+        List<UserDomain> list = this.userDao.findUserListByConditionWithPage(condition);
+        if (null != list && list.size() != 0) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public Integer findUserCountByCondition(UserCondition condition) {
         return this.userDao.findUserCountByCondition(condition);
     }

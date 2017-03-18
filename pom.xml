@@ -31,11 +31,19 @@
 
     <profiles>
         <profile>
-            <id>oschina-repo</id>
+            <id>dev</id>
+            <properties>
+                <log.level>DEBUG</log.level>
+                <log.path>/usr/local/logs/bigops</log.path>
+
+            </properties>
+        </profile>
+        <profile>
+            <id>aliyun-repo</id>
             <repositories>
                 <repository>
-                    <id>oschina</id>
-                    <url>http://maven.oschina.net/content/groups/public/</url>
+                    <id>aliyun</id>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -46,8 +54,8 @@
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
-                    <id>oschina-plugin</id>
-                    <url>http://maven.oschina.net/content/groups/public/</url>
+                    <id>aliyun-plugin</id>
+                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -166,7 +174,7 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <phase>package</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -182,7 +190,7 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <phase>package</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
@@ -190,5 +198,11 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>

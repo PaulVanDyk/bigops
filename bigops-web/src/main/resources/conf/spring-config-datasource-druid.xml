@@ -34,7 +34,7 @@
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="${mysql.maxPoolPreparedStatementPerConnectionSize}"/>
         <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
-        <property name="filters" value="stat"/>
+        <property name="filters" value="${mysql.filters}"/>
     </bean>
 
 

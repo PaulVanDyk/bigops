@@ -49,6 +49,18 @@ public interface UserService {
     List<UserDomain> findUserListByConditionWithPage(UserCondition condition) throws BigOpsException;
 
     /**
+     * 获取用户
+     *
+     * @param condition, see {@link UserCondition}
+     * @return userDomain, see {@link UserDomain}
+     * @throws BigOpsException
+     * @see UserDomain
+     * @see UserCondition
+     * @see BigOpsException
+     */
+    UserDomain findUserByCondition(UserCondition condition) throws BigOpsException;
+
+    /**
      * 通过条件获取用户个数
      *
      * @param condition, see {@link UserCondition}

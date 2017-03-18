@@ -482,13 +482,13 @@
             submitHandler: function(form){   //表单提交句柄,为一回调函数，带一个参数：form
                 error.hide();
                 var postData = $(".login-form").serializeArray();
-                $.post("login.do", postData, function (data) {
+                $.post("<%=contextPath%>/user/login.do", postData, function (data) {
                     if(data.status=="success"){
-//                        success.find("span").text("登陆成功，系统跳转中...");
+                        success.find("span").text("登陆成功，系统跳转中...");
                         success.show();
-                        setTimeout(function(){location.href='<%=contextPath%>/index.do';},1000);
+                        setTimeout(function(){location.href='<%=contextPath%>/user/index.do';},1000);
                     }else{
-                        error.find("span").text(data.msg);
+                        error.find("span").text(data.errorMessage);
                         error.show();
                     }
                 }).error(function () {
