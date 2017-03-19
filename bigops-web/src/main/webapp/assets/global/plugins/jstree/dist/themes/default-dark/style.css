@@ -13,7 +13,8 @@
 }
 .jstree-anchor {
   display: inline-block;
-  color: black;
+  /*color: black;*/
+  color: #999;
   white-space: nowrap;
   padding: 0 4px 0 1px;
   margin: 0;
@@ -28,7 +29,7 @@
 .jstree-anchor:hover,
 .jstree-anchor:active {
   text-decoration: none;
-  color: inherit;
+  /*color: inherit;*/
 }
 .jstree-icon {
   display: inline-block;
@@ -1063,7 +1064,7 @@
   background: #333;
 }
 .jstree-default-dark .jstree-anchor {
-  color: #999;
+  /*color: #999;*/
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 .jstree-default-dark .jstree-clicked,

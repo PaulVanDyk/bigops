@@ -140,7 +140,9 @@
     <%@include file="../layout/page-quick-nav.jsp"%>
     <!-- END QUICK NAV -->
     <%@include file="../layout/foot.jsp"%>
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="<%=contextPath%>/assets/global/plugins/icheck/icheck.min.js" type="text/javascript"></script>
     <script src="<%=contextPath%>/assets/pages/scripts/temp/user.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

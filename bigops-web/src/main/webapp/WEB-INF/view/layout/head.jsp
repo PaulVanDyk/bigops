@@ -29,6 +29,7 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="<%=contextPath%>/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/jstree/dist/themes/default-dark/style.min.css" rel="stylesheet" type="text/css" />
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="<%=contextPath%>/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -36,12 +37,10 @@
 <!-- END THEME GLOBAL STYLES -->
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="<%=contextPath%>/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-<link href="<%=contextPath%>/assets/layouts/layout/css/themes/blue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+<link href="<%=contextPath%>/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
 <link href="<%=contextPath%>/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->
 <!-- BEGIN USER STYLES -->
-<%--<link rel="stylesheet" href="<%=contextPath%>/assets/global/plugins/jquery-ztree/themes/zTreeStyle/zTreeStyle.css" type="text/css">--%>
-<link rel="stylesheet" href="<%=contextPath%>/assets/global/plugins/jquery-ztree/themes/metroStyle/metroStyle.css" type="text/css">
 <!-- END USER STYLES -->
 <link rel="shortcut icon" href="<%=contextPath%>/favicon.ico" />
 <!-- END HEAD -->

@@ -1,4 +1,8 @@
 /* here you can put your own css to customize and override the theme */
+.bg-trans {
+    background: transparent !important;
+}
+
 .mgr5 {
     margin-right: 5px !important;
 }
@@ -14,6 +18,7 @@
 .mgr20 {
     margin-right: 20px !important;
 }
+
 .mgl5 {
     margin-left: 5px !important;
 }

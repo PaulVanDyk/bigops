@@ -51,9 +51,7 @@
             <li class="nav-item">
                 <%--<a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">--%>
                     <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
-                <div>
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
+                    <div id="tree_org" class="tree-demo bg-trans" style="background-color: transparent;"> </div>
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->
@@ -134,21 +132,102 @@
     ];
 
     $(document).ready(function(){
-        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        $("#tree_org").jstree({
+            "core" : {
+                "themes" : {
+                    "name" : "default-dark",
+                    "responsive": false
+                },
+                // so that create works
+                "check_callback" : true,
+                'data': [{
+                    "text": "Parent Node",
+                    "children": [{
+                        "text": "Initially selected",
+                        "state": {
+                            "selected": true
+                        }
+                    }, {
+                        "text": "Custom Icon",
+                        "icon": "fa fa-warning icon-state-danger"
+                    }, {
+                        "text": "Initially open",
+                        "icon" : "fa fa-folder icon-state-success",
+                        "state": {
+                            "opened": true
+                        },
+                        "children": [
+                            {"text": "Another node", "icon" : "fa fa-file icon-state-warning"}
+                        ]
+                    }, {
+                        "text": "Another Custom Icon",
+                        "icon": "fa fa-warning icon-state-warning"
+                    }, {
+                        "text": "Disabled Node",
+                        "icon": "fa fa-check icon-state-success",
+                        "state": {
+                            "disabled": true
+                        }
+                    }, {
+                        "text": "Sub Nodes",
+                        "icon": "fa fa-folder icon-state-danger",
+                        "children": [
+                            {"text": "Item 1", "icon" : "fa fa-file icon-state-warning", "li_attr":{"type":"leaf"}},
+                            {"text": "Item 2", "icon" : "fa fa-file icon-state-success", "li_attr":{"type":"leaf"}},
+                            {"text": "Item 3", "icon" : "fa fa-file icon-state-default", "li_attr   ":{"type":"node"}},
+                            {"text": "Item 4", "icon" : "fa fa-file icon-state-danger"},
+                            {"text": "Item 5", "icon" : "fa fa-file icon-state-info"}
+                        ]
+                    }]
+                },
+                    "Another Node"
+                ]
+            },
+            "types" : {
+                "default" : {
+                    "icon" : "fa fa-folder icon-state-warning icon-lg"
+                },
+                "file" : {
+                    "icon" : "fa fa-file icon-state-warning icon-lg"
+                }
+            },
+            "state" : { "key" : "demo2" },
+            "contextmenu": {
+                "items": {
+                    "create": {
+                        "label": "添加",
+                        "_disabled": function (data) {
+                            var inst = $.jstree.reference(data.reference);
+                            obj = inst.get_node(data.reference);
+//                            console.info(obj.li_attr.type=    ="leaf");
+                            return obj.li_attr.type=="leaf";
+                        },
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            inst.create_node(obj, {}, "last", function (new_node) {
+                                setTimeout(function () {
+                                    inst.edit(new_node);
+                                }, 0);
+                            })
+                        }
+                    }
+                }
+            },
+            "plugins" : [ "wholerow", "search", "contextmenu", "dnd", "state", "types" ]
+        });
+//        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
 
     function filterTree() {
         var regex = $("#txt_regex").val().trim();
-        if (!regex && regex != 0) {
-            $("#treeDemo li").show();
+        var to = false;
+        if (to) {
+            clearTimeout(to);
         }
-        $("#treeDemo li > a").each(function () {
-            var text = $(this).attr("title");
-            if (text && text.indexOf(regex) > -1) {
-                $(this).parent().hide();
-            } else {
-                $(this).parent().show();
-            }
-        });
+        to = setTimeout(function () {
+            var v = $("#txt_regex").val().trim();
+            $('#tree_org').jstree(true).search(v);
+        }, 250);
     }
 </SCRIPT>
