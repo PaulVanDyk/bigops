@@ -47,5 +47,4 @@
 
 <!-- BEGIN PREFIX SCRIPTS -->
 <script src="<%=contextPath%>/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="<%=contextPath%>/assets/global/plugins/jquery-ztree/js/jquery.ztree.core.min.js" type="text/javascript"></script>
 <!-- END PREFIX SCRIPTS -->

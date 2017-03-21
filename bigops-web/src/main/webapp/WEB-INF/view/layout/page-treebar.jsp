@@ -172,11 +172,11 @@
                         "text": "Sub Nodes",
                         "icon": "fa fa-folder icon-state-danger",
                         "children": [
-                            {"text": "Item 1", "icon" : "fa fa-file icon-state-warning", "li_attr":{"type":"leaf"}},
-                            {"text": "Item 2", "icon" : "fa fa-file icon-state-success", "li_attr":{"type":"leaf"}},
-                            {"text": "Item 3", "icon" : "fa fa-file icon-state-default", "li_attr   ":{"type":"node"}},
-                            {"text": "Item 4", "icon" : "fa fa-file icon-state-danger"},
-                            {"text": "Item 5", "icon" : "fa fa-file icon-state-info"}
+                            {"id":"1", "text": "Item 1", "icon" : "fa fa-file icon-state-warning", "li_attr":{"type":"leaf"}},
+                            {"id":"2", "text": "Item 2", "icon" : "fa fa-file icon-state-success", "li_attr":{"type":"leaf"}},
+                            {"id":"3", "text": "Item 3", "icon" : "fa fa-file icon-state-default", "li_attr   ":{"type":"node"}},
+                            {"id":"4", "text": "Item 4", "icon" : "fa fa-file icon-state-danger"},
+                            {"id":"5", "text": "Item 5", "icon" : "fa fa-file icon-state-info"}
                         ]
                     }]
                 },
@@ -215,6 +215,10 @@
                 }
             },
             "plugins" : [ "wholerow", "search", "contextmenu", "dnd", "state", "types" ]
+        });
+        $("#tree_org").on("activate_node.jstree", function(e, data){
+            var id = data.node.id;
+            Layout.loadAjaxContent('/user/indexAjax.do?employId='+id,$(data.node    ))
         });
 //        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });

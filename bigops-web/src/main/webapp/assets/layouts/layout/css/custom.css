@@ -60,12 +60,23 @@
     top: 0;
     right: 0;
     bottom: 0;
-    height: 100%;
-    width: 80%;
-    background: #78a3dc;
-    /*color: #fff;*/
+    width: 50%;
+    padding: 5px 15px 5px 15px;
     overflow: auto;
     z-index: 10000;
+}
+
+.direct > .direct-content > .portlet {
+    border:2px solid #d3d7e9;
+    box-shadow: 0px 5px 20px 0px #888888;
+    background: #fbfbfb;
+    height: 100%;
+    margin:inherit;
+}
+
+.direct > .direct-content > .portlet > .portlet-title,.direct > .direct-content > .portlet > .portlet-body {
+    margin:inherit;
+    padding:15px;
 }
 
 .direct.direct-open > .direct-content {
@@ -73,26 +84,4 @@
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
-}
-
-.direct > .direct-content > .content-title {
-    border-bottom: 1px solid #eef1f5;
-    padding: 10px;
-    min-height: 28px;
-}
-
-.direct > .direct-content > .content-title > .actions {
-    padding-left: 5px;
-    margin-right: 15px;
-    display: inline-block;
-}
-
-.direct > .direct-content > .content-title > .caption {
-    padding-left: 5px;
-    display: inline-block;
-}
-
-.direct > .direct-content > .content-body {
-    padding-top: 8px;
-    clear: both;
 }

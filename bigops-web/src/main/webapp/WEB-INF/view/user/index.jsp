@@ -36,7 +36,7 @@
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
                     <!-- BEGIN THEME PANEL -->
-                    <%@include file="../layout/page-theme-panel.jsp"%>
+                    <%--<%@include file="../layout/page-theme-panel.jsp"%>--%>
                     <!-- END THEME PANEL -->
                     <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">
@@ -62,20 +62,22 @@
                         </div>
                     </div>
                     <!-- END PAGE BAR -->
-                    <div class="row" style="margin: 15px;">
-                        <div class="col-md-2 icheck-inline form-control-static">
-                            <label>
-                                <input type="checkbox" class="icheck"> 显示所有成员</label>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" value="">
-                        </div>
-                        <div class="col-md-5">
-                            <button type="button" class="btn blue">搜索</button>
-                        </div>
+                    <div class="page-title">
+                        <form class="form-inline" id="search_form">
+                            <label class="mt-checkbox mt-checkbox-outline">
+                                <input type="checkbox"> 显示所有成员
+                                <span></span>
+                            </label>
+                            <div class="form-group">
+                                <label class="sr-only" for="txtSearch">Password</label>
+                                <input type="text" id="txtSearch" class="form-control input-large" placeholder="多维条件检索">
+                            </div>
+                            <button type="button" class="btn blue mgl20">搜索</button>
+                        </form>
                     </div>
                     <!-- END PAGE HEADER-->
-                    <div class="page-content-body">
+                    <div class="page-content-body full-height-content full-height-content-scrollable">
+                        <div class="full-height-content-body">
                         <div class="note note-info">
                             <p> Page contents can be loaded via ajax. To enable ajax content loading for the sidebar menu you can follow below steps: </p>
                         </div>
@@ -107,20 +109,22 @@
                                 <p>Use <code>../layout.addAjaxContentErrorCallback(function(res){ // res is ajax response object })</code> to add ajax error callback function</p>
                             </div>
                             <div class="direct-content">
-                                <div class="content-title">
-                                    <div class="actions">
-                                        <a href="javascript:;" onclick="$('.direct').toggleClass('direct-open');" class="btn btn-icon-only purple">
-                                            <i class="fa fa-times"></i>
-                                        </a>
+                                <div class="portlet mt-element-ribbon">
+                                    <div class="ribbon ribbon-right ribbon-clip ribbon-shadow ribbon-border-dash-hor ribbon-color-success uppercase">
+                                        <div class="ribbon-sub ribbon-clip ribbon-right"></div>
+                                        Portlet Ribbon
                                     </div>
-                                    <div class="caption">
-                                        <span class="bold">Quick Info</span>
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <span class="bold">Quick Info</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="content-body">
-                                    <h3>This is direct-content-body</h3>
+                                    <div class="portlet-body">
+                                        <h3>This is direct-content-body</h3>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

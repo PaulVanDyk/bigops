@@ -651,6 +651,7 @@ var Layout = function () {
         //public function to fix the sidebar and content height accordingly
         fixContentHeight: function () {
             handleSidebarAndContentHeight();
+            handle100HeightContent(); // handles 100% height elements(block, portlet, etc)
         },
 
         initFixedSidebarHoverEffect: function() {
