@@ -65,7 +65,7 @@
                     <div class="page-title">
                         <form class="form-inline" id="search_form">
                             <label class="mt-checkbox mt-checkbox-outline">
-                                <input type="checkbox"> 显示所有成员
+                                <input id="showAll" type="checkbox"> 显示所有成员
                                 <span></span>
                             </label>
                             <div class="form-group">

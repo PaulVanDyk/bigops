@@ -1,5 +1,6 @@
 package com.ywb.bigops.web.controller.user;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ywb.bigops.common.util.BigOpsException;
 import com.ywb.bigops.common.util.DigestUtils;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * UserController
@@ -41,9 +45,19 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("indexAjax")
-    public ModelAndView indexAjax(@RequestParam String employId) {
+    public ModelAndView indexAjax(@RequestParam String params) {
         ModelAndView modelAndView = new ModelAndView("user/list");
-        modelAndView.addObject("params", "{\"key\":\"employId\",\"value\":\"" + employId + "\"}");
+        Map map;
+        List list = new ArrayList();
+        String[] param = params.split("\\,");
+        for (String str : param) {
+            map = new HashMap();
+            String[] item = str.split("\\:");
+            map.put("key", item[0]);
+            map.put("value", item[1]);
+            list.add(map);
+        }
+        modelAndView.addObject("params", JSONArray.toJSONString(list));
         return modelAndView;
     }
 

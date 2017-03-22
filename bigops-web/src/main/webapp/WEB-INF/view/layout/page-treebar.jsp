@@ -19,7 +19,8 @@
         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
+            data-slide-speed="200" style="padding-top: 20px">
             <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
             <li class="sidebar-toggler-wrapper hide">
                 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -50,8 +51,8 @@
             </li>
             <li class="nav-item">
                 <%--<a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">--%>
-                    <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
-                    <div id="tree_org" class="tree-demo bg-trans" style="background-color: transparent;"> </div>
+                <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
+                <div id="tree_org" class="tree-demo bg-trans" style="background-color: transparent;"></div>
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->
@@ -72,126 +73,101 @@
         }
     };
 
-    var zNodes =[
-        { id:1, pId:0, name:"父节点1 - 展开", url:"../login/login.jsp", open:true},
-        { id:11, pId:1, name:"父节点11 - 折叠", click:"Layout.loadAjaxContent('/user/findUserList.do?start=1&length=10')"},
-        { id:111, pId:11, name:"叶子节点111", click:"Layout.loadAjaxContent('/user/indexAjax.do?employId=1',$(this))"},
-        { id:112, pId:11, name:"叶子节点112"},
-        { id:113, pId:11, name:"叶子节点113"},
-        { id:114, pId:11, name:"叶子节点114"},
-        { id:12, pId:1, name:"父节点12 - 折叠"},
-        { id:121, pId:12, name:"叶子节点121"},
-        { id:122, pId:12, name:"叶子节点122"},
-        { id:123, pId:12, name:"叶子节点123"},
-        { id:124, pId:12, name:"叶子节点124"},
-        { id:13, pId:1, name:"父节点13 - 没有子节点", isParent:true},
-        { id:131, pId:13, name:"叶子节点131"},
-        { id:132, pId:13, name:"叶子节点132"},
-        { id:133, pId:13, name:"叶子节点133"},
-        { id:134, pId:13, name:"叶子节点134"},
-        { id:2, pId:0, name:"父节点2 - 折叠"},
-        { id:21, pId:2, name:"父节点21 - 展开", open:true},
-        { id:211, pId:21, name:"叶子节点211"},
-        { id:212, pId:21, name:"叶子节点212"},
-        { id:213, pId:21, name:"叶子节点213"},
-        { id:214, pId:21, name:"叶子节点214"},
-        { id:22, pId:2, name:"父节点22 - 折叠"},
-        { id:221, pId:22, name:"叶子节点221"},
-        { id:222, pId:22, name:"叶子节点222"},
-        { id:223, pId:22, name:"叶子节点223"},
-        { id:224, pId:22, name:"叶子节点224"},
-        { id:23, pId:2, name:"父节点23 - 折叠"},
-        { id:231, pId:23, name:"叶子节点231"},
-        { id:232, pId:23, name:"叶子节点232"},
-        { id:233, pId:23, name:"叶子节点233"},
-        { id:234, pId:23, name:"叶子节点234"},
-        { id:3, pId:0, name:"父节点3 - 没有子节点", isParent:true},
-        { id:31, pId:3, name:"叶子节点31"},
-        { id:311, pId:31, name:"叶子节点311"},
-        { id:312, pId:31, name:"叶子节点312"},
-        { id:313, pId:31, name:"叶子节点313"},
-        { id:314, pId:31, name:"叶子节点314"},
-        { id:32, pId:3, name:"叶子节点32"},
-        { id:321, pId:32, name:"叶子节点321"},
-        { id:322, pId:32, name:"叶子节点322"},
-        { id:323, pId:32, name:"叶子节点323"},
-        { id:324, pId:32, name:"叶子节点324"},
-        { id:33, pId:3, name:"叶子节点33"},
-        { id:331, pId:33, name:"叶子节点331"},
-        { id:332, pId:33, name:"叶子节点332"},
-        { id:333, pId:33, name:"叶子节点333"},
-        { id:334, pId:33, name:"叶子节点334"},
-        { id:34, pId:3, name:"叶子节点34"},
-        { id:341, pId:34, name:"叶子节点341"},
-        { id:342, pId:34, name:"叶子节点342"},
-        { id:343, pId:34, name:"叶子节点343"},
-        { id:344, pId:34, name:"叶子节点344"},
-        { id:4, pId:0, name:"父节点4 - 没有子节点", isParent:true},
-        { id:41, pId:4, name:"叶子节点34", isParent:true}
+    var zNodes = [
+        {id: 1, pId: 0, name: "父节点1 - 展开", url: "../login/login.jsp", open: true},
+        {
+            id: 11,
+            pId: 1,
+            name: "父节点11 - 折叠",
+            click: "Layout.loadAjaxContent('/user/findUserList.do?start=1&length=10')"
+        },
+        {id: 111, pId: 11, name: "叶子节点111", click: "Layout.loadAjaxContent('/user/indexAjax.do?employId=1',$(this))"},
+        {id: 112, pId: 11, name: "叶子节点112"},
+        {id: 113, pId: 11, name: "叶子节点113"},
+        {id: 114, pId: 11, name: "叶子节点114"},
+        {id: 12, pId: 1, name: "父节点12 - 折叠"},
+        {id: 121, pId: 12, name: "叶子节点121"},
+        {id: 122, pId: 12, name: "叶子节点122"},
+        {id: 123, pId: 12, name: "叶子节点123"},
+        {id: 124, pId: 12, name: "叶子节点124"},
+        {id: 13, pId: 1, name: "父节点13 - 没有子节点", isParent: true},
+        {id: 131, pId: 13, name: "叶子节点131"},
+        {id: 132, pId: 13, name: "叶子节点132"},
+        {id: 133, pId: 13, name: "叶子节点133"},
+        {id: 134, pId: 13, name: "叶子节点134"},
+        {id: 2, pId: 0, name: "父节点2 - 折叠"},
+        {id: 21, pId: 2, name: "父节点21 - 展开", open: true},
+        {id: 211, pId: 21, name: "叶子节点211"},
+        {id: 212, pId: 21, name: "叶子节点212"},
+        {id: 213, pId: 21, name: "叶子节点213"},
+        {id: 214, pId: 21, name: "叶子节点214"},
+        {id: 22, pId: 2, name: "父节点22 - 折叠"},
+        {id: 221, pId: 22, name: "叶子节点221"},
+        {id: 222, pId: 22, name: "叶子节点222"},
+        {id: 223, pId: 22, name: "叶子节点223"},
+        {id: 224, pId: 22, name: "叶子节点224"},
+        {id: 23, pId: 2, name: "父节点23 - 折叠"},
+        {id: 231, pId: 23, name: "叶子节点231"},
+        {id: 232, pId: 23, name: "叶子节点232"},
+        {id: 233, pId: 23, name: "叶子节点233"},
+        {id: 234, pId: 23, name: "叶子节点234"},
+        {id: 3, pId: 0, name: "父节点3 - 没有子节点", isParent: true},
+        {id: 31, pId: 3, name: "叶子节点31"},
+        {id: 311, pId: 31, name: "叶子节点311"},
+        {id: 312, pId: 31, name: "叶子节点312"},
+        {id: 313, pId: 31, name: "叶子节点313"},
+        {id: 314, pId: 31, name: "叶子节点314"},
+        {id: 32, pId: 3, name: "叶子节点32"},
+        {id: 321, pId: 32, name: "叶子节点321"},
+        {id: 322, pId: 32, name: "叶子节点322"},
+        {id: 323, pId: 32, name: "叶子节点323"},
+        {id: 324, pId: 32, name: "叶子节点324"},
+        {id: 33, pId: 3, name: "叶子节点33"},
+        {id: 331, pId: 33, name: "叶子节点331"},
+        {id: 332, pId: 33, name: "叶子节点332"},
+        {id: 333, pId: 33, name: "叶子节点333"},
+        {id: 334, pId: 33, name: "叶子节点334"},
+        {id: 34, pId: 3, name: "叶子节点34"},
+        {id: 341, pId: 34, name: "叶子节点341"},
+        {id: 342, pId: 34, name: "叶子节点342"},
+        {id: 343, pId: 34, name: "叶子节点343"},
+        {id: 344, pId: 34, name: "叶子节点344"},
+        {id: 4, pId: 0, name: "父节点4 - 没有子节点", isParent: true},
+        {id: 41, pId: 4, name: "叶子节点34", isParent: true}
 
     ];
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $("#tree_org").jstree({
-            "core" : {
-                "themes" : {
-                    "name" : "default-dark",
+            "core": {
+                "themes": {
+                    "name": "default-dark",
                     "responsive": false
                 },
                 // so that create works
-                "check_callback" : true,
-                'data': [{
-                    "text": "Parent Node",
-                    "children": [{
-                        "text": "Initially selected",
-                        "state": {
-                            "selected": true
-                        }
-                    }, {
-                        "text": "Custom Icon",
-                        "icon": "fa fa-warning icon-state-danger"
-                    }, {
-                        "text": "Initially open",
-                        "icon" : "fa fa-folder icon-state-success",
-                        "state": {
-                            "opened": true
-                        },
-                        "children": [
-                            {"text": "Another node", "icon" : "fa fa-file icon-state-warning"}
-                        ]
-                    }, {
-                        "text": "Another Custom Icon",
-                        "icon": "fa fa-warning icon-state-warning"
-                    }, {
-                        "text": "Disabled Node",
-                        "icon": "fa fa-check icon-state-success",
-                        "state": {
-                            "disabled": true
-                        }
-                    }, {
-                        "text": "Sub Nodes",
-                        "icon": "fa fa-folder icon-state-danger",
-                        "children": [
-                            {"id":"1", "text": "Item 1", "icon" : "fa fa-file icon-state-warning", "li_attr":{"type":"leaf"}},
-                            {"id":"2", "text": "Item 2", "icon" : "fa fa-file icon-state-success", "li_attr":{"type":"leaf"}},
-                            {"id":"3", "text": "Item 3", "icon" : "fa fa-file icon-state-default", "li_attr   ":{"type":"node"}},
-                            {"id":"4", "text": "Item 4", "icon" : "fa fa-file icon-state-danger"},
-                            {"id":"5", "text": "Item 5", "icon" : "fa fa-file icon-state-info"}
-                        ]
-                    }]
-                },
-                    "Another Node"
-                ]
-            },
-            "types" : {
-                "default" : {
-                    "icon" : "fa fa-folder icon-state-warning icon-lg"
-                },
-                "file" : {
-                    "icon" : "fa fa-file icon-state-warning icon-lg"
+                "check_callback": true,
+                'data': {
+                    "url": "<%=contextPath%>/organization/lazyList.do?lazy",
+                    "data": function (node) {
+                        return {"pid": node.id === "#" ? "0" : node.id};
+                    }
                 }
             },
-            "state" : { "key" : "demo2" },
+            "types": {
+                "default": {
+                    "icon": "fa fa-folder icon-state-warning icon-lg"
+                },
+                "file": {
+                    "icon": "fa fa-file icon-state-default icon-lg"
+                },
+                "male": {
+                    "icon": "fa fa-male icon-state-success icon-lg"
+                },
+                "female": {
+                    "icon": "fa fa-female icon-state-danger icon-lg"
+                }
+            },
+            "state": {"key": "demo2"},
             "contextmenu": {
                 "items": {
                     "create": {
@@ -200,7 +176,7 @@
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
 //                            console.info(obj.li_attr.type=    ="leaf");
-                            return obj.li_attr.type=="leaf";
+                            return obj.li_attr.type == "leaf";
                         },
                         "action": function (data) {
                             var inst = $.jstree.reference(data.reference),
@@ -214,11 +190,14 @@
                     }
                 }
             },
-            "plugins" : [ "wholerow", "search", "contextmenu", "dnd", "state", "types" ]
+            "plugins": ["wholerow", "search", "massload", "contextmenu", "dnd", "state", "types"]
         });
-        $("#tree_org").on("activate_node.jstree", function(e, data){
-            var id = data.node.id;
-            Layout.loadAjaxContent('/user/indexAjax.do?employId='+id,$(data.node    ))
+        $("#tree_org").on("activate_node.jstree", function (e, data) {
+            var type = data.node.type;
+            if (!type || type == "default") {
+                var id = data.node.id;
+                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + id, $(data.node))
+            }
         });
 //        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });

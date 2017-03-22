@@ -21,6 +21,7 @@ public class UserCondition extends BaseCondition {
     private String mobile;
     private Integer gender;
     private Integer age;
+    private Integer organizationId;
     private String employId;
     private String im1;
     private String im2;
@@ -102,6 +103,14 @@ public class UserCondition extends BaseCondition {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 
     public String getEmployId() {

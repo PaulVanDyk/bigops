@@ -1,6 +1,6 @@
 package com.ywb.bigops.service.user.impl;
 
-import com.ywb.bigops.dao.UserDao;
+import com.ywb.bigops.dao.user.UserDao;
 import com.ywb.bigops.domain.user.UserCondition;
 import com.ywb.bigops.domain.user.UserDomain;
 import com.ywb.bigops.service.user.UserService;

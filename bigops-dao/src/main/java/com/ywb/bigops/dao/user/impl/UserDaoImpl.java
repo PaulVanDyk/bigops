@@ -1,6 +1,6 @@
-package com.ywb.bigops.dao.impl;
+package com.ywb.bigops.dao.user.impl;
 
-import com.ywb.bigops.dao.UserDao;
+import com.ywb.bigops.dao.user.UserDao;
 import com.ywb.bigops.dao.mapper.UserMapper;
 import com.ywb.bigops.domain.user.UserCondition;
 import com.ywb.bigops.domain.user.UserDomain;

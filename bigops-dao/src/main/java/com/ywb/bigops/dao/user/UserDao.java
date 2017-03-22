@@ -1,4 +1,4 @@
-package com.ywb.bigops.dao;
+package com.ywb.bigops.dao.user;
 
 import com.ywb.bigops.domain.user.UserCondition;
 import com.ywb.bigops.domain.user.UserDomain;

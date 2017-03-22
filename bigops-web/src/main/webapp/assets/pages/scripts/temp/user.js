@@ -28,6 +28,19 @@ var User = function () {
                 $(".direct").toggleClass("direct-open", true);
             }
         });
+
+        $(document).on("click", "#showAll", function () {
+            var selected = $('#tree_org').jstree().get_selected(true);
+            if ($(this).prop("checked")) {
+                var params = "params=depth:true,organizationId:";
+                params += selected ? selected[0].id : "0";
+                Layout.loadAjaxContent('/user/indexAjax.do?' + params, $(selected[0]))
+            } else {
+                var params = "params=organizationId:";
+                params += selected ? selected[0].id : "0";
+                Layout.loadAjaxContent('/user/indexAjax.do?' + params, $(selected[0]))
+            }
+        })
     };
 
     /**

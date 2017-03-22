@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- Dao -->
-    <bean id="userDao" class="com.ywb.bigops.dao.impl.UserDaoImpl"/>
+    <bean id="userDao" class="com.ywb.bigops.dao.user.impl.UserDaoImpl"/>
+    <bean id="organizationDao" class="com.ywb.bigops.dao.organization.impl.OrganizationDaoImpl"/>
 
 </beans>

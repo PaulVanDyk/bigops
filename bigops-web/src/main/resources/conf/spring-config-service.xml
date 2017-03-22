@@ -6,5 +6,6 @@
 
     <!-- Service -->
     <bean id="userService" class="com.ywb.bigops.service.user.impl.UserServiceImpl"/>
+    <bean id="organizationService" class="com.ywb.bigops.service.organization.impl.OrganizationServiceImpl"/>
 
 </beans>

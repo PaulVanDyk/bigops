@@ -12,6 +12,7 @@
         <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="gender" property="gender" jdbcType="INTEGER"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="organizationId" property="organizationId" jdbcType="INTEGER"/>
         <result column="employId" property="employId" jdbcType="INTEGER"/>
         <result column="im1" property="im1" jdbcType="VARCHAR"/>
         <result column="im2" property="im2" jdbcType="VARCHAR"/>
@@ -26,7 +27,7 @@
 
     <!-- 全局列名 -->
     <sql id="Base_Column_List">
-        uid, email, password, realname, title, tel, mobile, gender, age, employId, im1, im2, description,
+        uid, email, password, realname, title, tel, mobile, gender, age, organizationId, employId, im1, im2, description,
         expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status
     </sql>
 
@@ -60,6 +61,9 @@
             </if>
             <if test="age != null">
                 and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="organizationId != null">
+                and organizationId = #{organizationId,jdbcType=INTEGER}
             </if>
             <if test="employId != null">
                 and employId = #{employId,jdbcType=INTEGER}
@@ -127,6 +131,9 @@
                     <if test="condition.age != null">
                         and age = #{condition.age,jdbcType=INTEGER}
                     </if>
+                    <if test="condition.organizationId != null">
+                        and organizationId = #{condition.organizationId,jdbcType=INTEGER}
+                    </if>
                     <if test="condition.employId != null">
                         and employId = #{condition.employId,jdbcType=INTEGER}
                     </if>
@@ -185,6 +192,9 @@
                     </if>
                     <if test="age != null">
                         and age = #{age,jdbcType=INTEGER}
+                    </if>
+                    <if test="organizationId != null">
+                        and organizationId = #{organizationId,jdbcType=INTEGER}
                     </if>
                     <if test="employId != null">
                         and employId = #{employId,jdbcType=INTEGER}
@@ -247,6 +257,9 @@
             <if test="age != null">
                 age = #{age,jdbcType=INTEGER},
             </if>
+            <if test="organizationId != null">
+                organizationId = #{organizationId,jdbcType=INTEGER},
+            </if>
             <if test="employId != null">
                 employId = #{employId,jdbcType=INTEGER},
             </if>
@@ -307,6 +320,9 @@
                 <if test="user.age != null">
                     age = #{user.age,jdbcType=INTEGER},
                 </if>
+                <if test="user.organizationId != null">
+                    organizationId = #{user.organizationId,jdbcType=INTEGER},
+                </if>
                 <if test="user.employId != null">
                     employId = #{user.employId,jdbcType=INTEGER},
                 </if>
@@ -351,6 +367,7 @@
             mobile = #{mobile,jdbcType=VARCHAR},
             gender = #{gender,jdbcType=INTEGER},
             age = #{age,jdbcType=INTEGER},
+            organizationId = #{organizationId,jdbcType=INTEGER},
             employId = #{employId,jdbcType=INTEGER},
             im1 = #{im1,jdbcType=VARCHAR},
             im2 = #{im2,jdbcType=VARCHAR},
@@ -375,6 +392,7 @@
                 mobile = #{user.mobile,jdbcType=VARCHAR},
                 gender = #{user.gender,jdbcType=INTEGER},
                 age = #{user.age,jdbcType=INTEGER},
+                organizationId = #{user.organizationId,jdbcType=INTEGER},
                 employId = #{user.employId,jdbcType=INTEGER},
                 im1 = #{user.im1,jdbcType=VARCHAR},
                 im2 = #{user.im2,jdbcType=VARCHAR},
@@ -391,11 +409,11 @@
 
     <!-- 创建用户 -->
     <insert id="insertUser" parameterType="com.ywb.bigops.domain.user.UserDomain">
-        insert into sso_user (email, password, realname, title, tel, mobile, gender, age, employId, im1, im2,
+        insert into sso_user (email, password, realname, title, tel, mobile, gender, age, organizationId, employId, im1, im2,
         description, expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status)
         values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
         #{title,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
-        #{age,jdbcType=INTEGER}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
         #{description,jdbcType=VARCHAR}, #{expires,jdbcType=TIMESTAMP}, #{pwdLastSetTime,jdbcType=TIMESTAMP},
         #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginIp,jdbcType=INTEGER},
         #{lastLoginIp,jdbcType=INTEGER})

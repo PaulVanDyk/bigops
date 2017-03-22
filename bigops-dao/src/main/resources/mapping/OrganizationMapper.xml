@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywb.bigops.dao.mapper.OrganizationMapper">
+    <!-- 默认返回对象映射 -->
+    <resultMap id="BaseResultMap" type="com.ywb.bigops.domain.organization.OrganizationDomain">
+        <id column="oid" property="oid" jdbcType="INTEGER"/>
+        <result column="oname" property="oname" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 全局列名 -->
+    <sql id="Base_Column_List">
+        oid, oname, pid, status
+    </sql>
+
+    <!-- 对象查询条件拼装 -->
+    <sql id="where_Cond">
+        <where>
+            1 = 1
+            <if test="oid != null">
+                and oid = #{oid,jdbcType=INTEGER}
+            </if>
+            <if test="oname != null">
+                and oname = #{oname,jdbcType=VARCHAR}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null">
+                and createTime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and updateTime = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+    <!-- 封装查询条件拼装 -->
+    <sql id="where_CondKey">
+        <where>
+            1 = 1
+            <choose>
+                <when test="condition != null">
+
+                    <if test="condition.oid != null">
+                        and oid = #{condition.oid,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.oname != null">
+                        and oname = #{condition.oname,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.pid != null">
+                        and pid = #{condition.pid,jdbcType=INTEGER}
+                    </if>
+                    <if test="condition.createTime != null">
+                        and craeteTime = #{condition.createTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="condition.updateTime != null">
+                        and updateTime = #{condition.updateTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="condition.status != null">
+                        and status = #{condition.status,jdbcType=INTEGER}
+                    </if>
+                </when>
+                <otherwise>
+                    <if test="oid != null">
+                        and oid = #{oid,jdbcType=INTEGER}
+                    </if>
+                    <if test="oname != null">
+                        and oname = #{oname,jdbcType=VARCHAR}
+                    </if>
+                    <if test="pid != null">
+                        and pid = #{pid,jdbcType=INTEGER}
+                    </if>
+                    <if test="createTime != null">
+                        and createTime = #{createTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="updateTime != null">
+                        and updateTime = #{updateTime,jdbcType=TIMESTAMP}
+                    </if>
+                    <if test="status != null">
+                        and status = #{status,jdbcType=INTEGER}
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    <!-- 对象更新拼装 -->
+    <sql id="set_Organization">
+        <set>
+            <if test="oname != null">
+                oname = #{oname,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                updateTime = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER}
+            </if>
+        </set>
+    </sql>
+    <!-- 封装更新拼装 -->
+    <sql id="set_OrganizationKey">
+        <set>
+            <if test="organization != null">
+                <if test="organization.oname != null">
+                    oname = #{organization.oname,jdbcType=VARCHAR},
+                </if>
+                <if test="organization.pid != null">
+                    pid = #{organization.pid,jdbcType=INTEGER},
+                </if>
+                <if test="organization.createTime != null">
+                    craeteTime = #{organization.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="organization.updateTime != null">
+                    updateTime = #{organization.updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="organization.status != null">
+                    status = #{organization.status,jdbcType=INTEGER}
+                </if>
+            </if>
+        </set>
+    </sql>
+    <!-- 对象覆盖更新拼装 -->
+    <sql id="set_OrganizationWithForce">
+        <set>
+            oname = #{oname,jdbcType=VARCHAR},
+            pid = #{pid,jdbcType=INTEGER},
+            craeteTime = #{createTime,jdbcType=TIMESTAMP},
+            updateTime = #{updateTime,jdbcType=TIMESTAMP},
+            status = #{status,jdbcType=INTEGER}
+        </set>
+    </sql>
+    <!-- 封装覆盖更新拼装 -->
+    <sql id="set_OrganizationKeyWithForce">
+        <set>
+            <if test="organization != null">
+                oname = #{organization.oname,jdbcType=VARCHAR},
+                pid = #{organization.pid,jdbcType=INTEGER},
+                craeteTime = #{organization.createTime,jdbcType=TIMESTAMP},
+                updateTime = #{organization.updateTime,jdbcType=TIMESTAMP},
+                status = #{organization.status,jdbcType=INTEGER}
+            </if>
+        </set>
+    </sql>
+
+    <!-- 创建用户 -->
+    <insert id="insertOrganization" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
+        insert into sso_organization (oname, pid, createTime, updateTime, status)
+        values (#{oname,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    </insert>
+
+    <!-- 通过ID查询用户 -->
+    <select id="findOrganizationById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sso_organization
+        where oid = #{oid,jdbcType=INTEGER}
+    </select>
+    <!-- 通过分页条件查询用户列表 -->
+    <select id="findOrganizationListByConditionWithPage" resultMap="BaseResultMap"
+            parameterType="com.ywb.bigops.domain.organization.OrganizationCondition">
+        select
+        <include refid="Base_Column_List"/>
+        from sso_organization
+        <include refid="where_Cond"/>
+        <if test="sortField != null and sortDesc != null">
+            ORDER BY ${sortField} ${sortDesc}
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}
+        </if>
+    </select>
+    <!-- 通过条件查询用户数量 -->
+    <select id="findOrganizationCountByCondition" resultType="java.lang.Integer"
+            parameterType="com.ywb.bigops.domain.organization.OrganizationCondition">
+        select count(*)
+        from sso_organization
+        <include refid="where_Cond"/>
+    </select>
+
+    <!-- 通过ID更新用户信息 -->
+    <update id="updateOrganizationById" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
+        update sso_organization
+        <include refid="set_Organization"/>
+        where oid = #{oid,jdbcType=INTEGER}
+    </update>
+    <!-- 通过ID覆盖更新用户信息 -->
+    <update id="updateOrganizationByIdWithForce" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
+        update sso_organization
+        <include refid="set_OrganizationWithForce"/>
+        where oid = #{oid,jdbcType=INTEGER}
+    </update>
+    <!-- 通过Ids更新用户信息 -->
+    <update id="updateOrganizationByIds" parameterType="java.util.Map">
+        update sso_organization
+        <include refid="set_OrganizationKey"/>
+        where oid IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!-- 通过Ids更新用户信息 -->
+    <update id="updateOrganizationByIdsWithForce" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
+        update sso_organization
+        <include refid="set_OrganizationKeyWithForce"/>
+        where oid IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!-- 通过条件更新用户信息 -->
+    <update id="updateOrganizationByCondition" parameterType="java.util.Map">
+        update sso_organization
+        <include refid="set_OrganizationKey"/>
+        <include refid="where_CondKey"/>
+    </update>
+    <!-- 通过条件覆盖更新用户信息 -->
+    <update id="updateOrganizationByConditionWithForce" parameterType="java.util.Map">
+        update sso_organization
+        <include refid="set_OrganizationKeyWithForce"/>
+        <include refid="where_CondKey"/>
+    </update>
+
+    <!-- 通过ID删除用户 -->
+    <delete id="deleteOrganizationById" parameterType="java.lang.Long">
+        delete from sso_organization
+        where oid = #{oid,jdbcType=INTEGER}
+    </delete>
+    <!-- 通过Ids删除用户 -->
+    <delete id="deleteOrganizationByIds">
+        delete from sso_organization
+        where oid IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
