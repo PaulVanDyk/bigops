@@ -17,6 +17,8 @@ public class OrganizationCondition extends BaseCondition {
     private Integer oid;
     private String oname;
     private Integer pid;
+    private String type;
+    private Integer order;
     private Date createTime;
     private Date updateTime;
     private Integer status;
@@ -43,6 +45,22 @@ public class OrganizationCondition extends BaseCondition {
 
     public void setPid(Integer pid) {
         this.pid = pid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public Date getCreateTime() {

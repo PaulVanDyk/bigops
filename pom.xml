@@ -35,7 +35,6 @@
             <properties>
                 <log.level>DEBUG</log.level>
                 <log.path>/usr/local/logs/bigops</log.path>
-
             </properties>
         </profile>
         <profile>

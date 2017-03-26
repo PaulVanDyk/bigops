@@ -13,7 +13,7 @@
 
     <!-- 全局列名 -->
     <sql id="Base_Column_List">
-        oid, oname, pid, status
+        oid, oname, pid, type, `order`, createTime, updateTime, status
     </sql>
 
     <!-- 对象查询条件拼装 -->
@@ -29,8 +29,14 @@
             <if test="pid != null">
                 and pid = #{pid,jdbcType=INTEGER}
             </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
             <if test="createTime != null">
                 and createTime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="order != null">
+                and `order` = #{order,jdbcType=INTEGER}
             </if>
             <if test="updateTime != null">
                 and updateTime = #{updateTime,jdbcType=TIMESTAMP}
@@ -56,6 +62,12 @@
                     <if test="condition.pid != null">
                         and pid = #{condition.pid,jdbcType=INTEGER}
                     </if>
+                    <if test="condition.type != null">
+                        and type = #{condition.type,jdbcType=VARCHAR}
+                    </if>
+                    <if test="condition.order != null">
+                        and `order` = #{condition.order,jdbcType=INTEGER}
+                    </if>
                     <if test="condition.createTime != null">
                         and craeteTime = #{condition.createTime,jdbcType=TIMESTAMP}
                     </if>
@@ -75,6 +87,12 @@
                     </if>
                     <if test="pid != null">
                         and pid = #{pid,jdbcType=INTEGER}
+                    </if>
+                    <if test="type != null">
+                        and type = #{type,jdbcType=VARCHAR}
+                    </if>
+                    <if test="order != null">
+                        and `order` = #{order,jdbcType=INTEGER}
                     </if>
                     <if test="createTime != null">
                         and createTime = #{createTime,jdbcType=TIMESTAMP}
@@ -98,6 +116,12 @@
             <if test="pid != null">
                 pid = #{pid,jdbcType=INTEGER},
             </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=INTEGER},
+            </if>
             <if test="createTime != null">
                 createTime = #{createTime,jdbcType=TIMESTAMP},
             </if>
@@ -119,6 +143,12 @@
                 <if test="organization.pid != null">
                     pid = #{organization.pid,jdbcType=INTEGER},
                 </if>
+                <if test="organization.type != null">
+                    type = #{organization.type,jdbcType=VARCHAR},
+                </if>
+                <if test="organization.order != null">
+                    `order` = #{organization.order,jdbcType=INTEGER},
+                </if>
                 <if test="organization.createTime != null">
                     craeteTime = #{organization.createTime,jdbcType=TIMESTAMP},
                 </if>
@@ -136,6 +166,8 @@
         <set>
             oname = #{oname,jdbcType=VARCHAR},
             pid = #{pid,jdbcType=INTEGER},
+            type = #{type,jdbcType=VARCHAR},
+            `order` = #{order,jdbcType=VARCHAR},
             craeteTime = #{createTime,jdbcType=TIMESTAMP},
             updateTime = #{updateTime,jdbcType=TIMESTAMP},
             status = #{status,jdbcType=INTEGER}
@@ -147,6 +179,8 @@
             <if test="organization != null">
                 oname = #{organization.oname,jdbcType=VARCHAR},
                 pid = #{organization.pid,jdbcType=INTEGER},
+                type = #{organization.type,jdbcType=VARCHAR},
+                `order` = #{organization.order,jdbcType=INTEGER},
                 craeteTime = #{organization.createTime,jdbcType=TIMESTAMP},
                 updateTime = #{organization.updateTime,jdbcType=TIMESTAMP},
                 status = #{organization.status,jdbcType=INTEGER}
@@ -154,20 +188,20 @@
         </set>
     </sql>
 
-    <!-- 创建用户 -->
+    <!-- 创建部门 -->
     <insert id="insertOrganization" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
-        insert into sso_organization (oname, pid, createTime, updateTime, status)
-        values (#{oname,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+        insert into sso_organization (oname, pid,  type, `order`, createTime,updateTime, status)
+        values (#{oname,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
     </insert>
 
-    <!-- 通过ID查询用户 -->
+    <!-- 通过ID查询部门 -->
     <select id="findOrganizationById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from sso_organization
         where oid = #{oid,jdbcType=INTEGER}
     </select>
-    <!-- 通过分页条件查询用户列表 -->
+    <!-- 通过分页条件查询部门列表 -->
     <select id="findOrganizationListByConditionWithPage" resultMap="BaseResultMap"
             parameterType="com.ywb.bigops.domain.organization.OrganizationCondition">
         select
@@ -175,13 +209,13 @@
         from sso_organization
         <include refid="where_Cond"/>
         <if test="sortField != null and sortDesc != null">
-            ORDER BY ${sortField} ${sortDesc}
+            ORDER BY `${sortField}` ${sortDesc}
         </if>
         <if test="pageIndex != null and pageSize != null">
             limit #{pageIndex, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}
         </if>
     </select>
-    <!-- 通过条件查询用户数量 -->
+    <!-- 通过条件查询部门数量 -->
     <select id="findOrganizationCountByCondition" resultType="java.lang.Integer"
             parameterType="com.ywb.bigops.domain.organization.OrganizationCondition">
         select count(*)
@@ -189,19 +223,19 @@
         <include refid="where_Cond"/>
     </select>
 
-    <!-- 通过ID更新用户信息 -->
+    <!-- 通过ID更新部门信息 -->
     <update id="updateOrganizationById" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
         update sso_organization
         <include refid="set_Organization"/>
         where oid = #{oid,jdbcType=INTEGER}
     </update>
-    <!-- 通过ID覆盖更新用户信息 -->
+    <!-- 通过ID覆盖更新部门信息 -->
     <update id="updateOrganizationByIdWithForce" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
         update sso_organization
         <include refid="set_OrganizationWithForce"/>
         where oid = #{oid,jdbcType=INTEGER}
     </update>
-    <!-- 通过Ids更新用户信息 -->
+    <!-- 通过Ids更新部门信息 -->
     <update id="updateOrganizationByIds" parameterType="java.util.Map">
         update sso_organization
         <include refid="set_OrganizationKey"/>
@@ -210,7 +244,7 @@
             #{item}
         </foreach>
     </update>
-    <!-- 通过Ids更新用户信息 -->
+    <!-- 通过Ids更新部门信息 -->
     <update id="updateOrganizationByIdsWithForce" parameterType="com.ywb.bigops.domain.organization.OrganizationDomain">
         update sso_organization
         <include refid="set_OrganizationKeyWithForce"/>
@@ -219,25 +253,25 @@
             #{item}
         </foreach>
     </update>
-    <!-- 通过条件更新用户信息 -->
+    <!-- 通过条件更新部门信息 -->
     <update id="updateOrganizationByCondition" parameterType="java.util.Map">
         update sso_organization
         <include refid="set_OrganizationKey"/>
         <include refid="where_CondKey"/>
     </update>
-    <!-- 通过条件覆盖更新用户信息 -->
+    <!-- 通过条件覆盖更新部门信息 -->
     <update id="updateOrganizationByConditionWithForce" parameterType="java.util.Map">
         update sso_organization
         <include refid="set_OrganizationKeyWithForce"/>
         <include refid="where_CondKey"/>
     </update>
 
-    <!-- 通过ID删除用户 -->
+    <!-- 通过ID删除部门 -->
     <delete id="deleteOrganizationById" parameterType="java.lang.Long">
         delete from sso_organization
         where oid = #{oid,jdbcType=INTEGER}
     </delete>
-    <!-- 通过Ids删除用户 -->
+    <!-- 通过Ids删除部门 -->
     <delete id="deleteOrganizationByIds">
         delete from sso_organization
         where oid IN

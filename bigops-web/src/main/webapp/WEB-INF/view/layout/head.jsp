@@ -29,7 +29,11 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="<%=contextPath%>/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/assets/global/plugins/jstree/dist/themes/default-dark/style.min.css" rel="stylesheet" type="text/css" />
+<link href="<%=contextPath%>/assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="<%=contextPath%>/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />

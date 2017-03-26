@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class DigestUtils {
 
+    public static String DEFAULT_PWD = "123456";
     public static String SALT = "BIGOPS";
     public static String SEPARATOR = "@";
 

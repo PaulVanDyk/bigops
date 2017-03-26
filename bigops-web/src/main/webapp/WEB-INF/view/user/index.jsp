@@ -44,22 +44,22 @@
                             <li>
                                 <span style="font-size: 24px;">运维帮科技</span>
                             </li>
-                            <li class="mgl10">
-                                <button type="button" class="btn btn-xs blue">修改名字</button>
-                            </li>
-                            <li class="mgl10">
-                                <button type="button" class="btn btn-xs blue">新建子部门</button>
-                            </li>
-                            <li class="mgl10">
-                                <button type="button" class="btn btn-xs red">删除</button>
-                            </li>
-                            <li class="mgl10">
-                                <button type="button" class="btn btn-xs blue">新增成员</button>
-                            </li>
+                            <%--<li class="mgl10">--%>
+                                <%--<button type="button" class="btn btn-xs blue editName">修改名称</button>--%>
+                            <%--</li>--%>
+                            <%--<li class="mgl10">--%>
+                                <%--<button type="button" class="btn btn-xs blue newOrg">新建子部门</button>--%>
+                            <%--</li>--%>
+                            <%--<li class="mgl10">--%>
+                                <%--<button type="button" class="btn btn-xs red del">删除</button>--%>
+                            <%--</li>--%>
+                            <%--<li class="mgl10">--%>
+                                <%--<button type="button" class="btn btn-xs blue newUser">新增成员</button>--%>
+                            <%--</li>--%>
                         </ul>
-                        <div class="page-toolbar">
+                        <%--<div class="page-toolbar">--%>
                             <%--<button type="button" class="btn btn-xs default">修改名字</button>--%>
-                        </div>
+                        <%--</div>--%>
                     </div>
                     <!-- END PAGE BAR -->
                     <div class="page-title">
@@ -115,12 +115,8 @@
                                         Portlet Ribbon
                                     </div>
                                     <div class="portlet-title">
-                                        <div class="caption">
-                                            <span class="bold">Quick Info</span>
-                                        </div>
                                     </div>
                                     <div class="portlet-body">
-                                        <h3>This is direct-content-body</h3>
                                     </div>
                                 </div>
                             </div>
@@ -139,6 +135,10 @@
         <!-- BEGIN FOOTER -->
         <%@include file="../layout/page-footer.jsp"%>
         <!-- END FOOTER -->
+
+
+        <!-- BEGIN DIALOG -->
+        <!-- END DIALOG -->
     </div>
     <!-- BEGIN QUICK NAV -->
     <%@include file="../layout/page-quick-nav.jsp"%>
@@ -146,7 +146,7 @@
     <%@include file="../layout/foot.jsp"%>
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="<%=contextPath%>/assets/global/plugins/icheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=contextPath%>/assets/pages/scripts/temp/user.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/assets/pages/scripts/user.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 </body>
 </html>

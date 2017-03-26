@@ -20,7 +20,7 @@
         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
-            data-slide-speed="200" style="padding-top: 20px">
+            data-slide-speed="200" style="padding-top: 20px; padding-bottom: 50px;">
             <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
             <li class="sidebar-toggler-wrapper hide">
                 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -41,7 +41,7 @@
                     <div class="input-group">
                         <input type="text" id="txt_regex" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                                            <a href="javascript:;" class="btn" onclick="filterTree()">
+                                            <a href="javascript:;" class="btn" onclick="Tree.filterTree()">
                                                 <i class="icon-magnifier"></i>
                                             </a>
                                         </span>
@@ -56,161 +56,165 @@
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->
-        <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
 </div>
 <!-- END SIDEBAR -->
+<!-- BEGIN DIALOG -->
+<div id="modal_org" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">添加部门</h4>
+    </div>
+    <div class="modal-body">
+        <form id="org-form" class="form-horizontal" action="/organization/addOrg.do" method="post">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">部门名称：</label>
+                    <div class="col-md-8">
+                        <input type="hidden" id="org_ids" name="ids">
+                        <input type="hidden" id="pid" name="pid">
+                        <input type="text" id="oname" name="oname" class="form-control" placeholder="请输入部门名称">
+                        <%--<span class="help-block"> A block of help text. </span>--%>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+        <button type="button" class="btn green" data-type="add">添加</button>
+    </div>
+</div>
+<div id="modal_user" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">添加成员</h4>
+    </div>
+    <div class="modal-body">
+        <form id="user-form" class="form-horizontal" role="form" action="/user/addUser.do" method="post">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">姓名:</label>
+                            <div class="col-md-8">
+                                <input type="hidden" id="user_ids" name="ids">
+                                <input type="text" class="form-control" id="input_realname" name="realname">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">性别:</label>
+                            <div class="col-md-8">
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio">
+                                        <input type="radio" name="gender" id="input_gender_1" value="1" checked> 男
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio">
+                                        <input type="radio" name="gender" id="input_gender_0" value="0"> 女
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">年龄:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_age" name="age">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">用户类型:</label>
+                            <div class="col-md-8">
+                                <div class="mt-radio-inline">
+                                    <label class="mt-radio">
+                                        <input type="radio" name="isAdmin" id="input_idAdmin_0" value="0" checked> 普通用户
+                                        <span></span>
+                                    </label>
+                                    <label class="mt-radio">
+                                        <input type="radio" name="isAdmin" id="input_idAdmin_1" value="1"> 管理员
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hide">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">所属机构:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_organizationId" name="organizationId">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-12">--%>
+                        <%--<div class="form-group">--%>
+                            <%--<label class="control-label col-md-3">到期时间:</label>--%>
+                            <%--<div class="col-md-8">--%>
+                                <%--<input type="text" class="form-control" id="input_expires" name="expires">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <h3 class="form-section">联系方式</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">电话:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_mobile" name="mobile">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">邮箱:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_email" name="email">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IM:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_im1" name="im1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+        <button type="button" class="btn green" data-type="add">添加</button>
+    </div>
+</div>
+<!-- END DIALOG -->
+<script src="<%=contextPath%>/assets/pages/scripts/tree.js" type="text/javascript"></script>
 <SCRIPT type="text/javascript">
-    var setting = {
-        data: {
-            simpleData: {
-                enable: true
-            }
-        },
-        view: {
-            showLine: false
-        }
-    };
-
-    var zNodes = [
-        {id: 1, pId: 0, name: "父节点1 - 展开", url: "../login/login.jsp", open: true},
-        {
-            id: 11,
-            pId: 1,
-            name: "父节点11 - 折叠",
-            click: "Layout.loadAjaxContent('/user/findUserList.do?start=1&length=10')"
-        },
-        {id: 111, pId: 11, name: "叶子节点111", click: "Layout.loadAjaxContent('/user/indexAjax.do?employId=1',$(this))"},
-        {id: 112, pId: 11, name: "叶子节点112"},
-        {id: 113, pId: 11, name: "叶子节点113"},
-        {id: 114, pId: 11, name: "叶子节点114"},
-        {id: 12, pId: 1, name: "父节点12 - 折叠"},
-        {id: 121, pId: 12, name: "叶子节点121"},
-        {id: 122, pId: 12, name: "叶子节点122"},
-        {id: 123, pId: 12, name: "叶子节点123"},
-        {id: 124, pId: 12, name: "叶子节点124"},
-        {id: 13, pId: 1, name: "父节点13 - 没有子节点", isParent: true},
-        {id: 131, pId: 13, name: "叶子节点131"},
-        {id: 132, pId: 13, name: "叶子节点132"},
-        {id: 133, pId: 13, name: "叶子节点133"},
-        {id: 134, pId: 13, name: "叶子节点134"},
-        {id: 2, pId: 0, name: "父节点2 - 折叠"},
-        {id: 21, pId: 2, name: "父节点21 - 展开", open: true},
-        {id: 211, pId: 21, name: "叶子节点211"},
-        {id: 212, pId: 21, name: "叶子节点212"},
-        {id: 213, pId: 21, name: "叶子节点213"},
-        {id: 214, pId: 21, name: "叶子节点214"},
-        {id: 22, pId: 2, name: "父节点22 - 折叠"},
-        {id: 221, pId: 22, name: "叶子节点221"},
-        {id: 222, pId: 22, name: "叶子节点222"},
-        {id: 223, pId: 22, name: "叶子节点223"},
-        {id: 224, pId: 22, name: "叶子节点224"},
-        {id: 23, pId: 2, name: "父节点23 - 折叠"},
-        {id: 231, pId: 23, name: "叶子节点231"},
-        {id: 232, pId: 23, name: "叶子节点232"},
-        {id: 233, pId: 23, name: "叶子节点233"},
-        {id: 234, pId: 23, name: "叶子节点234"},
-        {id: 3, pId: 0, name: "父节点3 - 没有子节点", isParent: true},
-        {id: 31, pId: 3, name: "叶子节点31"},
-        {id: 311, pId: 31, name: "叶子节点311"},
-        {id: 312, pId: 31, name: "叶子节点312"},
-        {id: 313, pId: 31, name: "叶子节点313"},
-        {id: 314, pId: 31, name: "叶子节点314"},
-        {id: 32, pId: 3, name: "叶子节点32"},
-        {id: 321, pId: 32, name: "叶子节点321"},
-        {id: 322, pId: 32, name: "叶子节点322"},
-        {id: 323, pId: 32, name: "叶子节点323"},
-        {id: 324, pId: 32, name: "叶子节点324"},
-        {id: 33, pId: 3, name: "叶子节点33"},
-        {id: 331, pId: 33, name: "叶子节点331"},
-        {id: 332, pId: 33, name: "叶子节点332"},
-        {id: 333, pId: 33, name: "叶子节点333"},
-        {id: 334, pId: 33, name: "叶子节点334"},
-        {id: 34, pId: 3, name: "叶子节点34"},
-        {id: 341, pId: 34, name: "叶子节点341"},
-        {id: 342, pId: 34, name: "叶子节点342"},
-        {id: 343, pId: 34, name: "叶子节点343"},
-        {id: 344, pId: 34, name: "叶子节点344"},
-        {id: 4, pId: 0, name: "父节点4 - 没有子节点", isParent: true},
-        {id: 41, pId: 4, name: "叶子节点34", isParent: true}
-
-    ];
-
     $(document).ready(function () {
-        $("#tree_org").jstree({
-            "core": {
-                "themes": {
-                    "name": "default-dark",
-                    "responsive": false
-                },
-                // so that create works
-                "check_callback": true,
-                'data': {
-                    "url": "<%=contextPath%>/organization/lazyList.do?lazy",
-                    "data": function (node) {
-                        return {"pid": node.id === "#" ? "0" : node.id};
-                    }
-                }
-            },
-            "types": {
-                "default": {
-                    "icon": "fa fa-folder icon-state-warning icon-lg"
-                },
-                "file": {
-                    "icon": "fa fa-file icon-state-default icon-lg"
-                },
-                "male": {
-                    "icon": "fa fa-male icon-state-success icon-lg"
-                },
-                "female": {
-                    "icon": "fa fa-female icon-state-danger icon-lg"
-                }
-            },
-            "state": {"key": "demo2"},
-            "contextmenu": {
-                "items": {
-                    "create": {
-                        "label": "添加",
-                        "_disabled": function (data) {
-                            var inst = $.jstree.reference(data.reference);
-                            obj = inst.get_node(data.reference);
-//                            console.info(obj.li_attr.type=    ="leaf");
-                            return obj.li_attr.type == "leaf";
-                        },
-                        "action": function (data) {
-                            var inst = $.jstree.reference(data.reference),
-                                obj = inst.get_node(data.reference);
-                            inst.create_node(obj, {}, "last", function (new_node) {
-                                setTimeout(function () {
-                                    inst.edit(new_node);
-                                }, 0);
-                            })
-                        }
-                    }
-                }
-            },
-            "plugins": ["wholerow", "search", "massload", "contextmenu", "dnd", "state", "types"]
-        });
-        $("#tree_org").on("activate_node.jstree", function (e, data) {
-            var type = data.node.type;
-            if (!type || type == "default") {
-                var id = data.node.id;
-                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + id, $(data.node))
-            }
-        });
-//        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
-
-    function filterTree() {
-        var regex = $("#txt_regex").val().trim();
-        var to = false;
-        if (to) {
-            clearTimeout(to);
-        }
-        to = setTimeout(function () {
-            var v = $("#txt_regex").val().trim();
-            $('#tree_org').jstree(true).search(v);
-        }, 250);
-    }
 </SCRIPT>

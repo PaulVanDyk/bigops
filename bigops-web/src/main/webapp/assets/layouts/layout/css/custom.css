@@ -67,16 +67,23 @@
 }
 
 .direct > .direct-content > .portlet {
-    border:2px solid #d3d7e9;
+    border: 2px solid #d3d7e9;
     box-shadow: 0px 5px 20px 0px #888888;
     background: #fbfbfb;
     height: 100%;
-    margin:inherit;
+    margin: inherit;
 }
 
-.direct > .direct-content > .portlet > .portlet-title,.direct > .direct-content > .portlet > .portlet-body {
-    margin:inherit;
-    padding:15px;
+.direct > .direct-content > .portlet > .portlet-bottom {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    padding: 15px;
+}
+
+.direct > .direct-content > .portlet > .portlet-title, .direct > .direct-content > .portlet > .portlet-body {
+    margin: inherit;
+    padding: 15px;
 }
 
 .direct.direct-open > .direct-content {

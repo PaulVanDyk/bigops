@@ -22,7 +22,14 @@
 <script src="<%=contextPath%>/assets/global/scripts/datatable.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/jquery.form.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="<%=contextPath%>/assets/global/scripts/app.min.js" type="text/javascript"></script>

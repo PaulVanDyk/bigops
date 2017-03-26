@@ -236,9 +236,6 @@
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
             <if test="realname != null">
                 realname = #{realname,jdbcType=VARCHAR},
             </if>
@@ -299,9 +296,6 @@
                 <if test="user.email != null">
                     email = #{user.email,jdbcType=VARCHAR},
                 </if>
-                <if test="user.password != null">
-                    password = #{user.password,jdbcType=VARCHAR},
-                </if>
                 <if test="user.realname != null">
                     realname = #{user.realname,jdbcType=VARCHAR},
                 </if>
@@ -360,7 +354,6 @@
     <sql id="set_UserWithForce">
         <set>
             email = #{email,jdbcType=VARCHAR},
-            password = #{password,jdbcType=VARCHAR},
             realname = #{realname,jdbcType=VARCHAR},
             title = #{title,jdbcType=VARCHAR},
             tel = #{tel,jdbcType=VARCHAR},
@@ -385,7 +378,6 @@
         <set>
             <if test="user != null">
                 email = #{user.email,jdbcType=VARCHAR},
-                password = #{user.password,jdbcType=VARCHAR},
                 realname = #{user.realname,jdbcType=VARCHAR},
                 title = #{user.title,jdbcType=VARCHAR},
                 tel = #{user.tel,jdbcType=VARCHAR},
@@ -415,8 +407,7 @@
         #{title,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
         #{age,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
         #{description,jdbcType=VARCHAR}, #{expires,jdbcType=TIMESTAMP}, #{pwdLastSetTime,jdbcType=TIMESTAMP},
-        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginIp,jdbcType=INTEGER},
-        #{lastLoginIp,jdbcType=INTEGER})
+        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{isAdmin,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
     </insert>
 
     <!-- 通过ID查询用户 -->

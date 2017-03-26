@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ywb.bigops.common.util.BigOpsException;
 import com.ywb.bigops.common.util.DigestUtils;
+import com.ywb.bigops.domain.organization.OrganizationCondition;
+import com.ywb.bigops.domain.organization.OrganizationDomain;
 import com.ywb.bigops.domain.user.UserCondition;
 import com.ywb.bigops.domain.user.UserDomain;
+import com.ywb.bigops.service.organization.OrganizationService;
 import com.ywb.bigops.service.user.UserService;
 import com.ywb.bigops.web.controller.BaseController;
 import com.ywb.bigops.web.controller.JsonData;
@@ -19,10 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * UserController
@@ -38,6 +38,8 @@ public class UserController extends BaseController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private OrganizationService organizationService;
 
     @RequestMapping("index")
     public ModelAndView index() {
@@ -89,22 +91,146 @@ public class UserController extends BaseController {
         return jsonData;
     }
 
-    @RequestMapping("/findUserList")
+    @RequestMapping("findUserList")
     @ResponseBody
-    public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond) {
+    public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond, boolean depth) {
         try {
-            cond.setPageIndex(pageInfo.getStart());
-            cond.setPageSize(pageInfo.getLength());
-            List<UserDomain> list = this.userService.findUserListByConditionWithPage(cond);
-            int count = this.userService.findUserCountByCondition(cond);
-            pageInfo.setData(list);
-            pageInfo.setRecordsTotal(count);
+            if (depth) {
+                cond.setPageIndex(0);
+                cond.setPageSize(Integer.MAX_VALUE);
+                List<UserDomain> list = new ArrayList<UserDomain>();
+                this.findUserListByOrganizationRecursive(list, cond);
+                int length = pageInfo.getStart() + pageInfo.getLength();
+                pageInfo.setData(list.subList(pageInfo.getStart(), length > list.size() ? list.size() : length));
+                pageInfo.setRecordsTotal(list.size());
+            } else {
+                cond.setPageIndex(pageInfo.getStart());
+                cond.setPageSize(pageInfo.getLength());
+                List<UserDomain> list = this.userService.findUserListByConditionWithPage(cond);
+                int count = this.userService.findUserCountByCondition(cond);
+                pageInfo.setData(list);
+                pageInfo.setRecordsTotal(count);
+            }
         } catch (BigOpsException e) {
             logger.error("findUserList pageInfo:" + JSONObject.toJSONString(pageInfo) + ", cond:" + JSONObject.toJSONString(cond), e);
         } catch (Exception ex) {
             logger.error("findUserList pageInfo:" + JSONObject.toJSONString(pageInfo) + ", cond:" + JSONObject.toJSONString(cond), ex);
         }
         return pageInfo;
+    }
+
+    private void findUserListByOrganizationRecursive(List<UserDomain> list, UserCondition condition) throws BigOpsException {
+        list.addAll(this.userService.findUserListByConditionWithPage(condition));
+        OrganizationCondition organizationCondition = new OrganizationCondition();
+        organizationCondition.setPid(condition.getOrganizationId());
+        organizationCondition.setPageIndex(0);
+        organizationCondition.setPageSize(Integer.MAX_VALUE);
+        List<OrganizationDomain> orgList = this.organizationService.findOrganizationListByConditionWithPage(organizationCondition);
+        for (OrganizationDomain domain : orgList) {
+            condition.setOrganizationId(domain.getOid());
+            findUserListByOrganizationRecursive(list, condition);
+        }
+    }
+
+
+    @RequestMapping("addUser")
+    @ResponseBody
+    public JsonData addUser(UserDomain domain) {
+        JsonData jsonData = new JsonData(JsonData.FAILED);
+        jsonData.setMethod("addUser");
+        try {
+            domain.setStatus(1);
+            String passwordDigest = DigestUtils.digest(domain.getEmail() + DigestUtils.SEPARATOR
+                    + DigestUtils.DEFAULT_PWD + DigestUtils.SEPARATOR + DigestUtils.SALT);
+            domain.setPassword(passwordDigest);
+            boolean bool = this.userService.insertUser(domain);
+            jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+        } catch (BigOpsException e) {
+            logger.error("addUser domain:" + JSONObject.toJSONString(domain), e);
+        }
+        return jsonData;
+
+    }
+
+    @RequestMapping("delUser")
+    @ResponseBody
+    public JsonData delUser(Integer[] ids) {
+        JsonData jsonData = new JsonData(JsonData.FAILED);
+        jsonData.setMethod("delUser");
+        try {
+            UserDomain domain = new UserDomain();
+            domain.setStatus(0);
+            boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
+            jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+        } catch (BigOpsException e) {
+            logger.error("delUser ids:" + ids, e);
+        }
+        return jsonData;
+    }
+
+    @RequestMapping("moveUser")
+    @ResponseBody
+    public JsonData moveUser(Integer[] ids, Integer oid) {
+        JsonData jsonData = new JsonData(JsonData.FAILED);
+        jsonData.setMethod("moveUser");
+        try {
+            UserDomain domain = new UserDomain();
+            domain.setOrganizationId(oid);
+            boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
+            jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+        } catch (BigOpsException e) {
+            logger.error("moveUser ids:" + ids + ", oid:" + oid, e);
+        }
+        return jsonData;
+    }
+
+    @RequestMapping("modifyUser")
+    @ResponseBody
+    public JsonData modifyUser(UserDomain domain, Integer[] ids) {
+        JsonData jsonData = new JsonData(JsonData.FAILED);
+        jsonData.setMethod("modifyUser");
+        try {
+            boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
+            jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+        } catch (BigOpsException e) {
+            logger.error("modifyUser domain:" + domain + ", ids:" + ids, e);
+        }
+        return jsonData;
+    }
+
+    @RequestMapping("findUserById")
+    @ResponseBody
+    public JsonData findUserById(Integer id) {
+        JsonData jsonData = new JsonData(JsonData.FAILED);
+        jsonData.setMethod("findUserById");
+        try {
+            UserDomain domain = this.userService.findUserById(id);
+            jsonData.setStatus(domain == null ? JsonData.FAILED : JsonData.SUCCESS);
+            jsonData.setData(domain);
+        } catch (BigOpsException e) {
+            logger.error("findUserById id:" + id, e);
+        }
+        return jsonData;
+    }
+
+    @RequestMapping("checkEmail")
+    @ResponseBody
+    public boolean checkEmail(String email) {
+        boolean bool;
+        try {
+            UserCondition condition = new UserCondition();
+            condition.setEmail(email);
+            UserDomain domain = this.userService.findUserByCondition(condition);
+            if (null != domain && domain.getEmail().equals(email)) {
+                bool = false;
+            } else {
+                bool = true;
+            }
+        } catch (BigOpsException e) {
+            bool = false;
+            logger.error("checkEmail email:" + email, e);
+        }
+        return bool;
     }
 
 }

@@ -15,9 +15,9 @@
         <div class="page-logo">
             <a href="index.html">
                 <img src="../assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> </a>
-            <div class="menu-toggler sidebar-toggler">
-                <span></span>
-            </div>
+            <%--<div class="menu-toggler sidebar-toggler">--%>
+                <%--<span></span>--%>
+            <%--</div>--%>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
