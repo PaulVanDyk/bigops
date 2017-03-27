@@ -21,7 +21,8 @@ public class UserDomain implements Serializable {
     private String mobile;
     private Integer gender;
     private Integer age;
-    private Integer organizationId;
+    private String organizationId;
+    private String organizationName;
     private String employId;
     private String im1;
     private String im2;
@@ -105,12 +106,20 @@ public class UserDomain implements Serializable {
         this.age = age;
     }
 
-    public Integer getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Integer organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     public String getEmployId() {

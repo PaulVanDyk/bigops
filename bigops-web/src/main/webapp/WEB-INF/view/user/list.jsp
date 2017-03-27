@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3">所属机构:</label>
                                     <div class="col-md-9">
-                                        <p class="form-control-static" id="view_organizationId"> Male </p>
+                                        <p class="form-control-static" id="view_organizationName"> Male </p>
                                     </div>
                                 </div>
                             </div>

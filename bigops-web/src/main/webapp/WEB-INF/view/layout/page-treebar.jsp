@@ -153,25 +153,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="row hide">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label col-md-3">所属机构:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="input_organizationId" name="organizationId">
+                                <input type="hidden" class="form-control" id="input_organizationId"
+                                       name="organizationId">
+                                <input type="text" class="form-control" id="input_organizationName"
+                                       name="organizationName">
                             </div>
                         </div>
                     </div>
                 </div>
                 <%--<div class="row">--%>
-                    <%--<div class="col-md-12">--%>
-                        <%--<div class="form-group">--%>
-                            <%--<label class="control-label col-md-3">到期时间:</label>--%>
-                            <%--<div class="col-md-8">--%>
-                                <%--<input type="text" class="form-control" id="input_expires" name="expires">--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
+                <%--<div class="col-md-12">--%>
+                <%--<div class="form-group">--%>
+                <%--<label class="control-label col-md-3">到期时间:</label>--%>
+                <%--<div class="col-md-8">--%>
+                <%--<input type="text" class="form-control" id="input_expires" name="expires">--%>
+                <%--</div>--%>
+                <%--</div>--%>
+                <%--</div>--%>
                 <%--</div>--%>
                 <h3 class="form-section">联系方式</h3>
                 <div class="row">
@@ -210,6 +213,19 @@
     <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
         <button type="button" class="btn green" data-type="add">添加</button>
+    </div>
+</div>
+<div id="modal_orgSelect" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">选择部门</h4>
+    </div>
+    <div class="modal-body bg-blue-chambray" style="height: 550px;">
+        <div id="tree_orgSelect" class="tree-demo bg-trans"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+        <button type="button" class="btn green">确定</button>
     </div>
 </div>
 <!-- END DIALOG -->

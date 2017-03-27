@@ -95,6 +95,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond, boolean depth) {
         try {
+            cond.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
             if (depth) {
                 cond.setPageIndex(0);
                 cond.setPageSize(Integer.MAX_VALUE);
@@ -122,12 +123,12 @@ public class UserController extends BaseController {
     private void findUserListByOrganizationRecursive(List<UserDomain> list, UserCondition condition) throws BigOpsException {
         list.addAll(this.userService.findUserListByConditionWithPage(condition));
         OrganizationCondition organizationCondition = new OrganizationCondition();
-        organizationCondition.setPid(condition.getOrganizationId());
+        organizationCondition.setPid(Integer.parseInt(condition.getOrganizationId()));
         organizationCondition.setPageIndex(0);
         organizationCondition.setPageSize(Integer.MAX_VALUE);
         List<OrganizationDomain> orgList = this.organizationService.findOrganizationListByConditionWithPage(organizationCondition);
         for (OrganizationDomain domain : orgList) {
-            condition.setOrganizationId(domain.getOid());
+            condition.setOrganizationId(String.valueOf(domain.getOid()));
             findUserListByOrganizationRecursive(list, condition);
         }
     }
@@ -175,7 +176,15 @@ public class UserController extends BaseController {
         jsonData.setMethod("moveUser");
         try {
             UserDomain domain = new UserDomain();
-            domain.setOrganizationId(oid);
+
+            OrganizationDomain orgDomain = this.organizationService.findOrganizationById(oid);
+//            UserDomain userDomain = this.userService.findUserById(id);
+
+//            String oids = "," + userDomain.getOrganizationId() + ",";
+//            String onames = "," + userDomain.getOrganizationName() + ",";
+//            domain.setOrganizationId(oids.replace()String.valueOf(oid));
+            domain.setOrganizationId(String.valueOf(oid));
+            domain.setOrganizationName(orgDomain.getOname());
             boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
             jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
         } catch (BigOpsException e) {
@@ -215,20 +224,21 @@ public class UserController extends BaseController {
 
     @RequestMapping("checkEmail")
     @ResponseBody
-    public boolean checkEmail(String email) {
+    public boolean checkEmail(String email, Integer id) {
         boolean bool;
         try {
             UserCondition condition = new UserCondition();
+
             condition.setEmail(email);
             UserDomain domain = this.userService.findUserByCondition(condition);
-            if (null != domain && domain.getEmail().equals(email)) {
+            if (null != domain && domain.getEmail().equals(email) && domain.getUid() != id) {
                 bool = false;
             } else {
                 bool = true;
             }
         } catch (BigOpsException e) {
             bool = false;
-            logger.error("checkEmail email:" + email, e);
+            logger.error("checkEmail email:" + email + ", id:" + id, e);
         }
         return bool;
     }

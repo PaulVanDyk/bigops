@@ -31,7 +31,27 @@ var Tree = function () {
             });
             return returnVal;
         }, "部门名称不能重复");
+        //自定义邮箱名称校验方法
+        jQuery.validator.addMethod("checkUserEmail", function (value, element) {
+            var returnVal = false;
+            var uid = $("#modal_user .modal-body #user_ids").val();
 
+            $.ajax({
+                type: "POST",
+                url: "/user/checkEmail.do",
+                data: {
+                    email: value,
+                    id: uid ? uid : 0
+                },
+                async: false,
+                success: function (data) {
+                    if (data) {
+                        returnVal = true;
+                    }
+                }
+            });
+            return returnVal;
+        }, "该邮箱已注册，请更换其他邮箱");
 
         initTree();
     };
@@ -97,6 +117,191 @@ var Tree = function () {
             }
             $("#modal_user").modal('show');
         });
+
+        //选择机构
+        $("#modal_user #input_organizationName").on("click", function () {
+            $("#modal_orgSelect #tree_orgSelect").jstree({
+                "core": {
+                    "themes": {
+                        "name": "default-dark",
+                        "responsive": false
+                    },
+                    // so that create works
+                    "check_callback": true,
+                    'data': {
+                        "url": "/organization/lazyOrgList.do?lazy",
+                        "data": function (node) {
+                            return {"pid": node.id === "#" ? "0" : node.id};
+                        }
+                    }
+                },
+                "checkbox": {
+                    "keep_selected_style": false,
+                    "three_state": false,
+                    "cascade": "",
+                    "tie_selection": false
+                },
+                "types": {
+                    "#": {
+                        "icon": "fa fa-folder icon-state-info icon-lg",
+                        "max_children": 1,
+                        "max_depth": 4,
+                        "valid_children": ["default", "static"]
+                    },
+                    "static": {
+                        "icon": "fa fa-folder icon-state-danger icon-lg",
+                        "valid_children": ["static-default"]
+                    },
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg",
+                        "valid_children": ["default", "male", "female"]
+                    },
+                    "static-default": {
+                        "icon": "fa fa-folder icon-state-danger icon-lg",
+                        "valid_children": ["static-default", "static-male", "static-female"]
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-default icon-lg"
+                    },
+                    "static-male": {
+                        "icon": "fa fa-male icon-state-success icon-lg",
+                        "valid_children": []
+                    },
+                    "static-female": {
+                        "icon": "fa fa-female icon-state-danger icon-lg",
+                        "valid_children": []
+                    },
+                    "male": {
+                        "icon": "fa fa-male icon-state-success icon-lg",
+                        "valid_children": []
+                    },
+                    "female": {
+                        "icon": "fa fa-female icon-state-danger icon-lg",
+                        "valid_children": []
+                    }
+                },
+                "contextmenu": {
+                    "items": {
+                        "createOrg": {
+                            "label": "添加部门",
+                            "_ishide": function (data) {
+                                var inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                return obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
+                            },
+                            "action": function (data) {
+                                Tree.resetOrgForm();
+                                var selected = $('#tree_org').jstree().get_selected(true);
+                                $("#modal_org #pid").val(selected[0].id);
+                                $("#modal_org .modal-header .modal-title").text("添加部门");
+                                $("#modal_org .modal-footer .btn.green").attr("data-type", "add").text("添加");
+                                $("#modal_org").modal('show');
+                            }
+                        },
+                        "createUser": {
+                            "label": "添加用户",
+                            "_ishide": function (data) {
+                                var inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                return obj.type.indexOf("static") != -1 || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
+                            },
+                            "action": function (data) {
+                                Tree.resetUserForm();
+                                var selected = $('#tree_org').jstree().get_selected(true);
+                                $("#modal_user #input_organizationId").val(selected[0].id);
+                                $("#modal_user .modal-header .modal-title").text("添加用户");
+                                $("#modal_user .modal-footer .btn.green").attr("data-type", "add").text("添加");
+                                $("#modal_user").modal('show');
+                            }
+                        },
+                        "editOrg": {
+                            "label": "修改部门",
+                            "_ishide": function (data) {
+                                var inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                return obj.type == "static" || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1 || obj.type == "#";
+                            },
+                            "action": function (data) {
+                                Tree.resetOrgForm();
+                                var selected = $('#tree_org').jstree().get_selected(true);
+                                $("#modal_org #org_ids").val(selected[0].id);
+                                $("#modal_org #oname").val(selected[0].text);
+                                $("#modal_org .modal-header .modal-title").text("编辑部门");
+                                $("#modal_org .modal-footer .btn.green").attr("data-type", "edit").text("保存");
+                                $("#modal_org").modal('show');
+                            }
+                        },
+                        "editUser": {
+                            "label": "修改用户",
+                            "_ishide": function (data) {
+                                var inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                return obj.type.indexOf("static") != -1 || obj.type == "default" || obj.type == "#";
+                            },
+                            "action": function (data) {
+                                Tree.resetUserForm();
+                                var selected = $('#tree_org').jstree().get_selected(true);
+                                $("#modal_user #user_ids").val(selected[0].id.split("_")[1]);
+                                $("#modal_user #input_email").attr("readonly", "readonly");
+                                $("#modal_user .modal-header .modal-title").text("编辑用户");
+                                $("#modal_user .modal-footer .btn.green").attr("data-type", "edit").text("保存");
+                                $("#modal_user").modal('show');
+                            }
+                        },
+                        "delete": {
+                            "label": "删除",
+                            "_ishide": function (data) {
+                                var inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                return obj.type == "static" || obj.type == "static-male" || obj.type == "static-female" || obj.type == "#";
+                            },
+                            "action": function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                swal({
+                                        title: "确认删除?",
+                                        text: obj.text,
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        cancelButtonText: "取消",
+                                        confirmButtonClass: "btn-danger",
+                                        confirmButtonText: "确认",
+                                        closeOnConfirm: true
+                                    },
+                                    function () {
+                                        if (obj.type.indexOf("default") != -1) {
+                                            delOrg(obj.id);
+                                        } else if (obj.type == "male" || obj.type == "female") {
+                                            delUser(obj.id.split("_")[1]);
+                                        }
+                                    });
+                            }
+                        }
+                    }
+                },
+                "plugins": ["checkbox", "types"]
+            });
+            $("#modal_orgSelect #tree_orgSelect").on("check_node.jstree", function (node, selected, e) {
+                $.each(selected.node.parents, function () {
+                    selected.instance.uncheck_node(this);
+                });
+                unCheckChildRecursive(selected.node, selected.instance);
+            });
+            $("#modal_orgSelect").modal("show");
+        });
+
+        //选择机构回调
+        $("#modal_orgSelect .modal-footer .btn.green").on("click", function () {
+            var items = $("#tree_orgSelect").jstree(true).get_checked(true);
+            var oids = '', onames = '';
+            $.each(items, function () {
+                oids += "," + this.id;
+                onames += "," + this.text;
+            });
+            $("#modal_user #input_organizationId").val(oids.substr(1));
+            $("#modal_user #input_organizationName").val(onames.substr(1));
+            $("#modal_orgSelect").modal("hide");
+        });
     }
 
     var initTree = function () {
@@ -124,14 +329,26 @@ var Tree = function () {
                 },
                 "static": {
                     "icon": "fa fa-folder icon-state-danger icon-lg",
-                    "valid_children": []
+                    "valid_children": ["static-default"]
                 },
                 "default": {
                     "icon": "fa fa-folder icon-state-warning icon-lg",
                     "valid_children": ["default", "male", "female"]
                 },
+                "static-default": {
+                    "icon": "fa fa-folder icon-state-danger icon-lg",
+                    "valid_children": ["static-default", "static-male", "static-female"]
+                },
                 "file": {
                     "icon": "fa fa-file icon-state-default icon-lg"
+                },
+                "static-male": {
+                    "icon": "fa fa-male icon-state-success icon-lg",
+                    "valid_children": []
+                },
+                "static-female": {
+                    "icon": "fa fa-female icon-state-danger icon-lg",
+                    "valid_children": []
                 },
                 "male": {
                     "icon": "fa fa-male icon-state-success icon-lg",
@@ -142,7 +359,7 @@ var Tree = function () {
                     "valid_children": []
                 }
             },
-            "state": {"key": "demo2"},
+            "state": {"key": "org1"},
             "contextmenu": {
                 "items": {
                     "createOrg": {
@@ -150,7 +367,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "male" || obj.type == "female";
+                            return obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
                         },
                         "action": function (data) {
                             Tree.resetOrgForm();
@@ -166,7 +383,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "male" || obj.type == "female";
+                            return obj.type.indexOf("static") != -1 || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
                         },
                         "action": function (data) {
                             Tree.resetUserForm();
@@ -182,7 +399,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "male" || obj.type == "female" || obj.type == "#";
+                            return obj.type == "static" || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1 || obj.type == "#";
                         },
                         "action": function (data) {
                             Tree.resetOrgForm();
@@ -199,16 +416,12 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "default" || obj.type == "#";
+                            return obj.type.indexOf("static") != -1 || obj.type == "default" || obj.type == "#";
                         },
                         "action": function (data) {
                             Tree.resetUserForm();
                             var selected = $('#tree_org').jstree().get_selected(true);
-                            $("#modal_user #user_ids").val(selected[0].id.split("_")[1]);
-                            $("#modal_user #input_email").attr("readonly", "readonly");
-                            $("#modal_user .modal-header .modal-title").text("编辑用户");
-                            $("#modal_user .modal-footer .btn.green").attr("data-type", "edit").text("保存");
-                            $("#modal_user").modal('show');
+                            initEdit(selected[0].id.split("_")[1]);
                         }
                     },
                     "delete": {
@@ -216,7 +429,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "#";
+                            return obj.type == "static" || obj.type == "static-male" || obj.type == "static-female" || obj.type == "#";
                         },
                         "action": function (data) {
                             var inst = $.jstree.reference(data.reference),
@@ -232,7 +445,7 @@ var Tree = function () {
                                     closeOnConfirm: true
                                 },
                                 function () {
-                                    if (obj.type == "default") {
+                                    if (obj.type.indexOf("default") != -1) {
                                         delOrg(obj.id);
                                     } else if (obj.type == "male" || obj.type == "female") {
                                         delUser(obj.id.split("_")[1]);
@@ -251,16 +464,16 @@ var Tree = function () {
             var inst = $.jstree.reference(e.target),
                 node = inst.get_node(e.target);
             var type = node.type;
-            if (!type || type == "default" || type == "static") {
-                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node))
-            } else if (type == "male" || type == "female") {
-                Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node))
+            if (type && (type.indexOf("male") != -1 || type.indexOf("female") != -1)) {
+                Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node));
+            } else {
+                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node));
             }
         }).on("move_node.jstree", function (e, data) {
             App.blockUI({"target": $("#tree_org"), "animate": true, "iconOnly": true});
-            if (data.node.type == "default") {
+            if (data.node.type.indexOf("default") != -1) {
                 moveOrg(data.node.id, data.parent);
-            } else if (data.node.type == "male" || data.node.type == "female") {
+            } else if (data.node.type.indexOf("male") != -1 || data.node.type.indexOf("female") != -1) {
                 var id = data.node.id.split("_")[1];
                 moveUser(id, data.parent);
             }
@@ -387,6 +600,9 @@ var Tree = function () {
                     required: true,
                     maxlength: 24
                 },
+                organizationName: {
+                    required: true
+                },
                 age: {
                     required: true,
                     digits: true,
@@ -401,13 +617,16 @@ var Tree = function () {
                 email: {
                     required: true,
                     email: true,
-                    remote: "/user/checkEmail.do"
+                    checkUserEmail: true
                 }
             },
             messages: {
                 realname: {
                     required: "请填写姓名",
                     maxlength: "姓名最长为24字符"
+                },
+                organizationName: {
+                    required: "请选择部门"
                 },
                 age: {
                     required: "请填写年龄",
@@ -460,6 +679,37 @@ var Tree = function () {
         addUserForm.attr("action", "/user/addUser.do").submit();
     };
 
+    var initEdit = function (uid) {
+        $("#modal_user .modal-header .modal-title").text("编辑用户");
+        $("#modal_user .modal-footer .btn.green").attr("data-type", "edit").text("保存");
+        App.blockUI();
+        $.post("/user/findUserById.do", {
+            id: uid
+        }, function (data) {
+            if (data.status == "success") {
+                $("#modal_user .modal-body #user_ids").val(data.data.uid);
+                $("#modal_user .modal-body #input_realname").val(data.data.realname);
+                $("#modal_user .modal-body #input_desc").val(data.data.description);
+                $("#modal_user .modal-body #input_gender_" + data.data.gender).attr("checked", "checked");
+                $("#modal_user .modal-body #input_age").val(data.data.age);
+                $("#modal_user .modal-body #input_isAdmin_" + data.data.isAdmin).attr("checked", "checked");
+                $("#modal_user .modal-body #input_organizationId").val(data.data.organizationId);
+                $("#modal_user .modal-body #input_organizationName").val(data.data.organizationName);
+                $("#modal_user .modal-body #input_expires").val(data.data.expires);
+                $("#modal_user .modal-body #input_mobile").val(data.data.mobile);
+                $("#modal_user .modal-body #input_email").val(data.data.email);
+                $("#modal_user .modal-body #input_im1").val(data.data.im1);
+                $("#modal_user").modal('show');
+            } else {
+                toastr.error("获取用户信息失败");
+            }
+            App.unblockUI();
+        }).error(function (e) {
+            App.unblockUI();
+            toastr.error(e);
+        });
+    };
+
     var editUser = function () {
         var addUserForm = $("#user-form");
         _userValidate = addUserForm.validate({
@@ -472,6 +722,9 @@ var Tree = function () {
                     required: true,
                     maxlength: 24
                 },
+                organizationName: {
+                    required: true
+                },
                 age: {
                     required: true,
                     digits: true,
@@ -482,12 +735,20 @@ var Tree = function () {
                     required: true,
                     digits: true,
                     rangelength: [11, 11]
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    checkUserEmail: true
                 }
             },
             messages: {
                 realname: {
                     required: "请填写姓名",
                     maxlength: "姓名最长为24字符"
+                },
+                organizationName: {
+                    required: "请选择部门"
                 },
                 age: {
                     required: "请填写年龄",
@@ -499,6 +760,11 @@ var Tree = function () {
                     required: "请填写手机号",
                     digits: "手机号必须为数字",
                     rangelength: "手机号长度必须为{0}位"
+                },
+                email: {
+                    required: "请填写邮箱",
+                    email: "请输入正确的邮箱格式",
+                    remote: "该邮箱已被注册"
                 }
             },
             errorPlacement: function (error, element) { // render error placement for each input type
@@ -614,6 +880,12 @@ var Tree = function () {
         });
     };
 
+    var unCheckChildRecursive = function (obj, instance) {
+        $.each(obj.children, function () {
+            instance.uncheck_node(this);
+            unCheckChildRecursive(instance.get_node(this), instance);
+        });
+    };
     // public functions
     return {
 

@@ -2,6 +2,8 @@ package com.ywb.bigops.domain.user;
 
 import com.ywb.bigops.domain.BaseCondition;
 
+import java.util.List;
+
 /**
  * UserCondition.
  *
@@ -21,7 +23,8 @@ public class UserCondition extends BaseCondition {
     private String mobile;
     private Integer gender;
     private Integer age;
-    private Integer organizationId;
+    private String organizationId;
+    private String organizationName;
     private String employId;
     private String im1;
     private String im2;
@@ -32,6 +35,8 @@ public class UserCondition extends BaseCondition {
     private String lastLoginIp;
     private Integer isAdmin;
     private Integer status;
+    private List<Integer> statusList;
+    private String mutilText;
 
     public Integer getUid() {
         return uid;
@@ -105,12 +110,20 @@ public class UserCondition extends BaseCondition {
         this.age = age;
     }
 
-    public Integer getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Integer organizationId) {
+    public void setOrganizationId(String organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     public String getEmployId() {
@@ -191,5 +204,21 @@ public class UserCondition extends BaseCondition {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Integer> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<Integer> statusList) {
+        this.statusList = statusList;
+    }
+
+    public String getMutilText() {
+        return mutilText;
+    }
+
+    public void setMutilText(String mutilText) {
+        this.mutilText = mutilText;
     }
 }

@@ -65,25 +65,58 @@ public class OrganizationController extends BaseController {
             }
 
             UserCondition userCondition = new UserCondition();
-            userCondition.setOrganizationId(pid);
+            userCondition.setOrganizationId(String.valueOf(pid));
             userCondition.setPageIndex(0);
             userCondition.setPageSize(Integer.MAX_VALUE);
             userCondition.setSortField("realname");
             userCondition.setSortDesc("ASC");
-            userCondition.setStatus(1);
+            userCondition.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
             List<UserDomain> userList = this.userService.findUserListByConditionWithPage(userCondition);
             if (null != userList) {
                 for (UserDomain domain : userList) {
                     node = new HashMap();
-                    node.put("id", "u_" + domain.getUid());
+                    node.put("id", pid + "_" + domain.getUid());
                     node.put("text", domain.getRealname());
-                    node.put("parent", domain.getOrganizationId());
-                    node.put("type", domain.getGender() == 0 ? "female" : "male");
+                    node.put("parent", pid);
+                    String prefixStr = domain.getStatus() == -1 ? "static-" : "";
+                    node.put("type", domain.getGender() == 0 ? prefixStr + "female" : prefixStr + "male");
                     list.add(node);
                 }
             }
         } catch (BigOpsException e) {
             logger.error("lazyList pid:" + pid, e);
+        }
+        return list;
+    }
+
+    @RequestMapping("lazyOrgList")
+    @ResponseBody
+    public List lazyOrgList(Integer pid) {
+        List<Map> list = new ArrayList<Map>();
+        try {
+            Map node;
+            OrganizationCondition condition = new OrganizationCondition();
+            condition.setPid(StringUtils.isEmpty(pid) ? 0 : pid);
+            condition.setSortField("order");
+            condition.setSortDesc("asc");
+            condition.setPageIndex(0);
+            condition.setPageSize(Integer.MAX_VALUE);
+            condition.setStatus(1);
+            List<OrganizationDomain> organizationList = this.organizationService.findOrganizationListByConditionWithPage(condition);
+            if (null != organizationList) {
+                for (OrganizationDomain domain : organizationList) {
+                    node = new HashMap();
+                    node.put("id", domain.getOid());
+                    node.put("text", domain.getOname());
+                    node.put("parent", domain.getPid() == 0 ? "#" : domain.getPid());
+                    node.put("type", domain.getType());
+                    node.put("order", domain.getOrder());
+                    node.put("children", true);
+                    list.add(node);
+                }
+            }
+        } catch (BigOpsException e) {
+            logger.error("lazyOrgList pid:" + pid, e);
         }
         return list;
     }
@@ -94,8 +127,13 @@ public class OrganizationController extends BaseController {
         JsonData jsonData = new JsonData(JsonData.FAILED);
         jsonData.setMethod("addOrg");
         try {
+            OrganizationDomain parentDomain = this.organizationService.findOrganizationById(domain.getPid());
             domain.setCreateTime(new Date());
-            domain.setType("default");
+            if (parentDomain.getType().equals("static")) {
+                domain.setType("static-default");
+            } else {
+                domain.setType("default");
+            }
             domain.setOrder(10);
             domain.setStatus(1);
             boolean bool = this.organizationService.insertOrganization(domain);

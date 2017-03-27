@@ -46,9 +46,9 @@ var User = function () {
         $("#search_form").on("click", ":button", function () {
             var text = $("#txtSearch").val().replace("/[ ,　]/g", "");
             if (text) {
-                gridUser.setAjaxParam("realname", text);
+                gridUser.setAjaxParam("mutilText", text);
             } else {
-                gridUser.setAjaxParam("realname", undefined);
+                gridUser.setAjaxParam("mutilText", undefined);
             }
             gridUser.getDataTable().ajax.reload(null, true);
         });
@@ -116,11 +116,6 @@ var User = function () {
                         }
                     }
                 ]
-            },
-            onDataLoad: function (a, b) {
-                console.info(a);
-                console.info(b);
-                App.initComponents();
             }
         });
     };
@@ -137,7 +132,7 @@ var User = function () {
                 $(".direct-content .portlet-body #view_gender").text(data.data.gender ? "男" : "女");
                 $(".direct-content .portlet-body #view_age").text(data.data.age);
                 $(".direct-content .portlet-body #view_isAdmin").text(data.data.isAdmin ? "管理员" : "普通用户");
-                $(".direct-content .portlet-body #view_organizationId").text(data.data.organizationId);
+                $(".direct-content .portlet-body #view_organizationName").text(data.data.organizationName);
                 $(".direct-content .portlet-body #view_expires").text(data.data.expires);
                 $(".direct-content .portlet-body #view_mobile").text(data.data.mobile);
                 $(".direct-content .portlet-body #view_email").text(data.data.email);
@@ -150,7 +145,7 @@ var User = function () {
                 $(".direct-content .portlet-body #view_gender").text("");
                 $(".direct-content .portlet-body #view_age").text("");
                 $(".direct-content .portlet-body #view_isAdmin").text("");
-                $(".direct-content .portlet-body #view_organizationId").text("");
+                $(".direct-content .portlet-body #view_organizationName").text("");
                 $(".direct-content .portlet-body #view_expires").text("");
                 $(".direct-content .portlet-body #view_mobile").text("");
                 $(".direct-content .portlet-body #view_email").text("");
@@ -179,6 +174,7 @@ var User = function () {
                 $("#modal_user .modal-body #input_age").val(data.data.age);
                 $("#modal_user .modal-body #input_isAdmin_"+data.data.isAdmin).attr("checked","checked");
                 $("#modal_user .modal-body #input_organizationId").val(data.data.organizationId);
+                $("#modal_user .modal-body #input_organizationName").val(data.data.organizationName);
                 $("#modal_user .modal-body #input_expires").val(data.data.expires);
                 $("#modal_user .modal-body #input_mobile").val(data.data.mobile);
                 $("#modal_user .modal-body #input_email").val(data.data.email);
@@ -192,7 +188,7 @@ var User = function () {
             App.unblockUI();
             toastr.error(e);
         });
-    }
+    };
 
     var _initParam = function (params) {
         if (params) {
