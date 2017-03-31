@@ -323,21 +323,19 @@ var Tree = function () {
             "types": {
                 "#": {
                     "icon": "fa fa-folder icon-state-info icon-lg",
-                    "max_children": 1,
-                    "max_depth": 4,
-                    "valid_children": ["default", "static"]
+                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
                 },
                 "static": {
                     "icon": "fa fa-folder icon-state-danger icon-lg",
-                    "valid_children": ["static-default"]
+                    "valid_children": ["default", "static-default"]
                 },
                 "default": {
                     "icon": "fa fa-folder icon-state-warning icon-lg",
-                    "valid_children": ["default", "male", "female"]
+                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
                 },
                 "static-default": {
-                    "icon": "fa fa-folder icon-state-danger icon-lg",
-                    "valid_children": ["static-default", "static-male", "static-female"]
+                    "icon": "fa fa-folder icon-state-warning icon-lg",
+                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
                 },
                 "file": {
                     "icon": "fa fa-file icon-state-default icon-lg"
@@ -416,7 +414,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type.indexOf("static") != -1 || obj.type == "default" || obj.type == "#";
+                            return obj.type == "static" || obj.type == "default" || obj.type == "#";
                         },
                         "action": function (data) {
                             Tree.resetUserForm();
@@ -429,7 +427,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "static-male" || obj.type == "static-female" || obj.type == "#";
+                            return obj.type == "static" || obj.type == "#";
                         },
                         "action": function (data) {
                             var inst = $.jstree.reference(data.reference),
@@ -817,7 +815,7 @@ var Tree = function () {
                 toastr.success("机构删除成功");
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error("机构删除失败");
+                toastr.error("机构删除失败,ex:" + data.errorMessage);
             }
             App.unblockUI();
         }).error(function (e) {

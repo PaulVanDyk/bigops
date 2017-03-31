@@ -152,10 +152,24 @@ public class OrganizationController extends BaseController {
         jsonData.setMethod("delOrg");
         try {
             OrganizationDomain domain = new OrganizationDomain();
-            domain.setUpdateTime(new Date());
-            domain.setStatus(0);
-            boolean bool = this.organizationService.updateOrganizationByIds(domain, Arrays.asList(ids));
-            jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+            OrganizationCondition condition = new OrganizationCondition();
+            condition.setPid(ids[0]);
+            OrganizationDomain entity = this.organizationService.findOrganizationByCondition(condition);
+            if (entity != null) {
+                jsonData.setErrorMessage("无法删除非空节点");
+            } else {
+                UserCondition userCondition = new UserCondition();
+                userCondition.setOrganizationId(String.valueOf(ids[0]));
+                UserDomain userDomain = this.userService.findUserByCondition(userCondition);
+                if (userDomain != null) {
+                    jsonData.setErrorMessage("无法删除非空节点");
+                } else {
+                    domain.setUpdateTime(new Date());
+                    domain.setStatus(0);
+                    boolean bool = this.organizationService.updateOrganizationByIds(domain, Arrays.asList(ids));
+                    jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
+                }
+            }
         } catch (BigOpsException e) {
             logger.error("delOrg ids:" + ids, e);
         }
