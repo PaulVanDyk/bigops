@@ -209,7 +209,7 @@
         from sso_organization
         <include refid="where_Cond"/>
         <if test="sortField != null and sortDesc != null">
-            ORDER BY `${sortField}` ${sortDesc}
+            ORDER BY ${sortField} ${sortDesc}
         </if>
         <if test="pageIndex != null and pageSize != null">
             limit #{pageIndex, jdbcType=INTEGER} , #{pageSize, jdbcType=INTEGER}

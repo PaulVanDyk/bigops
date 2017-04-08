@@ -150,12 +150,12 @@ var User = function () {
                 $(".direct-content .portlet-body #view_mobile").text("");
                 $(".direct-content .portlet-body #view_email").text("");
                 $(".direct-content .portlet-body #view_im").text("");
-                toastr.error("获取用户信息失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e);
+            toastr.error(e, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
         });
     }
 
@@ -170,9 +170,9 @@ var User = function () {
                 $("#modal_user .modal-body #user_ids").val(data.data.uid);
                 $("#modal_user .modal-body #input_realname").val(data.data.realname);
                 $("#modal_user .modal-body #input_desc").val(data.data.description);
-                $("#modal_user .modal-body #input_gender_"+data.data.gender).attr("checked","checked");
+                $("#modal_user .modal-body #input_gender_" + data.data.gender).attr("checked", "checked");
                 $("#modal_user .modal-body #input_age").val(data.data.age);
-                $("#modal_user .modal-body #input_isAdmin_"+data.data.isAdmin).attr("checked","checked");
+                $("#modal_user .modal-body #input_isAdmin_" + data.data.isAdmin).attr("checked", "checked");
                 $("#modal_user .modal-body #input_organizationId").val(data.data.organizationId);
                 $("#modal_user .modal-body #input_organizationName").val(data.data.organizationName);
                 $("#modal_user .modal-body #input_expires").val(data.data.expires);
@@ -181,12 +181,12 @@ var User = function () {
                 $("#modal_user .modal-body #input_im1").val(data.data.im1);
                 $("#modal_user").modal('show');
             } else {
-                toastr.error("获取用户信息失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e);
+            toastr.error(e, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
         });
     };
 

@@ -61,6 +61,24 @@ var Tree = function () {
      * @private
      */
     var _bindHandle = function () {
+        //展开
+        $("#treebar_expand").on("click", function () {
+            var selected = $('#tree_org').jstree().get_selected(true);
+            if (selected && selected.length > 0 && selected[0].type.indexOf("male") == -1 && selected[0].type.indexOf("female") == -1) {
+                $("#tree_org").jstree(true).open_all(selected[0]);
+            } else {
+                toastr.warning("请选择部门", undefined, {"positionClass": "toast-top-full-width"});
+            }
+        });
+        //折叠
+        $("#treebar_folding").on("click", function () {
+            var selected = $('#tree_org').jstree().get_selected(true);
+            if (selected && selected.length > 0 && selected[0].type.indexOf("male") == -1 && selected[0].type.indexOf("female") == -1) {
+                $("#tree_org").jstree(true).close_all(selected[0]);
+            } else {
+                toastr.warning("请选择部门", undefined, {"positionClass": "toast-top-full-width"});
+            }
+        });
         //添加部门回调
         $("#modal_org .modal-footer .btn.green").on('click', function () {
             if ($(this).attr("data-type") == "add") {
@@ -77,7 +95,6 @@ var Tree = function () {
                 editUser();
             }
         });
-
         //修改名称
         $(".page-bar").on('click', '.editName', function () {
             var selected = $('#tree_org').jstree().get_selected(true)[0];
@@ -92,7 +109,7 @@ var Tree = function () {
             var selected = $('#tree_org').jstree().get_selected(true)[0];
 
             if (selected.type == "male" || selected.type == "female") {
-                toastr.warning("请选择部门进行添加操作");
+                toastr.warning("请选择部门进行添加操作", undefined, {"positionClass": "toast-top-full-width"});
                 return;
             }
             $("#modal_org").modal('show');
@@ -112,7 +129,7 @@ var Tree = function () {
         $(".page-bar").on('click', '.newUser', function () {
             var selected = $('#tree_org').jstree().get_selected(true)[0];
             if (selected.type == "male" || selected.type == "female") {
-                toastr.warning("请选择部门进行添加操作");
+                toastr.warning("请选择部门进行添加操作", undefined, {"positionClass": "toast-top-full-width"});
                 return;
             }
             $("#modal_user").modal('show');
@@ -120,173 +137,69 @@ var Tree = function () {
 
         //选择机构
         $("#modal_user #input_organizationName").on("click", function () {
-            $("#modal_orgSelect #tree_orgSelect").jstree({
-                "core": {
-                    "themes": {
-                        "name": "default-dark",
-                        "responsive": false
-                    },
-                    // so that create works
-                    "check_callback": true,
-                    'data': {
-                        "url": "/organization/lazyOrgList.do?lazy",
-                        "data": function (node) {
-                            return {"pid": node.id === "#" ? "0" : node.id};
+            if ($("#modal_orgSelect #tree_orgSelect").jstree(true)) {
+                var oids = $("#modal_user #input_organizationId").val();
+                oids = oids ? oids.split(",") : [];
+                $("#modal_orgSelect #tree_orgSelect").jstree().select_node(oids);
+                $("#modal_orgSelect #tree_orgSelect").jstree().deselect_all();
+                $("#modal_orgSelect #tree_orgSelect").jstree().check_node(oids);
+            } else {
+                $("#modal_orgSelect #tree_orgSelect").jstree({
+                    "core": {
+                        "themes": {
+                            "name": "default-dark",
+                            "responsive": false
+                        },
+                        // so that create works
+                        "check_callback": true,
+                        'data': {
+                            "url": "/organization/lazyOrgList.do"
                         }
-                    }
-                },
-                "checkbox": {
-                    "keep_selected_style": false,
-                    "three_state": false,
-                    "cascade": "",
-                    "tie_selection": false
-                },
-                "types": {
-                    "#": {
-                        "icon": "fa fa-folder icon-state-info icon-lg",
-                        "max_children": 1,
-                        "max_depth": 4,
-                        "valid_children": ["default", "static"]
                     },
-                    "static": {
-                        "icon": "fa fa-folder icon-state-danger icon-lg",
-                        "valid_children": ["static-default"]
+                    "checkbox": {
+                        "keep_selected_style": false,
+                        "three_state": false,
+                        "cascade": "",
+                        "tie_selection": false
                     },
-                    "default": {
-                        "icon": "fa fa-folder icon-state-warning icon-lg",
-                        "valid_children": ["default", "male", "female"]
-                    },
-                    "static-default": {
-                        "icon": "fa fa-folder icon-state-danger icon-lg",
-                        "valid_children": ["static-default", "static-male", "static-female"]
-                    },
-                    "file": {
-                        "icon": "fa fa-file icon-state-default icon-lg"
-                    },
-                    "static-male": {
-                        "icon": "fa fa-male icon-state-success icon-lg",
-                        "valid_children": []
-                    },
-                    "static-female": {
-                        "icon": "fa fa-female icon-state-danger icon-lg",
-                        "valid_children": []
-                    },
-                    "male": {
-                        "icon": "fa fa-male icon-state-success icon-lg",
-                        "valid_children": []
-                    },
-                    "female": {
-                        "icon": "fa fa-female icon-state-danger icon-lg",
-                        "valid_children": []
-                    }
-                },
-                "contextmenu": {
-                    "items": {
-                        "createOrg": {
-                            "label": "添加部门",
-                            "_ishide": function (data) {
-                                var inst = $.jstree.reference(data.reference);
-                                obj = inst.get_node(data.reference);
-                                return obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
-                            },
-                            "action": function (data) {
-                                Tree.resetOrgForm();
-                                var selected = $('#tree_org').jstree().get_selected(true);
-                                $("#modal_org #pid").val(selected[0].id);
-                                $("#modal_org .modal-header .modal-title").text("添加部门");
-                                $("#modal_org .modal-footer .btn.green").attr("data-type", "add").text("添加");
-                                $("#modal_org").modal('show');
-                            }
+                    "types": {
+                        "#": {
+                            "icon": "fa fa-folder icon-state-info icon-lg",
+                            "valid_children": []
                         },
-                        "createUser": {
-                            "label": "添加用户",
-                            "_ishide": function (data) {
-                                var inst = $.jstree.reference(data.reference);
-                                obj = inst.get_node(data.reference);
-                                return obj.type.indexOf("static") != -1 || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
-                            },
-                            "action": function (data) {
-                                Tree.resetUserForm();
-                                var selected = $('#tree_org').jstree().get_selected(true);
-                                $("#modal_user #input_organizationId").val(selected[0].id);
-                                $("#modal_user .modal-header .modal-title").text("添加用户");
-                                $("#modal_user .modal-footer .btn.green").attr("data-type", "add").text("添加");
-                                $("#modal_user").modal('show');
-                            }
+                        "root": {
+                            "icon": "fa fa-folder icon-state-info icon-lg",
+                            "valid_children": ["default", "static-default"]
                         },
-                        "editOrg": {
-                            "label": "修改部门",
-                            "_ishide": function (data) {
-                                var inst = $.jstree.reference(data.reference);
-                                obj = inst.get_node(data.reference);
-                                return obj.type == "static" || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1 || obj.type == "#";
-                            },
-                            "action": function (data) {
-                                Tree.resetOrgForm();
-                                var selected = $('#tree_org').jstree().get_selected(true);
-                                $("#modal_org #org_ids").val(selected[0].id);
-                                $("#modal_org #oname").val(selected[0].text);
-                                $("#modal_org .modal-header .modal-title").text("编辑部门");
-                                $("#modal_org .modal-footer .btn.green").attr("data-type", "edit").text("保存");
-                                $("#modal_org").modal('show');
-                            }
+                        "static": {
+                            "icon": "fa fa-folder icon-state-danger icon-lg",
+                            "valid_children": ["default", "static-default"]
                         },
-                        "editUser": {
-                            "label": "修改用户",
-                            "_ishide": function (data) {
-                                var inst = $.jstree.reference(data.reference);
-                                obj = inst.get_node(data.reference);
-                                return obj.type.indexOf("static") != -1 || obj.type == "default" || obj.type == "#";
-                            },
-                            "action": function (data) {
-                                Tree.resetUserForm();
-                                var selected = $('#tree_org').jstree().get_selected(true);
-                                $("#modal_user #user_ids").val(selected[0].id.split("_")[1]);
-                                $("#modal_user #input_email").attr("readonly", "readonly");
-                                $("#modal_user .modal-header .modal-title").text("编辑用户");
-                                $("#modal_user .modal-footer .btn.green").attr("data-type", "edit").text("保存");
-                                $("#modal_user").modal('show');
-                            }
+                        "default": {
+                            "icon": "fa fa-folder icon-state-warning icon-lg",
+                            "valid_children": ["default", "static-default"]
                         },
-                        "delete": {
-                            "label": "删除",
-                            "_ishide": function (data) {
-                                var inst = $.jstree.reference(data.reference);
-                                obj = inst.get_node(data.reference);
-                                return obj.type == "static" || obj.type == "static-male" || obj.type == "static-female" || obj.type == "#";
-                            },
-                            "action": function (data) {
-                                var inst = $.jstree.reference(data.reference),
-                                    obj = inst.get_node(data.reference);
-                                swal({
-                                        title: "确认删除?",
-                                        text: obj.text,
-                                        type: "warning",
-                                        showCancelButton: true,
-                                        cancelButtonText: "取消",
-                                        confirmButtonClass: "btn-danger",
-                                        confirmButtonText: "确认",
-                                        closeOnConfirm: true
-                                    },
-                                    function () {
-                                        if (obj.type.indexOf("default") != -1) {
-                                            delOrg(obj.id);
-                                        } else if (obj.type == "male" || obj.type == "female") {
-                                            delUser(obj.id.split("_")[1]);
-                                        }
-                                    });
-                            }
+                        "static-default": {
+                            "icon": "fa fa-folder icon-state-warning icon-lg",
+                            "valid_children": ["default", "static-default"]
                         }
-                    }
-                },
-                "plugins": ["checkbox", "types"]
-            });
-            $("#modal_orgSelect #tree_orgSelect").on("check_node.jstree", function (node, selected, e) {
-                $.each(selected.node.parents, function () {
-                    selected.instance.uncheck_node(this);
+                    },
+                    "plugins": ["checkbox", "types"]
                 });
-                unCheckChildRecursive(selected.node, selected.instance);
-            });
+                $("#modal_orgSelect #tree_orgSelect").on("check_node.jstree", function (node, selected, e) {
+                    $.each(selected.node.parents, function () {
+                        selected.instance.uncheck_node(this);
+                    });
+                    unCheckChildRecursive(selected.node, selected.instance);
+                });
+                $("#modal_orgSelect #tree_orgSelect").on("ready.jstree", function (e, ins) {
+                    var oids = $("#modal_user #input_organizationId").val();
+                    oids = oids ? oids.split(",") : [];
+                    ins.instance.select_node(oids);
+                    ins.instance.deselect_all();
+                    ins.instance.check_node(oids);
+                });
+            }
             $("#modal_orgSelect").modal("show");
         });
 
@@ -314,14 +227,18 @@ var Tree = function () {
                 // so that create works
                 "check_callback": true,
                 'data': {
-                    "url": "/organization/lazyList.do?lazy",
-                    "data": function (node) {
-                        return {"pid": node.id === "#" ? "0" : node.id};
-                    }
+                    "url": "/organization/lazyList.do"
+                    // "data": function (node) {
+                    //     return {"pid": node.id === "#" ? "0" : node.id};
+                    // }
                 }
             },
             "types": {
                 "#": {
+                    "icon": "fa fa-folder icon-state-info icon-lg",
+                    "valid_children": []
+                },
+                "root": {
                     "icon": "fa fa-folder icon-state-info icon-lg",
                     "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
                 },
@@ -381,7 +298,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type.indexOf("static") != -1 || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
+                            return obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
                         },
                         "action": function (data) {
                             Tree.resetUserForm();
@@ -397,7 +314,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1 || obj.type == "#";
+                            return obj.type == "static" || obj.type.indexOf("male") != -1 || obj.type.indexOf("female") != -1;
                         },
                         "action": function (data) {
                             Tree.resetOrgForm();
@@ -414,7 +331,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "default" || obj.type == "#";
+                            return obj.type == "static" || obj.type.indexOf("default") != -1 || obj.type == "root";
                         },
                         "action": function (data) {
                             Tree.resetUserForm();
@@ -427,7 +344,7 @@ var Tree = function () {
                         "_ishide": function (data) {
                             var inst = $.jstree.reference(data.reference);
                             obj = inst.get_node(data.reference);
-                            return obj.type == "static" || obj.type == "#";
+                            return obj.type == "static" || obj.type == "root";
                         },
                         "action": function (data) {
                             var inst = $.jstree.reference(data.reference),
@@ -519,10 +436,11 @@ var Tree = function () {
                 addOrgForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
+                            toastr.success("添加部门成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_org").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error("机构添加失败");
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加部门失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -572,10 +490,11 @@ var Tree = function () {
                 addOrgForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
+                            toastr.success("修改部门成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_org").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error("机构添加失败");
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改部门失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -663,10 +582,11 @@ var Tree = function () {
                 addUserForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
+                            toastr.success("添加用户成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_user").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error("添加用户失败");
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加用户失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -699,12 +619,12 @@ var Tree = function () {
                 $("#modal_user .modal-body #input_im1").val(data.data.im1);
                 $("#modal_user").modal('show');
             } else {
-                toastr.error("获取用户信息失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e);
+            toastr.error(e, "获取用户信息失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -785,6 +705,7 @@ var Tree = function () {
                 addUserForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
+                            toastr.success("修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_user").modal('hide');
                             var node = $('#tree_org').jstree().get_selected(true)[0];
                             var type = node.type;
@@ -795,7 +716,7 @@ var Tree = function () {
                             }
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error("修改用户失败");
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改用户失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -812,15 +733,15 @@ var Tree = function () {
             ids: id
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("机构删除成功");
+                toastr.success("删除机构成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error("机构删除失败,ex:" + data.errorMessage);
+                toastr.error(data.errorCode + "：" + data.errorMessage, "删除机构失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e);
+            toastr.error(e, "删除机构失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -830,15 +751,15 @@ var Tree = function () {
             ids: id
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("用户删除成功");
+                toastr.success("删除用户成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error("用户删除失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "删除用户失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e);
+            toastr.error(e, "删除用户失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -848,15 +769,15 @@ var Tree = function () {
             pid: pid
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("机构移动成功");
+                toastr.success("移动机构成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error("机构移动失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "移动机构失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI($("#tree_org"));
         }).error(function (e) {
             App.unblockUI($("#tree_org"));
-            toastr.error(e);
+            toastr.error(e, "移动机构失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -866,15 +787,15 @@ var Tree = function () {
             oid: oid
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("用户移动成功");
+                toastr.success("移动用户成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error("用户移动失败");
+                toastr.error(data.errorCode + "：" + data.errorMessage, "移动用户失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI($("#tree_org"));
         }).error(function (e) {
             App.unblockUI($("#tree_org"));
-            toastr.error(e);
+            toastr.error(e, "移动用户失败", {"positionClass": "toast-top-full-width"});
         });
     };
 

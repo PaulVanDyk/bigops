@@ -49,6 +49,12 @@
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
+            <li class="nav-item" style="padding: 5px;">
+                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                    <a href="javascript:;" id="treebar_expand" class="btn btn-xs blue">展开</a>
+                    <a href="javascript:;" id="treebar_folding" class="btn btn-xs green">折叠</a>
+                </div>
+            </li>
             <li class="nav-item">
                 <%--<a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">--%>
                 <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
@@ -75,6 +81,7 @@
                         <input type="hidden" id="org_ids" name="ids">
                         <input type="hidden" id="pid" name="pid">
                         <input type="text" id="oname" name="oname" class="form-control" placeholder="请输入部门名称">
+                        <input type="text" name="shieldAutoSubmit" class="form-control hide" placeholder="屏蔽回车自动提交">
                         <%--<span class="help-block"> A block of help text. </span>--%>
                     </div>
                 </div>

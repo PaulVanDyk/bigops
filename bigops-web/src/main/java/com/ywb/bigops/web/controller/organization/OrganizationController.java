@@ -13,7 +13,6 @@ import com.ywb.bigops.web.controller.JsonData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,8 +43,10 @@ public class OrganizationController extends BaseController {
         try {
             Map node;
             OrganizationCondition condition = new OrganizationCondition();
-            condition.setPid(StringUtils.isEmpty(pid) ? 0 : pid);
-            condition.setSortField("order");
+            if (pid != null) {
+                condition.setPid(pid);
+            }
+            condition.setSortField("`order`,CONVERT( oname USING gbk ) COLLATE gbk_chinese_ci");
             condition.setSortDesc("asc");
             condition.setPageIndex(0);
             condition.setPageSize(Integer.MAX_VALUE);
@@ -59,28 +60,30 @@ public class OrganizationController extends BaseController {
                     node.put("parent", domain.getPid() == 0 ? "#" : domain.getPid());
                     node.put("type", domain.getType());
                     node.put("order", domain.getOrder());
-                    node.put("children", true);
+//                    node.put("children", true);
                     list.add(node);
                 }
             }
 
             UserCondition userCondition = new UserCondition();
-            userCondition.setOrganizationId(String.valueOf(pid));
+//            userCondition.setOrganizationId(String.valueOf(pid));
             userCondition.setPageIndex(0);
             userCondition.setPageSize(Integer.MAX_VALUE);
-            userCondition.setSortField("realname");
-            userCondition.setSortDesc("ASC");
+            userCondition.setSortField("CONVERT( realname USING gbk ) COLLATE gbk_chinese_ci");
+            userCondition.setSortDesc("asc");
             userCondition.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
             List<UserDomain> userList = this.userService.findUserListByConditionWithPage(userCondition);
             if (null != userList) {
                 for (UserDomain domain : userList) {
-                    node = new HashMap();
-                    node.put("id", pid + "_" + domain.getUid());
-                    node.put("text", domain.getRealname());
-                    node.put("parent", pid);
-                    String prefixStr = domain.getStatus() == -1 ? "static-" : "";
-                    node.put("type", domain.getGender() == 0 ? prefixStr + "female" : prefixStr + "male");
-                    list.add(node);
+                    for (String oid : domain.getOrganizationId().split("\\,")) {
+                        node = new HashMap();
+                        node.put("id", oid + "_" + domain.getUid());
+                        node.put("text", domain.getRealname());
+                        node.put("parent", oid);
+                        String prefixStr = domain.getStatus() == -1 ? "static-" : "";
+                        node.put("type", domain.getGender() == 0 ? prefixStr + "female" : prefixStr + "male");
+                        list.add(node);
+                    }
                 }
             }
         } catch (BigOpsException e) {
@@ -96,8 +99,10 @@ public class OrganizationController extends BaseController {
         try {
             Map node;
             OrganizationCondition condition = new OrganizationCondition();
-            condition.setPid(StringUtils.isEmpty(pid) ? 0 : pid);
-            condition.setSortField("order");
+            if (pid != null) {
+                condition.setPid(pid);
+            }
+            condition.setSortField("`order`,CONVERT( oname USING gbk ) COLLATE gbk_chinese_ci");
             condition.setSortDesc("asc");
             condition.setPageIndex(0);
             condition.setPageSize(Integer.MAX_VALUE);
@@ -111,7 +116,7 @@ public class OrganizationController extends BaseController {
                     node.put("parent", domain.getPid() == 0 ? "#" : domain.getPid());
                     node.put("type", domain.getType());
                     node.put("order", domain.getOrder());
-                    node.put("children", true);
+//                    node.put("children", true);
                     list.add(node);
                 }
             }
