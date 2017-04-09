@@ -27,7 +27,7 @@
 <script src="<%=contextPath%>/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
-<script src="<%=contextPath%>/assets/global/plugins/jstree/dist/jstree.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/jquery.form.js" type="text/javascript"></script>
 <script src="<%=contextPath%>/assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->

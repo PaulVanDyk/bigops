@@ -225,13 +225,20 @@ var Tree = function () {
                     "responsive": false
                 },
                 // so that create works
-                "check_callback": true,
+                "check_callback": function (operation, node, node_parent, node_position, more) {
+                    // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node', 'copy_node' or 'edit'
+                    // in case of 'rename_node' node_position is filled with the new node name
+                    return operation === 'move_node' ? node.parent != node_parent.id : true;
+                },
                 'data': {
                     "url": "/organization/lazyList.do"
                     // "data": function (node) {
                     //     return {"pid": node.id === "#" ? "0" : node.id};
                     // }
                 }
+            },
+            "unique": {
+                "case_sensitive": true
             },
             "types": {
                 "#": {

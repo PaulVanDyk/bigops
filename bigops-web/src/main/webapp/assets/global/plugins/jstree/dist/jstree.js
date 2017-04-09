@@ -6304,15 +6304,18 @@
 							off = ref.offset();
 							rel = data.event.pageY - off.top;
 							h = ref.outerHeight();
-							if(rel < h / 3) {
-								o = ['b', 'i', 'a'];
-							}
-							else if(rel > h - h / 3) {
-								o = ['a', 'i', 'b'];
-							}
-							else {
-								o = rel > h / 2 ? ['i', 'a', 'b'] : ['i', 'b', 'a'];
-							}
+							// if(rel < h / 3) {
+							// 	o = ['b', 'i', 'a'];
+							// }
+							// else if(rel > h - h / 3) {
+							// 	o = ['a', 'i', 'b'];
+							// }
+							// else {
+							// 	o = rel > h / 2 ? ['i', 'a', 'b'] : ['i', 'b', 'a'];
+							// }
+
+                            //屏蔽上下排序移动判断，只支持向node内移动
+							o = ['i'];
 							$.each(o, function (j, v) {
 								switch(v) {
 									case 'b':
@@ -6704,7 +6707,7 @@
 	 *		"id1" : [{ "text" : "Child of ID1", "id" : "c1" }, { "text" : "Another child of ID1", "id" : "c2" }],
 	 *		"id2" : [{ "text" : "Child of ID2", "id" : "c3" }]
 	 *	}
-	 * 
+	 *
 	 * @name $.jstree.defaults.massload
 	 * @plugin massload
 	 */
@@ -6781,10 +6784,10 @@
 	 */
 	$.jstree.defaults.search = {
 		/**
-		 * a jQuery-like AJAX config, which jstree uses if a server should be queried for results. 
-		 * 
+		 * a jQuery-like AJAX config, which jstree uses if a server should be queried for results.
+		 *
 		 * A `str` (which is the search string) parameter will be added with the request, an optional `inside` parameter will be added if the search is limited to a node id. The expected result is a JSON array with nodes that need to be opened so that matching nodes will be revealed.
-		 * Leave this setting as `false` to not query the server. You can also set this to a function, which will be invoked in the instance's scope and receive 3 parameters - the search string, the callback to call with the array of nodes to load, and the optional node ID to limit the search to 
+		 * Leave this setting as `false` to not query the server. You can also set this to a function, which will be invoked in the instance's scope and receive 3 parameters - the search string, the callback to call with the array of nodes to load, and the optional node ID to limit the search to
 		 * @name $.jstree.defaults.search.ajax
 		 * @plugin search
 		 */
@@ -6802,7 +6805,7 @@
 		 */
 		case_sensitive : false,
 		/**
-		 * Indicates if the tree should be filtered (by default) to show only matching nodes (keep in mind this can be a heavy on large trees in old browsers). 
+		 * Indicates if the tree should be filtered (by default) to show only matching nodes (keep in mind this can be a heavy on large trees in old browsers).
 		 * This setting can be changed at runtime when calling the search method. Default is `false`.
 		 * @name $.jstree.defaults.search.show_only_matches
 		 * @plugin search
