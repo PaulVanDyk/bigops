@@ -19,8 +19,8 @@
         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
-            data-slide-speed="200" style="padding-top: 20px; padding-bottom: 50px;">
+        <ul class="page-sidebar-menu page-header-fixed" data-keep-expanded="false" data-auto-scroll="true"
+            data-slide-speed="200">
             <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
             <li class="sidebar-toggler-wrapper hide">
                 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -34,7 +34,7 @@
                 <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
                 <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
                 <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
-                <form class="sidebar-search  " action="#" method="POST">
+                <form class="sidebar-search" style="margin: 20px 10px 5px 10px;" action="#" method="POST">
                     <a href="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
@@ -49,7 +49,7 @@
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="nav-item" style="padding: 5px;">
+            <li class="nav-item" style="padding: 5px; margin: 2px 2px;">
                 <div class="btn-group btn-group-devided" data-toggle="buttons">
                     <a href="javascript:;" id="treebar_expand" class="btn btn-xs blue">展开</a>
                     <a href="javascript:;" id="treebar_folding" class="btn btn-xs green">折叠</a>
@@ -58,7 +58,7 @@
             <li class="nav-item">
                 <%--<a href="layout_ajax_page_content_3.html" class="ajaxify nav-link">--%>
                 <%--<i class="icon-bar-chart"></i> Section 2</a>--%>
-                <div id="tree_org" class="tree-demo bg-trans" style="background-color: transparent;"></div>
+                <div id="tree_org" class="tree-demo bg-trans" style="background-color: transparent; padding-bottom: 20px;"></div>
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->
@@ -227,7 +227,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h4 class="modal-title">选择部门</h4>
     </div>
-    <div class="modal-body bg-blue-chambray" style="height: 550px;">
+    <div class="modal-body bg-blue-chambray scroller" style="height: 550px; padding: 15px;">
         <div id="tree_orgSelect" class="tree-demo bg-trans"></div>
     </div>
     <div class="modal-footer">

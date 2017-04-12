@@ -159,9 +159,7 @@ public class UserController extends BaseController {
         JsonData jsonData = new JsonData(JsonData.FAILED);
         jsonData.setMethod("delUser");
         try {
-            UserDomain domain = new UserDomain();
-            domain.setStatus(0);
-            boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
+            boolean bool = this.userService.deleteUserByIds(Arrays.asList(ids));
             jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
         } catch (BigOpsException e) {
             logger.error("delUser ids:" + ids, e);

@@ -2,7 +2,7 @@
  * Created by dream on 2017/3/25.
  */
 var Tree = function () {
-    var _defaultText, _orgValidate, _userValidate;
+    var _defaultText, _addOrgValidate, _editOrgValidate, _addUserValidate, _editUserValidate;
     /**
      * 初始化页面插件
      * @private
@@ -135,11 +135,12 @@ var Tree = function () {
             $("#modal_user").modal('show');
         });
 
-        //选择机构
+        //选择部门
         $("#modal_user #input_organizationName").on("click", function () {
             if ($("#modal_orgSelect #tree_orgSelect").jstree(true)) {
                 var oids = $("#modal_user #input_organizationId").val();
                 oids = oids ? oids.split(",") : [];
+                $("#modal_orgSelect #tree_orgSelect").jstree().uncheck_all();
                 $("#modal_orgSelect #tree_orgSelect").jstree().select_node(oids);
                 $("#modal_orgSelect #tree_orgSelect").jstree().deselect_all();
                 $("#modal_orgSelect #tree_orgSelect").jstree().check_node(oids);
@@ -203,7 +204,7 @@ var Tree = function () {
             $("#modal_orgSelect").modal("show");
         });
 
-        //选择机构回调
+        //选择部门回调
         $("#modal_orgSelect .modal-footer .btn.green").on("click", function () {
             var items = $("#tree_orgSelect").jstree(true).get_checked(true);
             var oids = '', onames = '';
@@ -295,6 +296,7 @@ var Tree = function () {
                             Tree.resetOrgForm();
                             var selected = $('#tree_org').jstree().get_selected(true);
                             $("#modal_org #pid").val(selected[0].id);
+                            $("#modal_org #ids").val("");
                             $("#modal_org .modal-header .modal-title").text("添加部门");
                             $("#modal_org .modal-footer .btn.green").attr("data-type", "add").text("添加");
                             $("#modal_org").modal('show');
@@ -327,6 +329,7 @@ var Tree = function () {
                             Tree.resetOrgForm();
                             var selected = $('#tree_org').jstree().get_selected(true);
                             $("#modal_org #org_ids").val(selected[0].id);
+                            $("#modal_org #pid").val("");
                             $("#modal_org #oname").val(selected[0].text);
                             $("#modal_org .modal-header .modal-title").text("编辑部门");
                             $("#modal_org .modal-footer .btn.green").attr("data-type", "edit").text("保存");
@@ -380,16 +383,20 @@ var Tree = function () {
             "plugins": ["unique", "search", "contextmenu", "dnd", "state", "types"]
         });
         $("#tree_org").on("click.jstree", function (e) {
-            if (e.target.tagName == "I" || e.target.tagName == "i") {
+            if (!$(e.target).is("a")) {
                 return;
             }
             var inst = $.jstree.reference(e.target),
                 node = inst.get_node(e.target);
-            var type = node.type;
-            if (type && (type.indexOf("male") != -1 || type.indexOf("female") != -1)) {
-                Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node));
-            } else {
-                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node));
+            if (node) {
+                var type = node.type;
+                if (type && (type.indexOf("male") != -1 || type.indexOf("female") != -1)) {
+                    $("#showAll").attr("checked", false).attr("disabled", true).parent().addClass("mt-checkbox-disabled");
+                    Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node));
+                } else {
+                    $("#showAll").attr("checked", false).attr("disabled", false).parent().removeClass("mt-checkbox-disabled");
+                    Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node));
+                }
             }
         }).on("move_node.jstree", function (e, data) {
             App.blockUI({"target": $("#tree_org"), "animate": true, "iconOnly": true});
@@ -404,7 +411,7 @@ var Tree = function () {
 
     var addOrg = function () {
         var addOrgForm = $("#org-form");
-        _orgValidate = addOrgForm.validate({
+        _addOrgValidate = addOrgForm.validate({
             errorElement: 'span',
             errorClass: "help-block help-block-error",
             focusInvalid: false,
@@ -443,78 +450,28 @@ var Tree = function () {
                 addOrgForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
-                            toastr.success("添加部门成功", undefined, {"positionClass": "toast-top-full-width"});
+                            toastr.success(data.method == "addOrg" ? "添加部门成功" : "修改部门成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_org").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加部门失败", {"positionClass": "toast-top-full-width"});
+                            toastr.error(data.errorCode + "：" + data.errorMessage, data.method == "addOrg" ? "添加部门失败" : "修改部门失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
                 })
             }
         });
-
         addOrgForm.attr("action", "/organization/addOrg.do").submit();
     };
 
     var editOrg = function () {
-        var addOrgForm = $("#org-form");
-        _orgValidate = addOrgForm.validate({
-            errorElement: 'span',
-            errorClass: "help-block help-block-error",
-            focusInvalid: false,
-            ignore: "",
-            rules: {
-                oname: {
-                    required: true,
-                    maxlength: 24
-                }
-            },
-            messages: {
-                oname: {
-                    required: "请填写部门",
-                    maxlength: "最大字符长度为24字符"
-                }
-            },
-            errorPlacement: function (error, element) { // render error placement for each input type
-                error.insertAfter(element); // for other inputs, just perform default behavoir
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                var dom = $(validator.invalidElements()[0]);
-                App.scrollTo($(dom), -200);
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
-            },
-            submitHandler: function (form) {   //表单提交句柄,为一回调函数，带一个参数：form
-                App.blockUI();
-                addOrgForm.ajaxSubmit({
-                    success: function (data) {
-                        if (data.status == "success") {
-                            toastr.success("修改部门成功", undefined, {"positionClass": "toast-top-full-width"});
-                            $("#modal_org").modal('hide');
-                            $('#tree_org').jstree(true).refresh();
-                        } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改部门失败", {"positionClass": "toast-top-full-width"});
-                        }
-                        App.unblockUI();
-                    }
-                })
-            }
-        });
-
-        addOrgForm.attr("action", "/organization/modifyOrg.do").submit();
+        var editOrgForm = $("#org-form");
+        editOrgForm.attr("action", "/organization/modifyOrg.do").submit();
     };
 
     var addUser = function () {
         var addUserForm = $("#user-form");
-        _userValidate = addUserForm.validate({
+        _addUserValidate = addUserForm.validate({
             errorElement: 'span',
             errorClass: "help-block help-block-error",
             focusInvalid: false,
@@ -589,11 +546,11 @@ var Tree = function () {
                 addUserForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
-                            toastr.success("添加用户成功", undefined, {"positionClass": "toast-top-full-width"});
+                            toastr.success(data.method = "addUser" ? "添加用户成功" : "修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_user").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加用户失败", {"positionClass": "toast-top-full-width"});
+                            toastr.error(data.errorCode + "：" + data.errorMessage, data.method = "addUser" ? "添加用户失败" : "修改用户失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -636,102 +593,8 @@ var Tree = function () {
     };
 
     var editUser = function () {
-        var addUserForm = $("#user-form");
-        _userValidate = addUserForm.validate({
-            errorElement: 'span',
-            errorClass: "help-block help-block-error",
-            focusInvalid: false,
-            ignore: "",
-            rules: {
-                realname: {
-                    required: true,
-                    maxlength: 24
-                },
-                organizationName: {
-                    required: true
-                },
-                age: {
-                    required: true,
-                    digits: true,
-                    min: 10,
-                    max: 100
-                },
-                mobile: {
-                    required: true,
-                    digits: true,
-                    rangelength: [11, 11]
-                },
-                email: {
-                    required: true,
-                    email: true,
-                    checkUserEmail: true
-                }
-            },
-            messages: {
-                realname: {
-                    required: "请填写姓名",
-                    maxlength: "姓名最长为24字符"
-                },
-                organizationName: {
-                    required: "请选择部门"
-                },
-                age: {
-                    required: "请填写年龄",
-                    digits: "年龄必须为数字",
-                    min: "年龄必须大于等于10",
-                    max: "年龄必须小于等于100"
-                },
-                mobile: {
-                    required: "请填写手机号",
-                    digits: "手机号必须为数字",
-                    rangelength: "手机号长度必须为{0}位"
-                },
-                email: {
-                    required: "请填写邮箱",
-                    email: "请输入正确的邮箱格式",
-                    remote: "该邮箱已被注册"
-                }
-            },
-            errorPlacement: function (error, element) { // render error placement for each input type
-                error.insertAfter(element); // for other inputs, just perform default behavoir
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                var dom = $(validator.invalidElements()[0]);
-                App.scrollTo($(dom), -200);
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
-            },
-            submitHandler: function (form) {   //表单提交句柄,为一回调函数，带一个参数：form
-                App.blockUI();
-                addUserForm.ajaxSubmit({
-                    success: function (data) {
-                        if (data.status == "success") {
-                            toastr.success("修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
-                            $("#modal_user").modal('hide');
-                            var node = $('#tree_org').jstree().get_selected(true)[0];
-                            var type = node.type;
-                            if (!type || type == "default" || type == "static") {
-                                Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node))
-                            } else if (type == "male" || type == "female") {
-                                Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node))
-                            }
-                            $('#tree_org').jstree(true).refresh();
-                        } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改用户失败", {"positionClass": "toast-top-full-width"});
-                        }
-                        App.unblockUI();
-                    }
-                })
-            }
-        });
-
-        addUserForm.attr("action", "/user/modifyUser.do").submit();
+        var editUserForm = $("#user-form");
+        editUserForm.attr("action", "/user/modifyUser.do").submit();
     };
 
     var delOrg = function (id) {
@@ -740,15 +603,15 @@ var Tree = function () {
             ids: id
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("删除机构成功", undefined, {"positionClass": "toast-top-full-width"});
+                toastr.success("删除部门成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error(data.errorCode + "：" + data.errorMessage, "删除机构失败", {"positionClass": "toast-top-full-width"});
+                toastr.error(data.errorCode + "：" + data.errorMessage, "删除部门失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI();
         }).error(function (e) {
             App.unblockUI();
-            toastr.error(e, "删除机构失败", {"positionClass": "toast-top-full-width"});
+            toastr.error(e, "删除部门失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -776,15 +639,15 @@ var Tree = function () {
             pid: pid
         }, function (data) {
             if (data.status == "success") {
-                toastr.success("移动机构成功", undefined, {"positionClass": "toast-top-full-width"});
+                toastr.success("移动部门成功", undefined, {"positionClass": "toast-top-full-width"});
                 $('#tree_org').jstree(true).refresh();
             } else {
-                toastr.error(data.errorCode + "：" + data.errorMessage, "移动机构失败", {"positionClass": "toast-top-full-width"});
+                toastr.error(data.errorCode + "：" + data.errorMessage, "移动部门失败", {"positionClass": "toast-top-full-width"});
             }
             App.unblockUI($("#tree_org"));
         }).error(function (e) {
             App.unblockUI($("#tree_org"));
-            toastr.error(e, "移动机构失败", {"positionClass": "toast-top-full-width"});
+            toastr.error(e, "移动部门失败", {"positionClass": "toast-top-full-width"});
         });
     };
 
@@ -833,13 +696,19 @@ var Tree = function () {
             }, 250);
         },
         resetOrgForm: function () {
-            if (_orgValidate) {
-                _orgValidate.resetForm();
+            if (_addOrgValidate) {
+                _addOrgValidate.resetForm();
+            }
+            if (_editOrgValidate) {
+                _editOrgValidate.resetForm();
             }
         },
         resetUserForm: function () {
-            if (_userValidate) {
-                _userValidate.resetForm();
+            if (_addUserValidate) {
+                _addUserValidate.resetForm();
+            }
+            if (_editUserValidate) {
+                _editUserValidate.resetForm();
             }
         }
     };
@@ -848,7 +717,18 @@ var Tree = function () {
 jQuery(document).ready(function () {
     Tree.init();
 });
-
+window.onload = function () {
+    // handleFixedTreeBar();
+    // App.addResizeHandler(handleFixedTreeBar);
+};
+function handleFixedTreeBar() {
+    var curHeight = App.getViewPort().height - $("#tree_org").parent().offset().top;
+    var treeOrg = $("#tree_org").parent();
+    App.destroySlimScroll(treeOrg);
+    treeOrg.height(curHeight - 40);//上下margin分别为20
+    App.initSlimScroll(treeOrg);
+    treeOrg.css({"height": curHeight + "px", "overflow-x": "auto"}).parent().css("height", curHeight + "px");
+}
 /***
  Usage
  ***/

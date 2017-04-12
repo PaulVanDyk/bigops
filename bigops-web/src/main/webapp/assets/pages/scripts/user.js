@@ -3,7 +3,6 @@
  */
 var User = function () {
 
-    var _validate;
     var gridUser = new Datatable();
 
     /**
@@ -20,7 +19,7 @@ var User = function () {
      */
     var _bindHandle = function () {
         var bakDirect;
-        $("#dt_user").on("click", "tbody > tr", function () {
+        $(document).on("click", "#dt_user > tbody > tr", function () {
             if (bakDirect && bakDirect === this) {
                 $(".direct").toggleClass("direct-open");
             } else {
@@ -53,7 +52,7 @@ var User = function () {
             gridUser.getDataTable().ajax.reload(null, true);
         });
 
-        $(".direct-content .portlet-bottom").on('click', ':button', function () {
+        $(document).on('click', '.direct-content .portlet-bottom :button', function () {
             var id = $(this).attr("data-value");
             initEdit(id);
         });
@@ -200,10 +199,12 @@ var User = function () {
     }
 
     return {
-        init: function (params) {
-            _initParam(params);
+        init: function () {
             _initPlugin();
             _bindHandle();
+        },
+        ajaxLoad: function (params) {
+            _initParam(params);
             _initTable();
         }
     }
@@ -223,3 +224,7 @@ function arrayToJson(array) {
     });
     return o;
 };
+
+$(document).ready(function () {
+    User.init();
+})

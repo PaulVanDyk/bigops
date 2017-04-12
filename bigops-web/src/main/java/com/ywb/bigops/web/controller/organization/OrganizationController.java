@@ -169,9 +169,7 @@ public class OrganizationController extends BaseController {
                 if (userDomain != null) {
                     jsonData.setErrorMessage("无法删除非空节点");
                 } else {
-                    domain.setUpdateTime(new Date());
-                    domain.setStatus(0);
-                    boolean bool = this.organizationService.updateOrganizationByIds(domain, Arrays.asList(ids));
+                    boolean bool = this.organizationService.deleteOrganizationByIds(Arrays.asList(ids));
                     jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
                 }
             }

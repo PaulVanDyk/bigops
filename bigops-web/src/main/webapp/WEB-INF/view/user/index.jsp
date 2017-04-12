@@ -64,12 +64,12 @@
                     <!-- END PAGE BAR -->
                     <div class="page-title">
                         <form class="form-inline" id="search_form">
-                            <label class="mt-checkbox mt-checkbox-outline">
-                                <input id="showAll" type="checkbox"> 显示所有成员
+                            <label class="mt-checkbox mt-checkbox-outline mt-checkbox-disabled">
+                                <input id="showAll" disabled type="checkbox"> 显示所有成员
                                 <span></span>
                             </label>
                             <div class="form-group">
-                                <label class="sr-only" for="txtSearch">Password</label>
+                                <label class="sr-only" for="txtSearch">多维条件检索</label>
                                 <input type="text" id="txtSearch" class="form-control input-large" placeholder="多维条件检索">
                             </div>
                             <button type="button" class="btn blue mgl20">搜索</button>

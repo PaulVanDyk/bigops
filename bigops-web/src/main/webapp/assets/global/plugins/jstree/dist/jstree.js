@@ -2352,6 +2352,8 @@
 			if(!obj.a_attr.id) {
 				obj.a_attr.id = obj.id + '_anchor';
 			}
+            //添加自定义title提示
+            node.setAttribute('title',obj.text);
 			node.setAttribute('aria-selected', !!obj.state.selected);
 			node.setAttribute('aria-level', obj.parents.length);
 			node.setAttribute('aria-labelledby', obj.a_attr.id);

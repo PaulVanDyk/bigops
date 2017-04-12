@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="full-height-content-body direct">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="table-container">
+        <%--<div class="col-md-12">--%>
         <table class="table table-striped table-bordered table-hover table-checkable order-column"
                id="dt_user">
             <thead>
@@ -24,7 +24,7 @@
             </thead>
             <tbody></tbody>
         </table>
-        </div>
+        <%--</div>--%>
     </div>
 
     <div class="direct-content">
@@ -145,6 +145,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        User.init(${params});
+        User.ajaxLoad(${params});
     })
 </script>
