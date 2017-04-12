@@ -718,8 +718,8 @@ jQuery(document).ready(function () {
     Tree.init();
 });
 window.onload = function () {
-    // handleFixedTreeBar();
-    // App.addResizeHandler(handleFixedTreeBar);
+    handleFixedTreeBar();
+    App.addResizeHandler(handleFixedTreeBar);
 };
 function handleFixedTreeBar() {
     var curHeight = App.getViewPort().height - $("#tree_org").parent().offset().top;
