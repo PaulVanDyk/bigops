@@ -54,50 +54,50 @@
                 <form class="form-horizontal" role="form">
                     <div class="form-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">性别:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">性别:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_gender"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">年龄:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">年龄:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_age"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">用户类型:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">用户类型:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_isAdmin"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">所属机构:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">所属机构:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_organizationName"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">到期时间:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">到期时间:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_expires"> Male </p>
                                     </div>
                                 </div>
@@ -105,30 +105,30 @@
                         </div>
                         <h3 class="form-section">联系方式</h3>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">电话:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">电话:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_mobile"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">邮箱:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">邮箱:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_email"> Male </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">IM:</label>
-                                    <div class="col-md-9">
+                                    <label class="control-label col-md-2">IM:</label>
+                                    <div class="col-md-10">
                                         <p class="form-control-static" id="view_im"> Male </p>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                 </form>
             </div>
             <div class="portlet-bottom">
-                <div class="row"> <div class="col-md-6"><button class="btn btn-info" data-value="">编辑</button></div></div>
+                <div class="row"> <div class="inline"><button class="btn btn-info mgl15" name="edit" data-value="">编辑</button><button class="btn btn-danger mgl15" name="close">关闭</button></div></div>
             </div>
         </div>
     </div>

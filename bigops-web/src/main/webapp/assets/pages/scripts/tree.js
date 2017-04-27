@@ -248,7 +248,8 @@ var Tree = function () {
                 },
                 "root": {
                     "icon": "fa fa-folder icon-state-info icon-lg",
-                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    // "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    "valid_children": ["default", "static-default"]
                 },
                 "static": {
                     "icon": "fa fa-folder icon-state-danger icon-lg",
@@ -256,11 +257,13 @@ var Tree = function () {
                 },
                 "default": {
                     "icon": "fa fa-folder icon-state-warning icon-lg",
-                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    // "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    "valid_children": ["default", "static-default"]
                 },
                 "static-default": {
                     "icon": "fa fa-folder icon-state-warning icon-lg",
-                    "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    // "valid_children": ["default", "male", "female", "static-default", "static-male", "static-female"]
+                    "valid_children": ["default", "static-default"]
                 },
                 "file": {
                     "icon": "fa fa-file icon-state-default icon-lg"
@@ -450,11 +453,11 @@ var Tree = function () {
                 addOrgForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
-                            toastr.success(data.method == "addOrg" ? "添加部门成功" : "修改部门成功", undefined, {"positionClass": "toast-top-full-width"});
+                            toastr.success("添加部门成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_org").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, data.method == "addOrg" ? "添加部门失败" : "修改部门失败", {"positionClass": "toast-top-full-width"});
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加部门失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -466,6 +469,56 @@ var Tree = function () {
 
     var editOrg = function () {
         var editOrgForm = $("#org-form");
+        _addOrgValidate = editOrgForm.validate({
+            errorElement: 'span',
+            errorClass: "help-block help-block-error",
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                oname: {
+                    required: true,
+                    maxlength: 24,
+                    checkOrgName: true
+                }
+            },
+            messages: {
+                oname: {
+                    required: "请填写部门",
+                    maxlength: "最大字符长度为24字符",
+                    checkOrgName: "部门名称不能重复"
+                }
+            },
+            errorPlacement: function (error, element) { // render error placement for each input type
+                error.insertAfter(element); // for other inputs, just perform default behavoir
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                var dom = $(validator.invalidElements()[0]);
+                App.scrollTo($(dom), -200);
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            submitHandler: function (form) {   //表单提交句柄,为一回调函数，带一个参数：form
+                App.blockUI();
+                editOrgForm.ajaxSubmit({
+                    success: function (data) {
+                        if (data.status == "success") {
+                            toastr.success("修改部门成功", undefined, {"positionClass": "toast-top-full-width"});
+                            $("#modal_org").modal('hide');
+                            $('#tree_org').jstree(true).refresh();
+                        } else {
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改部门失败", {"positionClass": "toast-top-full-width"});
+                        }
+                        App.unblockUI();
+                    }
+                })
+            }
+        });
         editOrgForm.attr("action", "/organization/modifyOrg.do").submit();
     };
 
@@ -546,11 +599,13 @@ var Tree = function () {
                 addUserForm.ajaxSubmit({
                     success: function (data) {
                         if (data.status == "success") {
-                            toastr.success(data.method = "addUser" ? "添加用户成功" : "修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
+                            // toastr.success(data.method = "addUser" ? "添加用户成功" : "修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
+                            toastr.success("添加用户成功", undefined, {"positionClass": "toast-top-full-width"});
                             $("#modal_user").modal('hide');
                             $('#tree_org').jstree(true).refresh();
                         } else {
-                            toastr.error(data.errorCode + "：" + data.errorMessage, data.method = "addUser" ? "添加用户失败" : "修改用户失败", {"positionClass": "toast-top-full-width"});
+                            // toastr.error(data.errorCode + "：" + data.errorMessage, data.method = "addUser" ? "添加用户失败" : "修改用户失败", {"positionClass": "toast-top-full-width"});
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "添加用户失败", {"positionClass": "toast-top-full-width"});
                         }
                         App.unblockUI();
                     }
@@ -594,6 +649,94 @@ var Tree = function () {
 
     var editUser = function () {
         var editUserForm = $("#user-form");
+        _addUserValidate = editUserForm.validate({
+            errorElement: 'span',
+            errorClass: "help-block help-block-error",
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                realname: {
+                    required: true,
+                    maxlength: 24
+                },
+                organizationName: {
+                    required: true
+                },
+                age: {
+                    required: true,
+                    digits: true,
+                    min: 10,
+                    max: 100
+                },
+                mobile: {
+                    required: true,
+                    digits: true,
+                    rangelength: [11, 11]
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    checkUserEmail: true
+                }
+            },
+            messages: {
+                realname: {
+                    required: "请填写姓名",
+                    maxlength: "姓名最长为24字符"
+                },
+                organizationName: {
+                    required: "请选择部门"
+                },
+                age: {
+                    required: "请填写年龄",
+                    digits: "年龄必须为数字",
+                    min: "年龄必须大于等于10",
+                    max: "年龄必须小于等于100"
+                },
+                mobile: {
+                    required: "请填写手机号",
+                    digits: "手机号必须为数字",
+                    rangelength: "手机号长度必须为{0}位"
+                },
+                email: {
+                    required: "请填写邮箱",
+                    email: "请输入正确的邮箱格式",
+                    remote: "该邮箱已被注册"
+                }
+            },
+            errorPlacement: function (error, element) { // render error placement for each input type
+                error.insertAfter(element); // for other inputs, just perform default behavoir
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                var dom = $(validator.invalidElements()[0]);
+                App.scrollTo($(dom), -200);
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+            submitHandler: function (form) {   //表单提交句柄,为一回调函数，带一个参数：form
+                App.blockUI();
+                editUserForm.ajaxSubmit({
+                    success: function (data) {
+                        if (data.status == "success") {
+                            // toastr.success(data.method = "addUser" ? "添加用户成功" : "修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
+                            toastr.success("修改用户成功", undefined, {"positionClass": "toast-top-full-width"});
+                            $("#modal_user").modal('hide');
+                            $('#tree_org').jstree(true).refresh();
+                        } else {
+                            // toastr.error(data.errorCode + "：" + data.errorMessage, data.method = "addUser" ? "添加用户失败" : "修改用户失败", {"positionClass": "toast-top-full-width"});
+                            toastr.error(data.errorCode + "：" + data.errorMessage, "修改用户失败", {"positionClass": "toast-top-full-width"});
+                        }
+                        App.unblockUI();
+                    }
+                })
+            }
+        });
         editUserForm.attr("action", "/user/modifyUser.do").submit();
     };
 

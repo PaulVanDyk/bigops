@@ -53,8 +53,15 @@ var User = function () {
         });
 
         $(document).on('click', '.direct-content .portlet-bottom :button', function () {
-            var id = $(this).attr("data-value");
-            initEdit(id);
+            switch ($(this).attr("name")) {
+                case "edit":
+                    var id = $(this).attr("data-value");
+                    initEdit(id);
+                    break;
+                case "close":
+                    $(".direct").toggleClass("direct-open");
+                    break;
+            }
         });
     };
 

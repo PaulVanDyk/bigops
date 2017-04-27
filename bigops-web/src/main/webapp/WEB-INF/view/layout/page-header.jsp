@@ -10,7 +10,7 @@
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
-    <div class="page-header-inner ">
+    <div class="page-header-menu ">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
             <a href="index.html">
@@ -20,6 +20,139 @@
             <%--</div>--%>
         </div>
         <!-- END LOGO -->
+
+        <div class="hor-menu  ">
+            <ul class="nav navbar-nav">
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                    <a href="javascript:;"> CMDB
+                        <span class="arrow"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  active">
+                                <i class="icon-pointer"></i> 位置
+                                <span class="badge badge-success">1</span>
+                            </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="fa fa-server"></i> 服务 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-user"></i> 负责人
+                                <span class="badge badge-danger">3</span>
+                            </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-badge"></i> 厂商型号 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-grid"></i> 资产状态 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-screen-desktop"></i> 操作系统 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                    <a href="javascript:;"> 网络
+                        <span class="arrow"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  active">
+                                <i class="fa fa-sitemap"></i> IP库 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-shuffle"></i> 端口关系 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                    <a href="javascript:;"> 监控
+                        <span class="arrow"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link ">
+                                <i class="fa fa-server"></i> 服务 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-settings"></i> 系统 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="fa fa-sitemap"></i> 网络 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                    <a href="javascript:;"> CI/CD
+                        <span class="arrow"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  active">
+                                <i class="icon-bar-chart"></i> 项目管理 </a>
+                        </li>
+                    </ul>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown">
+                    <a href="javascript:;"> 工单
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
+                    <a href="javascript:;"> 日志
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown active">
+                    <a href="javascript:;"> 设置
+                        <span class="arrow"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  active">
+                                <i class="icon-wrench"></i> 常规设置 </a>
+                        </li>
+                        <li aria-haspopup="true" class=" ">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-list"></i> 工单设置 </a>
+                        </li>
+                        <li aria-haspopup="true" class="dropdown-submenu active">
+                            <a href="javascript:;" class="nav-link  ">
+                                <i class="icon-user"></i> 用户设置 </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li aria-haspopup="true" class="active ">
+                                    <a href="javascript:;" class="nav-link ">
+                                        <i class="icon-home"></i> 组织架构 </a>
+                                </li>
+                                <li aria-haspopup="true" class=" ">
+                                    <a href="javascript:;" class="nav-link  ">
+                                        <i class="icon-users"></i> 用户组 </a>
+                                </li>
+                                <li aria-haspopup="true" class=" ">
+                                    <a href="javascript:;" class="nav-link  ">
+                                        <i class="icon-lock"></i> 权限 </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             <span></span>
@@ -360,11 +493,11 @@
                 <!-- END USER LOGIN DROPDOWN -->
                 <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                <li class="dropdown dropdown-quick-sidebar-toggler">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <i class="icon-logout"></i>
-                    </a>
-                </li>
+                <%--<li class="dropdown dropdown-quick-sidebar-toggler">--%>
+                    <%--<a href="javascript:;" class="dropdown-toggle">--%>
+                        <%--<i class="icon-logout"></i>--%>
+                    <%--</a>--%>
+                <%--</li>--%>
                 <!-- END QUICK SIDEBAR TOGGLER -->
             </ul>
         </div>
