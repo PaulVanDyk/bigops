@@ -30,6 +30,8 @@ var User = function () {
         });
 
         $("#search_form").on("click", "#showAll", function () {
+            $("#txtSearch").val("");
+            gridUser.setAjaxParam("isSearch", false);
             var selected = $('#tree_org').jstree().get_selected(true);
             if ($(this).prop("checked")) {
                 var params = "params=depth:true,organizationId:";
@@ -49,6 +51,7 @@ var User = function () {
             } else {
                 gridUser.setAjaxParam("mutilText", undefined);
             }
+            gridUser.setAjaxParam("isSearch", true);
             gridUser.getDataTable().ajax.reload(null, true);
         });
 
@@ -127,6 +130,9 @@ var User = function () {
     };
 
     var directUserDetail = function (uid) {
+        if (!uid) {
+            return;
+        }
         App.blockUI();
         $.post("/user/findUserById.do", {
             id: uid
@@ -166,6 +172,9 @@ var User = function () {
     }
 
     var initEdit = function (uid) {
+        if (!uid) {
+            return;
+        }
         $("#modal_user .modal-header .modal-title").text("编辑用户");
         $("#modal_user .modal-footer .btn.green").attr("data-type", "edit").text("保存");
         App.blockUI();

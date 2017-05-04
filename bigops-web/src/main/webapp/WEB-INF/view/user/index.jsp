@@ -28,7 +28,7 @@
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
-            <%@include file="../layout/page-treebar.jsp"%>
+            <%@include file="page-orgtree.jsp"%>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">

@@ -384,6 +384,15 @@ var Tree = function () {
                 }
             },
             "plugins": ["unique", "search", "contextmenu", "dnd", "state", "types"]
+        }).on('ready.jstree', function (e, data) {
+            var selected = $('#tree_org').jstree(true).get_selected(true)[0];
+            if (!selected) {
+                var inst = data.instance;
+                var obj = inst.get_node(e.target.firstChild.firstChild.lastChild);
+                inst.select_node(obj);
+                selected = obj;
+            }
+            $("#" + selected.id + "_anchor").trigger("click");
         });
         $("#tree_org").on("click.jstree", function (e) {
             if (!$(e.target).is("a")) {
@@ -394,9 +403,11 @@ var Tree = function () {
             if (node) {
                 var type = node.type;
                 if (type && (type.indexOf("male") != -1 || type.indexOf("female") != -1)) {
+                    $(".page-content .page-bar .page-breadcrumb span").text(inst.get_node(inst.get_parent(node)).text);
                     $("#showAll").attr("checked", false).attr("disabled", true).parent().addClass("mt-checkbox-disabled");
                     Layout.loadAjaxContent('/user/indexAjax.do?params=uid:' + node.id.split("_")[1], $(node));
                 } else {
+                    $(".page-content .page-bar .page-breadcrumb span").text(node.text);
                     $("#showAll").attr("checked", false).attr("disabled", false).parent().removeClass("mt-checkbox-disabled");
                     Layout.loadAjaxContent('/user/indexAjax.do?params=organizationId:' + node.id, $(node));
                 }

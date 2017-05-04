@@ -93,24 +93,34 @@ public class UserController extends BaseController {
 
     @RequestMapping("findUserList")
     @ResponseBody
-    public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond, boolean depth) {
+    public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond, boolean depth, boolean isSearch) {
         try {
             cond.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
-            if (depth) {
-                cond.setPageIndex(0);
-                cond.setPageSize(Integer.MAX_VALUE);
-                List<UserDomain> list = new ArrayList<UserDomain>();
-                this.findUserListByOrganizationRecursive(list, cond);
-                int length = pageInfo.getStart() + pageInfo.getLength();
-                pageInfo.setData(list.subList(pageInfo.getStart(), length > list.size() ? list.size() : length));
-                pageInfo.setRecordsTotal(list.size());
-            } else {
+            if (isSearch) {
                 cond.setPageIndex(pageInfo.getStart());
                 cond.setPageSize(pageInfo.getLength());
+                cond.setOrganizationId(null);
                 List<UserDomain> list = this.userService.findUserListByConditionWithPage(cond);
                 int count = this.userService.findUserCountByCondition(cond);
                 pageInfo.setData(list);
                 pageInfo.setRecordsTotal(count);
+            } else {
+                if (depth) {
+                    cond.setPageIndex(0);
+                    cond.setPageSize(Integer.MAX_VALUE);
+                    List<UserDomain> list = new ArrayList<UserDomain>();
+                    this.findUserListByOrganizationRecursive(list, cond);
+                    int length = pageInfo.getStart() + pageInfo.getLength();
+                    pageInfo.setData(list.subList(pageInfo.getStart(), length > list.size() ? list.size() : length));
+                    pageInfo.setRecordsTotal(list.size());
+                } else {
+                    cond.setPageIndex(pageInfo.getStart());
+                    cond.setPageSize(pageInfo.getLength());
+                    List<UserDomain> list = this.userService.findUserListByConditionWithPage(cond);
+                    int count = this.userService.findUserCountByCondition(cond);
+                    pageInfo.setData(list);
+                    pageInfo.setRecordsTotal(count);
+                }
             }
         } catch (BigOpsException e) {
             logger.error("findUserList pageInfo:" + JSONObject.toJSONString(pageInfo) + ", cond:" + JSONObject.toJSONString(cond), e);

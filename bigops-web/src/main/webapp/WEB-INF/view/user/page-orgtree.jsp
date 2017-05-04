@@ -236,7 +236,7 @@
     </div>
 </div>
 <!-- END DIALOG -->
-<script src="<%=contextPath%>/assets/pages/scripts/tree.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/pages/scripts/orgtree.js" type="text/javascript"></script>
 <SCRIPT type="text/javascript">
     $(document).ready(function () {
     });
