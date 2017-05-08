@@ -134,9 +134,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label col-md-3">年龄:</label>
+                            <label class="control-label col-md-3">生日:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="input_age" name="age">
+                                <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
+                                    <input type="text" class="form-control" id="input_birthday" name="age" readonly>
+                                    <span class="input-group-btn">
+                                    <button class="btn default" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,7 +243,7 @@
     </div>
 </div>
 <!-- END DIALOG -->
-<script src="<%=contextPath%>/assets/pages/scripts/orgtree.js" type="text/javascript"></script>
+<script src="<%=contextPath%>/assets/pages/scripts/user/orgtree.js" type="text/javascript"></script>
 <SCRIPT type="text/javascript">
     $(document).ready(function () {
     });

@@ -63,6 +63,28 @@ public class UserController extends BaseController {
         return modelAndView;
     }
 
+
+    @RequestMapping("gotoAdd")
+    public ModelAndView gotoAdd(Integer oid, String oname) {
+        ModelAndView modelAndView = new ModelAndView("user/addUser");
+        modelAndView.addObject("oid", oid);
+        modelAndView.addObject("oname", oname);
+        return modelAndView;
+    }
+
+    @RequestMapping("gotoEdit")
+    public ModelAndView gotoEdit(Integer id) {
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("user/editUser");
+            UserDomain userDomain = this.userService.findUserById(id);
+            modelAndView.addObject("userDomain", userDomain);
+        } catch (BigOpsException e) {
+            logger.error("gotoEdit id:" + id, e);
+        }
+        return modelAndView;
+    }
+
     @RequestMapping("login")
     @ResponseBody
     public JsonData login(String username, String password) {
@@ -95,7 +117,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public PageInfo findUserList(PageInfo<UserDomain> pageInfo, UserCondition cond, boolean depth, boolean isSearch) {
         try {
-            cond.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
+//            cond.setStatusList(Arrays.asList(new Integer[]{-1, 1}));
             if (isSearch) {
                 cond.setPageIndex(pageInfo.getStart());
                 cond.setPageSize(pageInfo.getLength());
@@ -150,7 +172,7 @@ public class UserController extends BaseController {
         JsonData jsonData = new JsonData(JsonData.FAILED);
         jsonData.setMethod("addUser");
         try {
-            domain.setStatus(1);
+            domain.setCreateTime(new Date());
             String passwordDigest = DigestUtils.digest(domain.getEmail() + DigestUtils.SEPARATOR
                     + DigestUtils.DEFAULT_PWD + DigestUtils.SEPARATOR + DigestUtils.SALT);
             domain.setPassword(passwordDigest);
@@ -193,6 +215,7 @@ public class UserController extends BaseController {
 //            domain.setOrganizationId(oids.replace()String.valueOf(oid));
             domain.setOrganizationId(String.valueOf(oid));
             domain.setOrganizationName(orgDomain.getOname());
+            domain.setLastUpdateTime(new Date());
             boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
             jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
         } catch (BigOpsException e) {
@@ -207,6 +230,7 @@ public class UserController extends BaseController {
         JsonData jsonData = new JsonData(JsonData.FAILED);
         jsonData.setMethod("modifyUser");
         try {
+            domain.setLastUpdateTime(new Date());
             boolean bool = this.userService.updateUserByIds(domain, Arrays.asList(ids));
             jsonData.setStatus(bool ? JsonData.SUCCESS : JsonData.FAILED);
         } catch (BigOpsException e) {

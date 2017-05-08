@@ -11,25 +11,26 @@
         <result column="tel" property="tel" jdbcType="VARCHAR"/>
         <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="gender" property="gender" jdbcType="INTEGER"/>
-        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
         <result column="organizationId" property="organizationId" jdbcType="VARCHAR"/>
         <result column="organizationName" property="organizationName" jdbcType="VARCHAR"/>
+        <result column="userGroupId" property="userGroupId" jdbcType="VARCHAR"/>
+        <result column="userGroupName" property="userGroupName" jdbcType="VARCHAR"/>
         <result column="employId" property="employId" jdbcType="INTEGER"/>
         <result column="im1" property="im1" jdbcType="VARCHAR"/>
         <result column="im2" property="im2" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="expires" property="expires" jdbcType="TIMESTAMP"/>
-        <result column="pwdLastSetTime" property="pwdLastSetTime" jdbcType="TIMESTAMP"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="lastUpdateTime" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
-        <result column="lastLoginIp" property="lastLoginIp" jdbcType="VARCHAR"/>
         <result column="isAdmin" property="isAdmin" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
     </resultMap>
 
     <!-- 全局列名 -->
     <sql id="Base_Column_List">
-        uid, email, password, realname, title, tel, mobile, gender, age, organizationId, organizationName, employId, im1, im2, description,
-        expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status
+        uid, email, password, realname, title, tel, mobile, gender, birthday, organizationId, organizationName, userGroupId, userGroupName, employId, im1, im2, description,
+        expires, createTime, lastUpdateTime, isAdmin, status
     </sql>
 
     <!-- 对象查询条件拼装 -->
@@ -60,14 +61,20 @@
             <if test="gender != null">
                 and gender = #{gender,jdbcType=INTEGER}
             </if>
-            <if test="age != null">
-                and age = #{age,jdbcType=INTEGER}
+            <if test="birthday != null">
+                and birthday = #{birthday,jdbcType=TIMESTAMP}
             </if>
             <if test="organizationId != null">
                 and CONCAT(',',organizationId,',') REGEXP CONCAT(',',#{organizationId,jdbcType=VARCHAR},',')
             </if>
             <if test="organizationName != null">
                 and CONCAT(',',organizationName,',') REGEXP CONCAT(',',#{organizationName,jdbcType=VARCHAR},',')
+            </if>
+            <if test="userGroupId != null">
+                and CONCAT(',',userGroupId,',') REGEXP CONCAT(',',#{userGroupId,jdbcType=VARCHAR},',')
+            </if>
+            <if test="userGroupName != null">
+                and CONCAT(',',userGroupName,',') REGEXP CONCAT(',',#{userGroupName,jdbcType=VARCHAR},',')
             </if>
             <if test="employId != null">
                 and employId = #{employId,jdbcType=INTEGER}
@@ -84,14 +91,11 @@
             <if test="expires != null">
                 and expires = #{expires,jdbcType=TIMESTAMP}
             </if>
-            <if test="pwdLastSetTime != null">
-                and pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP}
+            <if test="createTime != null">
+                and createTime = #{createTime,jdbcType=TIMESTAMP}
             </if>
             <if test="lastUpdateTime != null">
                 and lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="lastLoginIp != null">
-                and lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR}
             </if>
             <if test="isAdmin != null">
                 and isAdmin = #{isAdmin,jdbcType=INTEGER}
@@ -106,7 +110,8 @@
                 </foreach>
             </if>
             <if test="mutilText != null">
-                and (email REGEXP  #{mutilText,jdbcType=INTEGER} or realname REGEXP  #{mutilText,jdbcType=INTEGER} or mobile REGEXP  #{mutilText,jdbcType=INTEGER} or im1 REGEXP  #{mutilText,jdbcType=INTEGER})
+                and (email REGEXP #{mutilText,jdbcType=INTEGER} or realname REGEXP #{mutilText,jdbcType=INTEGER} or
+                mobile REGEXP #{mutilText,jdbcType=INTEGER} or im1 REGEXP #{mutilText,jdbcType=INTEGER})
             </if>
         </where>
     </sql>
@@ -141,14 +146,24 @@
                     <if test="condition.gender != null">
                         and gender = #{condition.gender,jdbcType=INTEGER}
                     </if>
-                    <if test="condition.age != null">
-                        and age = #{condition.age,jdbcType=INTEGER}
+                    <if test="condition.birthday != null">
+                        and birthday = #{condition.birthday,jdbcType=TIMESTAMP}
                     </if>
                     <if test="condition.organizationId != null">
-                        and CONCAT(',',organizationId,',') REGEXP CONCAT(',',#{condition.organizationId,jdbcType=VARCHAR},',')
+                        and CONCAT(',',organizationId,',') REGEXP
+                        CONCAT(',',#{condition.organizationId,jdbcType=VARCHAR},',')
                     </if>
                     <if test="condition.organizationName != null">
-                        and CONCAT(',',organizationId,',') REGEXP CONCAT(',',#{condition.organizationName,jdbcType=VARCHAR},',')
+                        and CONCAT(',',organizationName,',') REGEXP
+                        CONCAT(',',#{condition.organizationName,jdbcType=VARCHAR},',')
+                    </if>
+                    <if test="condition.userGroupId != null">
+                        and CONCAT(',',userGroupId,',') REGEXP
+                        CONCAT(',',#{condition.userGroupId,jdbcType=VARCHAR},',')
+                    </if>
+                    <if test="condition.userGroupName != null">
+                        and CONCAT(',',userGroupName,',') REGEXP
+                        CONCAT(',',#{condition.userGroupName,jdbcType=VARCHAR},',')
                     </if>
                     <if test="condition.employId != null">
                         and employId = #{condition.employId,jdbcType=INTEGER}
@@ -165,14 +180,11 @@
                     <if test="condition.expires != null">
                         and expires = #{condition.expires,jdbcType=TIMESTAMP}
                     </if>
-                    <if test="condition.pwdLastSetTime != null">
-                        and pwdLastSetTime = #{condition.pwdLastSetTime,jdbcType=TIMESTAMP}
+                    <if test="condition.createTime != null">
+                        and createTime = #{condition.createTime,jdbcType=TIMESTAMP}
                     </if>
                     <if test="condition.lastUpdateTime != null">
                         and lastUpdateTime = #{condition.lastUpdateTime,jdbcType=TIMESTAMP}
-                    </if>
-                    <if test="condition.lastLoginIp != null">
-                        and lastLoginIp = #{condition.lastLoginIp,jdbcType=VARCHAR}
                     </if>
                     <if test="condition.isAdmin != null">
                         and isAdmin = #{condition.isAdmin,jdbcType=INTEGER}
@@ -182,12 +194,15 @@
                     </if>
                     <if test="condition.statusList != null">
                         and status in
-                        <foreach item="item" index="index" collection="condition.statusList" open="(" separator="," close=")">
+                        <foreach item="item" index="index" collection="condition.statusList" open="(" separator=","
+                                 close=")">
                             #{item}
                         </foreach>
                     </if>
                     <if test="condition.mutilText != null">
-                        and (email REGEXP  #{condition.mutilText,jdbcType=INTEGER} or realname REGEXP  #{condition.mutilText,jdbcType=INTEGER} or mobile REGEXP  #{condition.mutilText,jdbcType=INTEGER} or im1 REGEXP  #{condition.mutilText,jdbcType=INTEGER})
+                        and (email REGEXP #{condition.mutilText,jdbcType=INTEGER} or realname REGEXP
+                        #{condition.mutilText,jdbcType=INTEGER} or mobile REGEXP #{condition.mutilText,jdbcType=INTEGER}
+                        or im1 REGEXP #{condition.mutilText,jdbcType=INTEGER})
                     </if>
                 </when>
                 <otherwise>
@@ -215,14 +230,20 @@
                     <if test="gender != null">
                         and gender = #{gender,jdbcType=INTEGER}
                     </if>
-                    <if test="age != null">
-                        and age = #{age,jdbcType=INTEGER}
+                    <if test="birthday != null">
+                        and birthday = #{birthday,jdbcType=TIMESTAMP}
                     </if>
                     <if test="organizationId != null">
                         and CONCAT(',',organizationId,',') REGEXP CONCAT(',',#{organizationId,jdbcType=VARCHAR},',')
                     </if>
                     <if test="organizationName != null">
-                        and CONCAT(',',organizationId,',') REGEXP CONCAT(',',#{organizationName,jdbcType=VARCHAR},',')
+                        and CONCAT(',',organizationName,',') REGEXP CONCAT(',',#{organizationName,jdbcType=VARCHAR},',')
+                    </if>
+                    <if test="userGroupId != null">
+                        and CONCAT(',',userGroupId,',') REGEXP CONCAT(',',#{userGroupId,jdbcType=VARCHAR},',')
+                    </if>
+                    <if test="organizationName != null">
+                        and CONCAT(',',userGroupName,',') REGEXP CONCAT(',',#{userGroupName,jdbcType=VARCHAR},',')
                     </if>
                     <if test="employId != null">
                         and employId = #{employId,jdbcType=INTEGER}
@@ -239,14 +260,11 @@
                     <if test="expires != null">
                         and expires = #{expires,jdbcType=TIMESTAMP}
                     </if>
-                    <if test="pwdLastSetTime != null">
-                        and pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP}
+                    <if test="createTime != null">
+                        and createTime = #{createTime,jdbcType=TIMESTAMP}
                     </if>
                     <if test="lastUpdateTime != null">
                         and lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP}
-                    </if>
-                    <if test="lastLoginIp != null">
-                        and lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR}
                     </if>
                     <if test="isAdmin != null">
                         and isAdmin = #{isAdmin,jdbcType=INTEGER}
@@ -261,7 +279,8 @@
                         </foreach>
                     </if>
                     <if test="mutilText != null">
-                        and (email REGEXP  #{mutilText,jdbcType=INTEGER} or realname REGEXP  #{mutilText,jdbcType=INTEGER} or mobile REGEXP  #{mutilText,jdbcType=INTEGER} or im1 REGEXP  #{mutilText,jdbcType=INTEGER})
+                        and (email REGEXP #{mutilText,jdbcType=INTEGER} or realname REGEXP #{mutilText,jdbcType=INTEGER}
+                        or mobile REGEXP #{mutilText,jdbcType=INTEGER} or im1 REGEXP #{mutilText,jdbcType=INTEGER})
                     </if>
                 </otherwise>
             </choose>
@@ -288,14 +307,20 @@
             <if test="gender != null">
                 gender = #{gender,jdbcType=INTEGER},
             </if>
-            <if test="age != null">
-                age = #{age,jdbcType=INTEGER},
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
             </if>
             <if test="organizationId != null">
                 organizationId = #{organizationId,jdbcType=VARCHAR},
             </if>
             <if test="organizationName != null">
                 organizationName = #{organizationName,jdbcType=VARCHAR},
+            </if>
+            <if test="userGroupId != null">
+                userGroupId = #{userGroupId,jdbcType=VARCHAR},
+            </if>
+            <if test="userGroupName != null">
+                userGroupName = #{userGroupName,jdbcType=VARCHAR},
             </if>
             <if test="employId != null">
                 employId = #{employId,jdbcType=INTEGER},
@@ -312,14 +337,11 @@
             <if test="expires != null">
                 expires = #{expires,jdbcType=TIMESTAMP},
             </if>
-            <if test="pwdLastSetTime != null">
-                pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP},
+            <if test="createTime != null">
+                createTime = #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="lastUpdateTime != null">
                 lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="lastLoginIp != null">
-                lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR},
             </if>
             <if test="isAdmin != null">
                 isAdmin = #{isAdmin,jdbcType=INTEGER},
@@ -351,14 +373,20 @@
                 <if test="user.gender != null">
                     gender = #{user.gender,jdbcType=INTEGER},
                 </if>
-                <if test="user.age != null">
-                    age = #{user.age,jdbcType=INTEGER},
+                <if test="user.birthday != null">
+                    birthday = #{user.birthday,jdbcType=TIMESTAMP},
                 </if>
                 <if test="user.organizationId != null">
                     organizationId = #{user.organizationId,jdbcType=VARCHAR},
                 </if>
                 <if test="user.organizationName != null">
                     organizationName = #{user.organizationName,jdbcType=VARCHAR},
+                </if>
+                <if test="user.userGroupId != null">
+                    userGroupId = #{user.userGroupId,jdbcType=VARCHAR},
+                </if>
+                <if test="user.userGroupName != null">
+                    userGroupName = #{user.userGroupName,jdbcType=VARCHAR},
                 </if>
                 <if test="user.employId != null">
                     employId = #{user.employId,jdbcType=INTEGER},
@@ -375,14 +403,11 @@
                 <if test="user.expires != null">
                     expires = #{user.expires,jdbcType=TIMESTAMP},
                 </if>
-                <if test="user.pwdLastSetTime != null">
-                    pwdLastSetTime = #{user.pwdLastSetTime,jdbcType=TIMESTAMP},
+                <if test="user.createTime != null">
+                    createTime = #{user.createTime,jdbcType=TIMESTAMP},
                 </if>
                 <if test="user.lastUpdateTime != null">
                     lastUpdateTime = #{user.lastUpdateTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="user.lastLoginIp != null">
-                    lastLoginIp = #{user.lastLoginIp,jdbcType=VARCHAR},
                 </if>
                 <if test="user.isAdmin != null">
                     isAdmin = #{user.isAdmin,jdbcType=INTEGER},
@@ -402,17 +427,18 @@
             tel = #{tel,jdbcType=VARCHAR},
             mobile = #{mobile,jdbcType=VARCHAR},
             gender = #{gender,jdbcType=INTEGER},
-            age = #{age,jdbcType=INTEGER},
+            birthday = #{birthday,jdbcType=TIMESTAMP},
             organizationId = #{organizationId,jdbcType=VARCHAR},
             organizationName = #{organizationName,jdbcType=VARCHAR},
+            userGroupId = #{userGroupId,jdbcType=VARCHAR},
+            userGroupName = #{userGroupName,jdbcType=VARCHAR},
             employId = #{employId,jdbcType=INTEGER},
             im1 = #{im1,jdbcType=VARCHAR},
             im2 = #{im2,jdbcType=VARCHAR},
             description = #{description,jdbcType=VARCHAR},
             expires = #{expires,jdbcType=TIMESTAMP},
-            pwdLastSetTime = #{pwdLastSetTime,jdbcType=TIMESTAMP},
+            createTime = #{createTime,jdbcType=TIMESTAMP},
             lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
-            lastLoginIp = #{lastLoginIp,jdbcType=VARCHAR},
             isAdmin = #{isAdmin,jdbcType=INTEGER},
             status = #{status,jdbcType=INTEGER}
         </set>
@@ -427,17 +453,18 @@
                 tel = #{user.tel,jdbcType=VARCHAR},
                 mobile = #{user.mobile,jdbcType=VARCHAR},
                 gender = #{user.gender,jdbcType=INTEGER},
-                age = #{user.age,jdbcType=INTEGER},
+                birthday = #{user.birthday,jdbcType=TIMESTAMP},
                 organizationId = #{user.organizationId,jdbcType=VARCHAR},
                 organizationName = #{user.organizationName,jdbcType=VARCHAR},
+                userGroupId = #{user.userGroupId,jdbcType=VARCHAR},
+                userGroupName = #{user.userGroupName,jdbcType=VARCHAR},
                 employId = #{user.employId,jdbcType=INTEGER},
                 im1 = #{user.im1,jdbcType=VARCHAR},
                 im2 = #{user.im2,jdbcType=VARCHAR},
                 description = #{user.description,jdbcType=VARCHAR},
                 expires = #{user.expires,jdbcType=TIMESTAMP},
-                pwdLastSetTime = #{user.pwdLastSetTime,jdbcType=TIMESTAMP},
+                createTime = #{user.createTime,jdbcType=TIMESTAMP},
                 lastUpdateTime = #{user.lastUpdateTime,jdbcType=TIMESTAMP},
-                lastLoginIp = #{user.lastLoginIp,jdbcType=VARCHAR},
                 isAdmin = #{user.isAdmin,jdbcType=INTEGER},
                 status = #{user.status,jdbcType=INTEGER}
             </if>
@@ -446,13 +473,13 @@
 
     <!-- 创建用户 -->
     <insert id="insertUser" parameterType="com.ywb.bigops.domain.user.UserDomain">
-        insert into sso_user (email, password, realname, title, tel, mobile, gender, age, organizationId, organizationName, employId, im1, im2,
-        description, expires, pwdLastSetTime, lastUpdateTime, lastLoginIp, isAdmin, status)
+        insert into sso_user (email, password, realname, title, tel, mobile, gender, birthday, organizationId, organizationName, userGroupId, userGroupName, employId, im1, im2,
+        description, expires, createTime, lastUpdateTime, isAdmin, status)
         values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
         #{title,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
-        #{age,jdbcType=INTEGER}, #{organizationId,jdbcType=VARCHAR},  #{organizationName,jdbcType=VARCHAR}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
-        #{description,jdbcType=VARCHAR}, #{expires,jdbcType=TIMESTAMP}, #{pwdLastSetTime,jdbcType=TIMESTAMP},
-        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{isAdmin,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+        #{birthday,jdbcType=TIMESTAMP}, #{organizationId,jdbcType=VARCHAR},  #{organizationName,jdbcType=VARCHAR}, #{userGroupId,jdbcType=VARCHAR},  #{userGroupName,jdbcType=VARCHAR}, #{employId,jdbcType=INTEGER}, #{im1,jdbcType=VARCHAR}, #{im2,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR}, #{expires,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{isAdmin,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
     </insert>
 
     <!-- 通过ID查询用户 -->

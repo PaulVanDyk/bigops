@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -35,6 +36,33 @@ public class OrganizationController extends BaseController {
     private OrganizationService organizationService;
     @Resource
     private UserService userService;
+
+
+    @RequestMapping("gotoAdd")
+    public ModelAndView gotoAdd(Integer pid, String pname) {
+        ModelAndView modelAndView = new ModelAndView("user/addOrg");
+        modelAndView.addObject("pid", pid);
+        modelAndView.addObject("pname", pname);
+        return modelAndView;
+    }
+
+    @RequestMapping("gotoEdit")
+    public ModelAndView gotoEdit(Integer id) {
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("user/editOrg");
+            OrganizationDomain organizationDomain = this.organizationService.findOrganizationById(id);
+            OrganizationDomain organizationDomain2 = this.organizationService.findOrganizationById(organizationDomain.getPid());
+            modelAndView.addObject("organizationDomain", organizationDomain);
+            if (organizationDomain2 != null) {
+                modelAndView.addObject("pname", organizationDomain2.getOname());
+            }
+        } catch (BigOpsException e) {
+            logger.error("gotoEdit id:" + id, e);
+        }
+        return modelAndView;
+    }
+
 
     @RequestMapping("lazyList")
     @ResponseBody

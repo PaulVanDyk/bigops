@@ -1,6 +1,9 @@
 package com.ywb.bigops.domain.user;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * UserDomain.
@@ -20,17 +23,22 @@ public class UserDomain implements Serializable {
     private String tel;
     private String mobile;
     private Integer gender;
-    private Integer age;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
     private String organizationId;
     private String organizationName;
+    private String userGroupId;
+    private String userGroupName;
     private String employId;
     private String im1;
     private String im2;
     private String description;
-    private String expires;
-    private String pwdLastSetTime;
-    private String lastUpdateTime;
-    private String lastLoginIp;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date expires;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date lastUpdateTime;
     private Integer isAdmin;
     private Integer status;
 
@@ -98,12 +106,12 @@ public class UserDomain implements Serializable {
         this.gender = gender;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getOrganizationId() {
@@ -120,6 +128,22 @@ public class UserDomain implements Serializable {
 
     public void setOrganizationName(String organizationName) {
         this.organizationName = organizationName;
+    }
+
+    public String getUserGroupId() {
+        return userGroupId;
+    }
+
+    public void setUserGroupId(String userGroupId) {
+        this.userGroupId = userGroupId;
+    }
+
+    public String getUserGroupName() {
+        return userGroupName;
+    }
+
+    public void setUserGroupName(String userGroupName) {
+        this.userGroupName = userGroupName;
     }
 
     public String getEmployId() {
@@ -154,36 +178,28 @@ public class UserDomain implements Serializable {
         this.description = description;
     }
 
-    public String getExpires() {
+    public Date getExpires() {
         return expires;
     }
 
-    public void setExpires(String expires) {
+    public void setExpires(Date expires) {
         this.expires = expires;
     }
 
-    public String getPwdLastSetTime() {
-        return pwdLastSetTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setPwdLastSetTime(String pwdLastSetTime) {
-        this.pwdLastSetTime = pwdLastSetTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public String getLastUpdateTime() {
+    public Date getLastUpdateTime() {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(String lastUpdateTime) {
+    public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
-    }
-
-    public String getLastLoginIp() {
-        return lastLoginIp;
-    }
-
-    public void setLastLoginIp(String lastLoginIp) {
-        this.lastLoginIp = lastLoginIp;
     }
 
     public Integer getIsAdmin() {

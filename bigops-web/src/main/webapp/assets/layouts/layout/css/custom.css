@@ -81,8 +81,9 @@
     padding: 15px;
 }
 
-.direct > .direct-content > .portlet > .portlet-title, .direct > .direct-content > .portlet > .portlet-body {
+.direct > .direct-content > .portlet > .portlet-title, .direct > .direct-content > .portlet > * .portlet-body {
     margin: inherit;
+    border-bottom: 1px solid #eee;
     padding: 15px;
 }
 
